@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>IICE Conference Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=FiraGO:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="style-keynote-pill">
+
+  <!-- Compact Top Operator Bar -->
+  <header id="controlBar" class="control-bar">
+    <div class="bar-main">
+      
+      <!-- Brand & Status -->
+      <div class="bar-left">
+        <div class="live-pulse" id="liveIndicator"></div>
+        <div class="brand-text">
+          <span class="app-title">IICE</span>
+          <span class="app-pill">Conference Translator</span>
+        </div>
+        <div class="v-divider"></div>
+        <span id="statusBadge" class="status-badge status-idle">მზადაა</span>
+      </div>
+
+      <!-- Center Controls -->
+      <div class="bar-center">
+        <!-- Mic Toggle Button -->
+        <button id="micBtn" class="btn btn-primary btn-record">
+          <span class="mic-icon">🎙️</span>
+          <span id="micBtnText">ჩართვა</span>
+        </button>
+
+        <!-- Elegant Single Language Direction Switcher -->
+        <button id="swapLangBtn" class="lang-switch-btn" title="დააჭირეთ ენის მიმართულების შესაცვლელად">
+          <span id="langDirectionText">🇺🇸 English ➔ 🇬🇪 ქართული</span>
+          <span class="swap-icon">⇄</span>
+        </button>
+
+        <!-- Audio Volume Waveform -->
+        <div class="audio-mini-meter" title="მიკროფონის დონე">
+          <div id="audioBar" class="audio-fill"></div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="bar-right">
+        <button id="clearScreenBtn" class="btn btn-ghost" title="ეკრანის გასუფთავება (C)">
+          <span>🧹 გასუფთავება</span>
+        </button>
+        <button id="toggleSettingsBtn" class="btn btn-ghost" title="პარამეტრების პანელი">
+          <span>⚙️ პარამეტრები</span>
+        </button>
+        <button id="hideBarBtn" class="btn btn-dark" title="მენიუს დამალვა (H)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="hide-text">OBS რეჟიმი (H)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Expandable Settings Drawer (4 Columns) -->
+    <div id="settingsDrawer" class="settings-drawer hidden">
+      <div class="drawer-grid">
+        
+        <!-- Column 1: AI & Translation Intelligence -->
+        <div class="drawer-card highlight-card">
+          <div class="card-title">🧠 თარგმნის ინტელექტი</div>
+          
+          <div class="toggle-row">
+            <span class="row-label">🧹 პარაზიტი სიტყვების გაწმენდა</span>
+            <label class="switch">
+              <input type="checkbox" id="toggleCleanSpeech" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="row-label">🔤 ჭკვიანი პუნქტუაცია და დაყოფა</span>
+            <label class="switch">
+              <input type="checkbox" id="togglePunctuation" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="row-label">📺 2-ხაზიანი ლიმიტი (კინო-სტილი)</span>
+            <label class="switch">
+              <input type="checkbox" id="toggleTwoLineLimit" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <button id="openGlossaryBtn" class="btn btn-outline-full">
+            📖 ტერმინების ლექსიკონი (<span id="glossaryCount">0</span>)
+          </button>
+        </div>
+
+        <!-- Column 2: Text Layers & Independent Sizes -->
+        <div class="drawer-card">
+          <div class="card-title">👁️ ტექსტის ფენები და ზომა</div>
+          
+          <div class="toggle-row">
+            <span class="row-label">სპიკერის ტექსტი (ორიგინალი)</span>
+            <label class="switch">
+              <input type="checkbox" id="toggleOrigSpeech" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span class="row-label">სინქრონული თარგმანი</span>
+            <label class="switch">
+              <input type="checkbox" id="toggleTransSpeech" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-head">
+              <span>თარგმანის შრიფტი:</span>
+              <span id="transSizeVal" class="val-pill">32px</span>
+            </div>
+            <input type="range" id="transSizeSlider" min="18" max="64" value="32" class="range-input">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-head">
+              <span>ორიგინალის შრიფტი:</span>
+              <span id="origSizeVal" class="val-pill">20px</span>
+            </div>
+            <input type="range" id="origSizeSlider" min="14" max="44" value="20" class="range-input">
+          </div>
+        </div>
+
+        <!-- Column 3: Slide Overlays & Transparency -->
+        <div class="drawer-card">
+          <div class="card-title">🎨 სლაიდის ოვერლეი</div>
+          
+          <div class="field-group">
+            <label>დიზაინის სტილი:</label>
+            <select id="overlayStyleSelect" class="form-select">
+              <option value="style-keynote-pill" selected>🍏 Apple Keynote Pill (მცურავი კაფსულა)</option>
+              <option value="style-cinema-fade">🎬 Cinema Bottom Fade (რბილი დაჩრდილვა)</option>
+              <option value="style-ghost-outline">👻 Ghost Outline (ფონის გარეშე, კონტურით)</option>
+              <option value="style-broadcast-ticker">📺 Broadcast News Ticker (სრული ქვედა ზოლი)</option>
+              <option value="style-frosted-glass">🔮 Frosted Glass (მუქი მინა)</option>
+              <option value="style-chroma-green">🟩 Green Screen (Chroma Key)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>განლაგება სლაიდზე:</label>
+            <select id="positionSelect" class="form-select">
+              <option value="pos-bottom" selected>⬇️ ქვედა ხაზი (Safe Margin)</option>
+              <option value="pos-bottom-flush">⏹️ სულ ქვედა კიდე (Flush Bottom)</option>
+              <option value="pos-top">⬆️ ზედა ზოლი (Top Bar)</option>
+              <option value="pos-corner">🏷️ მარცხენა კუთხე (Lower-Third)</option>
+              <option value="pos-center">📺 ცენტრალური ბარათი (Slide Mode)</option>
+            </select>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-head">
+              <span>ფონის გამჭვირვალობა:</span>
+              <span id="bgOpacityVal" class="val-pill">85%</span>
+            </div>
+            <input type="range" id="bgOpacitySlider" min="0" max="100" value="85" class="range-input">
+          </div>
+        </div>
+
+        <!-- Column 4: Audio & Timing Automation -->
+        <div class="drawer-card">
+          <div class="card-title">🎙️ ტაიმერი და ავტომატიკა</div>
+
+          <div class="field-group">
+            <label>ტექსტის გაქრობა სიჩუმისას:</label>
+            <select id="autoFadeSelect" class="form-select">
+              <option value="5000" selected>⏱️ 5 წამში (რეკომენდებული)</option>
+              <option value="8000">⏱️ 8 წამში</option>
+              <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
+              <option value="0">🚫 არასდროს (დარჩეს)</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Terminology / Glossary Modal (Hidden by default) -->
+  <div id="glossaryModal" class="modal-overlay hidden" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📖 კონფერენციის ტერმინოლოგია</h3>
+        <button id="closeGlossaryBtn" class="btn-close">&times;</button>
+      </div>
+      <p class="modal-desc">
+        ჩაწერეთ ტერმინები, ორგანიზაციები ან სახელები. სისტემა ავტომატურად ჩაანაცვლებს შეცდომებს:
+      </p>
+      <textarea id="glossaryInput" placeholder="მაგალითად:&#10;აიტი: IT&#10;ხელოვნური ინტელექტი: Artificial Intelligence&#10;გიორგი: Giorgi"></textarea>
+      <div class="modal-footer">
+        <button id="resetGlossaryBtn" class="btn btn-ghost" title="IICE-ის ოფიციალური ლექსიკონის ჩატვირთვა">🔄 IICE ლექსიკონის აღდგენა</button>
+        <button id="saveGlossaryBtn" class="btn btn-primary">შენახვა</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage Subtitle Overlay Container (OBS & Presentation View) -->
+  <main id="overlayContainer" class="overlay-container pos-bottom">
+    
+    <div class="subtitle-card" id="subtitleCard">
+      <!-- Original Speech Layer -->
+      <div class="speech-layer original-layer" id="originalLayer">
+        <span class="tag-badge" id="originalLangTag">ENG</span>
+        <p class="speech-text original-text" id="originalText">
+          <span class="placeholder-hint">დააჭირეთ „ჩართვა“-ს და დაიწყეთ საუბარი...</span>
+        </p>
+      </div>
+
+      <!-- Translation Layer -->
+      <div class="speech-layer translated-layer" id="translatedLayer">
+        <span class="tag-badge trans-badge" id="targetLangTag">GEO</span>
+        <p class="speech-text translated-text" id="translatedText">
+          <span class="placeholder-hint">აქ გამოჩნდება სინქრონული თარგმანი...</span>
+        </p>
+      </div>
+
+      <!-- Active Glowing Line -->
+      <div class="active-glow-line" id="glowLine"></div>
+    </div>
+
+  </main>
+
+  <!-- Floating Restore Button -->
+  <button id="floatingShowBtn" class="floating-btn" title="პანელის გამოჩენა (H)">⚙️</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
