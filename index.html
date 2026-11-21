@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>IICE Conference Translator</title>
+  <title>IICE Conference Translator — სამართავი პანელი</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=FiraGO:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+GO:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="style-keynote-pill">
+<body class="studio-mode style-oled-black align-center">
 
-  <!-- Compact Top Operator Bar -->
-  <header id="controlBar" class="control-bar">
+  <!-- Top Operator Header Bar -->
+  <header id="controlBar" class="control-bar studio-header">
     <div class="bar-main">
-      
       <!-- Brand & Status -->
       <div class="bar-left">
         <div class="live-pulse" id="liveIndicator"></div>
         <div class="brand-text">
-          <span class="app-title">IICE</span>
-          <span class="app-pill">Conference Translator</span>
+          <span class="app-title">IICE 2026</span>
+          <span class="app-pill">Operator Studio</span>
         </div>
         <div class="v-divider"></div>
         <span id="statusBadge" class="status-badge status-idle">მზადაა</span>
@@ -28,305 +27,344 @@
 
       <!-- Center Controls -->
       <div class="bar-center">
-        <!-- Mic Toggle Button -->
         <button id="micBtn" class="btn btn-primary btn-record">
           <span class="mic-icon">🎙️</span>
           <span id="micBtnText">ჩართვა</span>
         </button>
 
-        <!-- Elegant Single Language Direction Switcher -->
-        <button id="swapLangBtn" class="lang-switch-btn" title="დააჭირეთ ენის მიმართულების შესაცვლელად">
+        <button id="swapLangBtn" class="lang-switch-btn" title="ენის მიმართულების გადართვა (X)">
           <span id="langDirectionText">🇺🇸 English ➔ 🇬🇪 ქართული</span>
           <span class="swap-icon">⇄</span>
         </button>
 
-        <!-- Audio Volume Waveform -->
         <div class="audio-mini-meter" title="მიკროფონის დონე">
           <div id="audioBar" class="audio-fill"></div>
         </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Right Action Buttons -->
       <div class="bar-right">
-        <button id="openStageBtn" class="btn btn-stage" title="პროექტორის/მეორე ეკრანის ცალკე ფანჯარა (Stage Display)">
-          <span>🖥️ პროექტორი</span>
+        <button id="openStageBtn" class="btn btn-stage" title="პროექტორის/მეორე ეკრანის ფანჯრის გახსნა (Stage Display)">
+          <span>🖥️ პროექტორის გახსნა</span>
         </button>
-        <div class="banner-dropdown-wrap">
-          <button id="bannerMenuBtn" class="btn btn-ghost" title="საინფორმაციო ბანერები ეკრანზე">
-            <span>📢 ბანერი ▾</span>
-          </button>
-          <div id="bannerDropdown" class="banner-dropdown hidden">
-            <button class="banner-opt-btn" data-banner="break">☕ ყავის შესვენება / Break</button>
-            <button class="banner-opt-btn" data-banner="qa">❓ კითხვა-პასუხი / Q&A</button>
-            <button class="banner-opt-btn" data-banner="pause">⏱️ ტექნიკური პაუზა / Pause</button>
-            <div class="banner-dropdown-divider"></div>
-            <button class="banner-opt-btn banner-opt-clear" data-banner="clear">✕ ბანერის გათიშვა</button>
-          </div>
-        </div>
-        <button id="openLogBtn" class="btn btn-ghost" title="თარგმანის ისტორია და ლოგი">
-          <span>📜 ლოგი (<span id="logCountBadge">0</span>)</span>
+        <button id="clearScreenBtn" class="btn btn-ghost text-panic" title="პროექტორის მომენტალური გასუფთავება (C ან Esc)">
+          <span>🚨 გასუფთავება (C)</span>
+        </button>
+        <button id="openGlossaryBtn" class="btn btn-ghost" title="ტერმინების ლექსიკონის გახსნა">
+          <span>📖 ლექსიკონი (<span id="glossaryCount">0</span>)</span>
         </button>
         <button id="fullscreenBtn" class="btn btn-ghost" title="სრული ეკრანი (F)">
           <span id="fullscreenIcon">⛶</span>
-          <span class="fullscreen-text">სრული ეკრანი (F)</span>
-        </button>
-        <button id="clearScreenBtn" class="btn btn-ghost text-panic" title="ეკრანის მომენტალური გასუფთავება (C ან Esc)">
-          <span>🚨 გასუფთავება (C)</span>
-        </button>
-        <button id="toggleSettingsBtn" class="btn btn-ghost" title="პარამეტრების პანელი">
-          <span>⚙️ პარამეტრები</span>
-        </button>
-        <button id="hideBarBtn" class="btn btn-dark" title="მენიუს დამალვა (H)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span class="hide-text">OBS (H)</span>
         </button>
       </div>
     </div>
+  </header>
 
-    <!-- Expandable Settings Drawer (4 Columns) -->
-    <div id="settingsDrawer" class="settings-drawer hidden">
-      <!-- Live Preview Control Header -->
-      <div class="drawer-preview-header">
-        <div class="preview-header-left">
-          <span class="preview-pulse-dot"></span>
-          <span class="preview-header-title">👁️ ლაივ გადახედვა:</span>
-          <span class="preview-header-sub">ქვემოთ ეკრანზე მაშინვე ხედავთ როგორ გამოიყურება ტექსტი</span>
+  <!-- Main 3-Column Operator Studio Workspace (Always Visible) -->
+  <main id="settingsDrawer" class="studio-workspace">
+
+    <!-- COLUMN 1: Track, Speaker, Manual Text & Stage Banners -->
+    <section class="studio-col studio-col-left">
+      <!-- Track & Speaker Context Card -->
+      <div class="drawer-card highlight-card">
+        <div class="card-title">🎯 სექცია და მომხსენებელი</div>
+
+        <div class="field-group">
+          <label>მიმდინარე მიმართულება:</label>
+          <select id="trackSelect" class="form-select">
+            <option value="all">🌐 ყველა მიმართულება (IICE 2026)</option>
+            <option value="I. ნანოპროცესები და ნანოტექნოლოგიები">I. ნანოპროცესები და ნანოტექნოლოგიები</option>
+            <option value="II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები">II. წიაღისეული და მეორადი ნედლეული</option>
+            <option value="III. მწვანე ქიმია">III. მწვანე ქიმია</option>
+            <option value="IV. სამეცნიერო ინოვაციების პოპულარიზაცია და კომერციალიზაცია">IV. ინოვაციების კომერციალიზაცია</option>
+            <option value="V. სურსათის ქიმია და ხარისხი">V. სურსათის ქიმია და ხარისხი</option>
+            <option value="VI. STEM+P: მეცნიერება, ინოვაცია და პოლიტიკა">VI. STEM+P და პოლიტიკა</option>
+          </select>
         </div>
-        <div class="preview-header-actions">
-          <div class="manual-test-wrap">
-            <input type="text" id="manualTestInput" class="manual-test-input" placeholder="⌨️ ხელით ტექსტი / თარგმანის ტესტი (Enter)..." />
-            <button id="manualTestBtn" class="btn-preview-action" title="ჩაწერილი ტექსტის თარგმნა და ეკრანზე გაშვება">თარგმნე ➔</button>
-          </div>
-          <button id="cycleTestPhraseBtn" class="btn-preview-action" title="სხვადასხვა სატესტო ფრაზის გამოცდა">
-            🔄 ფრაზის შეცვლა
-          </button>
-          <label class="preview-toggle-label">
-            <input type="checkbox" id="testModeCheckbox" checked>
-            <span>სატესტო ტექსტი</span>
-          </label>
+
+        <div class="field-group">
+          <label>მომხსენებელი (Oral / სექცია):</label>
+          <select id="speakerSelect" class="form-select">
+            <option value="">-- აირჩიეთ მომხსენებელი --</option>
+          </select>
+        </div>
+
+        <div id="speakerContextCard" class="speaker-context-box hidden">
+          <div id="speakerCtxName" class="ctx-name"></div>
+          <div id="speakerCtxAff" class="ctx-aff"></div>
+        </div>
+
+        <button id="announceSpeakerBtn" class="btn btn-outline-full" title="არჩეული მომხსენებლის წარდგენის ბანერი პროექტორზე">
+          📢 პროექტორზე წარდგენა
+        </button>
+      </div>
+
+      <!-- Manual Text / Emergency Caption Card -->
+      <div class="drawer-card">
+        <div class="card-title">⌨️ ხელით ტექსტი / სწრაფი ტესტი</div>
+        <p class="card-hint">ჩაწერეთ ფრაზა და დააჭირეთ Enter-ს — მაშინვე ითარგმნება და გავა პროექტორზე:</p>
+        <div class="manual-input-col">
+          <input type="text" id="manualTestInput" class="form-input" placeholder="შეიყვანეთ ქართული ან ინგლისური ტექსტი..." />
+          <button id="manualTestBtn" class="btn btn-primary" style="width: 100%;">თარგმნა და ეკრანზე გაშვება ➔</button>
         </div>
       </div>
 
-      <div class="drawer-grid">
-        
-        <!-- Column 1: AI & Translation Intelligence -->
-        <div class="drawer-card highlight-card">
-          <div class="card-title">🧠 თარგმნის ინტელექტი</div>
-          
-          <div class="toggle-row">
-            <span class="row-label">🧹 პარაზიტი სიტყვების გაწმენდა</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleCleanSpeech" checked>
-              <span class="slider"></span>
+      <!-- Direct 1-Click Projector Banners Card -->
+      <div class="drawer-card">
+        <div class="card-title">📢 საინფორმაციო ბანერები</div>
+        <div class="banner-grid-btns">
+          <button type="button" class="btn btn-outline-preset banner-opt-btn" data-banner="break">☕ ყავის შესვენება</button>
+          <button type="button" class="btn btn-outline-preset banner-opt-btn" data-banner="qa">❓ კითხვა-პასუხი (Q&A)</button>
+          <button type="button" class="btn btn-outline-preset banner-opt-btn" data-banner="pause">⏱️ ტექნიკური პაუზა</button>
+          <button type="button" class="btn btn-ghost text-panic banner-opt-btn" data-banner="clear">✕ ბანერის გათიშვა</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMN 2: Live Stage Monitor + Full Live Transcript / Log -->
+    <section class="studio-col studio-col-center">
+      <!-- Live Stage Monitor (Exact preview of Projector Output) -->
+      <div class="drawer-card monitor-card">
+        <div class="monitor-header">
+          <div class="card-title" style="margin: 0;">👁️ Stage Monitor — რა გადის პროექტორზე</div>
+          <div class="monitor-actions">
+            <button id="cycleTestPhraseBtn" class="btn-preview-action" title="სატესტო ფრაზის ჩვენება მონიტორზე">🔄 ტესტ-ფრაზა</button>
+            <label class="preview-toggle-label">
+              <input type="checkbox" id="testModeCheckbox" checked>
+              <span>Preview</span>
             </label>
           </div>
-
-          <div class="toggle-row">
-            <span class="row-label">🔤 ჭკვიანი პუნქტუაცია და დაყოფა</span>
-            <label class="switch">
-              <input type="checkbox" id="togglePunctuation" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-
-          <div class="toggle-row">
-            <span class="row-label">📺 2-ხაზიანი ლიმიტი (კინო-სტილი)</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleTwoLineLimit" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-
-          <div class="field-group" style="margin-top: 4px;">
-            <label>🎯 მიმართულება (სექცია):</label>
-            <select id="trackSelect" class="form-select">
-              <option value="all">🌐 ყველა მიმართულება (IICE 2026)</option>
-              <option value="I. ნანოპროცესები და ნანოტექნოლოგიები">I. ნანოპროცესები და ნანოტექნოლოგიები</option>
-              <option value="II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები">II. წიაღისეული და მეორადი ნედლეული</option>
-              <option value="III. მწვანე ქიმია">III. მწვანე ქიმია</option>
-              <option value="IV. სამეცნიერო ინოვაციების პოპულარიზაცია და კომერციალიზაცია">IV. ინოვაციების კომერციალიზაცია</option>
-              <option value="V. სურსათის ქიმია და ხარისხი">V. სურსათის ქიმია და ხარისხი</option>
-              <option value="VI. STEM+P: მეცნიერება, ინოვაცია და პოლიტიკა">VI. STEM+P და პოლიტიკა</option>
-            </select>
-          </div>
-
-          <div class="field-group">
-            <label>🗣️ მომხსენებელი (Oral/სექცია):</label>
-            <div style="display: flex; gap: 6px;">
-              <select id="speakerSelect" class="form-select" style="flex: 1;">
-                <option value="">-- აირჩიეთ მომხსენებელი --</option>
-              </select>
-              <button id="announceSpeakerBtn" class="btn btn-ghost" style="padding: 4px 8px;" title="მომხსენებლის წარდგენის ბანერი პროექტორზე">📢</button>
-            </div>
-          </div>
-
-          <button id="openGlossaryBtn" class="btn btn-outline-full">
-            📖 ტერმინების ლექსიკონი (<span id="glossaryCount">0</span>)
-          </button>
         </div>
 
-        <!-- Column 2: Text Layers & Independent Sizes -->
-        <div class="drawer-card">
-          <div class="card-title">👁️ ტექსტის ფენები და ზომა</div>
-          
-          <div class="toggle-row">
-            <span class="row-label">სპიკერის ტექსტი (ორიგინალი)</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleOrigSpeech" checked>
-              <span class="slider"></span>
-            </label>
+        <div id="stageMonitorBox" class="stage-monitor-box">
+          <!-- Miniature Announcement Card -->
+          <div id="stageAnnouncement" class="stage-announcement-card mini-announcement">
+            <span id="announcementIcon" class="stage-announcement-icon"></span>
+            <div id="announcementTitle" class="stage-announcement-title"></div>
+            <div id="announcementSub" class="stage-announcement-sub"></div>
           </div>
 
-          <div class="toggle-row">
-            <span class="row-label">სინქრონული თარგმანი</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleTransSpeech" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>თარგმანის შრიფტი:</span>
-              <span id="transSizeVal" class="val-pill">32px</span>
+          <div id="overlayContainer" class="overlay-container pos-bottom">
+            <div class="subtitle-card" id="subtitleCard">
+              <div class="preview-mode-tag" id="previewModeTag" style="display: none;">
+                <span>👁️ გადახედვა</span>
+              </div>
+              <div class="speech-layer original-layer" id="originalLayer">
+                <span class="tag-badge" id="originalLangTag">ENG</span>
+                <p class="speech-text original-text" id="originalText">
+                  <span class="placeholder-hint">დააჭირეთ „ჩართვა“-ს და დაიწყეთ საუბარი...</span>
+                </p>
+              </div>
+              <div class="speech-layer translated-layer" id="translatedLayer">
+                <span class="tag-badge trans-badge" id="targetLangTag">GEO</span>
+                <p class="speech-text translated-text" id="translatedText">
+                  <span class="placeholder-hint">აქ გამოჩნდება სინქრონული თარგმანი...</span>
+                </p>
+              </div>
+              <div class="active-glow-line" id="glowLine"></div>
             </div>
-            <input type="range" id="transSizeSlider" min="18" max="120" value="32" class="range-input">
           </div>
+        </div>
+      </div>
 
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>ორიგინალის შრიფტი:</span>
-              <span id="origSizeVal" class="val-pill">20px</span>
-            </div>
-            <input type="range" id="origSizeSlider" min="14" max="80" value="20" class="range-input">
+      <!-- Inline Live Transcript & Conference Archive Log -->
+      <div class="drawer-card studio-log-card">
+        <div class="log-panel-header">
+          <div class="modal-title-group">
+            <div class="card-title" style="margin: 0;">📜 ლაივ სტენოგრამა & სრული არქივი</div>
+            <span class="badge-counter" id="logModalCount">0 ფრაზა</span>
+            <span id="logCountBadge" style="display: none;">0</span>
           </div>
+          <div class="log-search-inline">
+            <input type="text" id="logSearchInput" placeholder="🔍 ძიება ლოგებში..." class="search-input-sm">
+          </div>
+        </div>
 
-          <div class="field-group">
-            <label>ტექსტის განლაგება:</label>
-            <select id="textAlignSelect" class="form-select">
-              <option value="align-center" selected>↔️ ცენტრში (დარბაზის სტილი)</option>
+        <div class="log-entries-list studio-log-list" id="logEntriesList">
+          <div class="log-empty-state">
+            <span>ჯერ თარგმანი არ განხორციელებულა. საუბრის დაწყებისას აქ შეინახება სრული სტენოგრამა.</span>
+          </div>
+        </div>
+
+        <div class="log-panel-footer">
+          <div class="footer-left">
+            <button id="exportLogCsvBtn" class="btn btn-ghost" title="Excel / CSV">📥 CSV</button>
+            <button id="exportLogTxtBtn" class="btn btn-ghost" title="ტექსტური ფაილი">📄 TXT</button>
+            <button id="exportLogJsonBtn" class="btn btn-ghost" title="სრული JSON ბაზა ანალიზისთვის">📦 JSON</button>
+          </div>
+          <button id="clearLogBtn" class="btn btn-ghost text-panic" title="მთლიანი ისტორიის გასუფთავება">🧹 გასუფთავება</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMN 3: Audio, Intelligence & Projector Visual Styling -->
+    <section class="studio-col studio-col-right">
+      <!-- Audio & Intelligence Settings -->
+      <div class="drawer-card">
+        <div class="card-title">🎙️ აუდიო და ინტელექტი</div>
+
+        <div class="field-group">
+          <label>🎤 მიკროფონის მოწყობილობა:</label>
+          <select id="audioDeviceSelect" class="form-select">
+            <option value="default">🎙️ ნაგულისხმევი მიკროფონი (Default)</option>
+          </select>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">⚡ Watchdog ავტო-გაცოცხლება</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleWatchdog" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">🧹 პარაზიტი სიტყვების გაწმენდა</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleCleanSpeech" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">🔤 ჭკვიანი პუნქტუაცია</span>
+          <label class="switch">
+            <input type="checkbox" id="togglePunctuation" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">📺 2-ხაზიანი ლიმიტი (კინო)</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleTwoLineLimit" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="field-group">
+          <label>ტექსტის გაქრობა სიჩუმისას:</label>
+          <select id="autoFadeSelect" class="form-select">
+            <option value="5000" selected>⏱️ 5 წამში (რეკომენდებული)</option>
+            <option value="8000">⏱️ 8 წამში</option>
+            <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
+            <option value="0">🚫 არასდროს (დარჩეს)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Projector Styling & Typography -->
+      <div class="drawer-card">
+        <div class="card-title">🎨 პროექტორის ვიზუალი და ზომები</div>
+
+        <div class="preset-buttons-grid" style="margin-bottom: 6px;">
+          <button type="button" class="btn btn-outline-preset" id="presetHallBtn">🏛️ დიდი დარბაზი</button>
+          <button type="button" class="btn btn-outline-preset" id="presetCinemaBtn">🎬 კინო</button>
+          <button type="button" class="btn btn-outline-preset" id="presetBroadcastBtn">📺 Broadcast</button>
+          <button type="button" class="btn btn-outline-preset" id="presetObsBtn">🪟 OBS</button>
+        </div>
+
+        <div class="field-group">
+          <label>დიზაინის სტილი:</label>
+          <select id="overlayStyleSelect" class="form-select">
+            <option value="style-keynote-pill">🍏 Apple Keynote Pill</option>
+            <option value="style-oled-black" selected>🌌 OLED Pure Black (დარბაზი)</option>
+            <option value="style-cinema-fade">🎬 Cinema Bottom Fade</option>
+            <option value="style-broadcast-ticker">📺 Broadcast News Ticker</option>
+            <option value="style-cyber-neon">💎 Cyber Neon</option>
+            <option value="style-academic-slate">🏛️ Academic Slate</option>
+            <option value="style-frosted-glass">🔮 Frosted Glass</option>
+            <option value="style-ghost-outline">👻 Ghost Outline</option>
+            <option value="style-clean-transparent">🪟 Clean Transparent</option>
+            <option value="style-light-paper">☀️ Studio Light (თეთრი)</option>
+            <option value="style-chroma-green">🟩 Green Screen (OBS)</option>
+            <option value="style-chroma-blue">🟦 Blue Screen (OBS)</option>
+            <option value="style-custom-color">🎨 Custom Color</option>
+          </select>
+        </div>
+
+        <div class="field-group" id="customColorGroup" style="display: none;">
+          <label>საკუთარი ფერი:</label>
+          <div class="color-picker-row">
+            <input type="color" id="customBgColorPicker" value="#0f172a" class="color-picker-input">
+            <input type="text" id="customBgColorHex" value="#0f172a" class="form-input-hex" maxlength="7">
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">სპიკერის ტექსტი (ორიგინალი)</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleOrigSpeech" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <span class="row-label">სინქრონული თარგმანი</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleTransSpeech" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>თარგმანის შრიფტი:</span>
+            <span id="transSizeVal" class="val-pill">36px</span>
+          </div>
+          <input type="range" id="transSizeSlider" min="18" max="120" value="36" class="range-input">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>ორიგინალის შრიფტი:</span>
+            <span id="origSizeVal" class="val-pill">20px</span>
+          </div>
+          <input type="range" id="origSizeSlider" min="14" max="80" value="20" class="range-input">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>სიგანე პროექტორზე:</span>
+            <span id="cardWidthVal" class="val-pill">92%</span>
+          </div>
+          <input type="range" id="cardWidthSlider" min="40" max="100" value="92" class="range-input">
+          <div class="quick-preset-chips">
+            <button type="button" class="chip-btn" data-width="100">100%</button>
+            <button type="button" class="chip-btn" data-width="92">92%</button>
+            <button type="button" class="chip-btn" data-width="70">70%</button>
+          </div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-head">
+            <span>ფონის გამჭვირვალობა:</span>
+            <span id="bgOpacityVal" class="val-pill">85%</span>
+          </div>
+          <input type="range" id="bgOpacitySlider" min="0" max="100" value="85" class="range-input">
+        </div>
+
+        <div class="field-group">
+          <label>პოზიცია და სწორება:</label>
+          <div style="display: flex; gap: 6px;">
+            <select id="positionSelect" class="form-select" style="flex: 1;">
+              <option value="pos-bottom" selected>⬇️ ქვევით</option>
+              <option value="pos-bottom-flush">⏹️ სულ ძირში</option>
+              <option value="pos-top">⬆️ ზევით</option>
+              <option value="pos-corner">🏷️ კუთხეში</option>
+              <option value="pos-center">📺 ცენტრში</option>
+            </select>
+            <select id="textAlignSelect" class="form-select" style="flex: 1;">
+              <option value="align-center" selected>↔️ ცენტრი</option>
               <option value="align-left">⬅️ მარცხნივ</option>
               <option value="align-right">➡️ მარჯვნივ</option>
             </select>
           </div>
         </div>
-
-        <!-- Column 3: Slide Overlays & Transparency -->
-        <div class="drawer-card">
-          <div class="card-title">🎨 სლაიდის ოვერლეი და ბექგრაუნდი</div>
-          
-          <div class="field-group">
-            <label>დიზაინის სტილი:</label>
-            <select id="overlayStyleSelect" class="form-select">
-              <option value="style-keynote-pill" selected>🍏 Apple Keynote Pill (მცურავი კაფსულა)</option>
-              <option value="style-oled-black">🌌 OLED Pure Black (სააქტო დარბაზი / პროექტორი)</option>
-              <option value="style-cinema-fade">🎬 Cinema Bottom Fade (კინო-დაჩრდილვა)</option>
-              <option value="style-broadcast-ticker">📺 Broadcast News Ticker (სრული ქვედა ზოლი)</option>
-              <option value="style-cyber-neon">💎 Cyber Neon (ნეონის მანათობელი კონტური)</option>
-              <option value="style-academic-slate">🏛️ Academic Slate (საპრეზენტაციო ინდიგო)</option>
-              <option value="style-frosted-glass">🔮 Frosted Glass (მუქი მინა)</option>
-              <option value="style-ghost-outline">👻 Ghost Outline (ფონის გარეშე, კონტურით)</option>
-              <option value="style-clean-transparent">🪟 Ultra Clean Transparent (სუფთა OBS-ისთვის)</option>
-              <option value="style-light-paper">☀️ Studio Light (თეთრი/ნათელი ფონი)</option>
-              <option value="style-chroma-green">🟩 Green Screen (Chroma Key 00FF00)</option>
-              <option value="style-chroma-blue">🟦 Blue Screen (Chroma Key 0000FF)</option>
-              <option value="style-custom-color">🎨 Custom Color (საკუთარი ფერი)</option>
-            </select>
-          </div>
-
-          <!-- Custom Color Picker Row -->
-          <div class="field-group" id="customColorGroup" style="display: none;">
-            <label>საკუთარი ფონის ფერი:</label>
-            <div class="color-picker-row">
-              <input type="color" id="customBgColorPicker" value="#0f172a" class="color-picker-input">
-              <input type="text" id="customBgColorHex" value="#0f172a" class="form-input-hex" maxlength="7">
-            </div>
-          </div>
-
-          <div class="field-group">
-            <label>განლაგება სლაიდზე:</label>
-            <select id="positionSelect" class="form-select">
-              <option value="pos-bottom" selected>⬇️ ქვედა ხაზი (Safe Margin)</option>
-              <option value="pos-bottom-flush">⏹️ სულ ქვედა კიდე (Flush Bottom)</option>
-              <option value="pos-top">⬆️ ზედა ზოლი (Top Bar)</option>
-              <option value="pos-corner">🏷️ მარცხენა კუთხე (Lower-Third)</option>
-              <option value="pos-center">📺 ცენტრალური ბარათი (Slide Mode)</option>
-            </select>
-          </div>
-
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>ბარათის სიგანე ეკრანზე:</span>
-              <span id="cardWidthVal" class="val-pill">92%</span>
-            </div>
-            <input type="range" id="cardWidthSlider" min="40" max="100" value="92" class="range-input">
-            <div class="quick-preset-chips">
-              <button type="button" class="chip-btn" data-width="100">100% სრული</button>
-              <button type="button" class="chip-btn" data-width="92">92% სტანდარტი</button>
-              <button type="button" class="chip-btn" data-width="70">70% კომპაქტი</button>
-            </div>
-          </div>
-
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>ფონის გამჭვირვალობა:</span>
-              <span id="bgOpacityVal" class="val-pill">85%</span>
-            </div>
-            <input type="range" id="bgOpacitySlider" min="0" max="100" value="85" class="range-input">
-          </div>
-        </div>
-
-        <!-- Column 4: Audio & Timing Automation & Presets -->
-        <div class="drawer-card">
-          <div class="card-title">🎙️ აუდიო, ავტომატიკა და პროფილები</div>
-
-          <div class="field-group">
-            <label>🎤 მიკროფონის აპარატურა:</label>
-            <select id="audioDeviceSelect" class="form-select">
-              <option value="default">🎙️ ნაგულისხმევი მიკროფონი (Default)</option>
-            </select>
-          </div>
-
-          <div class="toggle-row">
-            <span class="row-label">⚡ Watchdog ავტო-გაცოცხლება</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleWatchdog" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-
-          <div class="field-group">
-            <label>ტექსტის გაქრობა სიჩუმისას:</label>
-            <select id="autoFadeSelect" class="form-select">
-              <option value="5000" selected>⏱️ 5 წამში (რეკომენდებული)</option>
-              <option value="8000">⏱️ 8 წამში</option>
-              <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
-              <option value="0">🚫 არასდროს (დარჩეს)</option>
-            </select>
-          </div>
-
-          <div class="field-group">
-            <label>სწრაფი საპრეზენტაციო პროფილები:</label>
-            <div class="preset-buttons-grid">
-              <button type="button" class="btn btn-outline-preset" id="presetHallBtn" title="100% სიგანე, დიდი შრიფტი, შავი ფონი">
-                🏛️ დიდი სააქტო დარბაზი
-              </button>
-              <button type="button" class="btn btn-outline-preset" id="presetCinemaBtn" title="კინო-სუბტიტრები ეკრანის ძირში">
-                🎬 კინო / Cinema Fade
-              </button>
-              <button type="button" class="btn btn-outline-preset" id="presetBroadcastBtn" title="100% სიგანის ქვედა საინფორმაციო ზოლი">
-                📺 Broadcast Ticker
-              </button>
-              <button type="button" class="btn btn-outline-preset" id="presetObsBtn" title="OBS-სთვის გამჭვირვალე ოვერლეი">
-                🪟 OBS გამჭვირვალე
-              </button>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </header>
+    </section>
+
+  </main>
 
   <!-- Terminology / Glossary Modal (Structured, Searchable & Editable) -->
   <div id="glossaryModal" class="modal-overlay hidden" style="display: none;">
@@ -334,7 +372,7 @@
       <div class="modal-header">
         <div class="modal-title-group">
           <h3>📖 კონფერენციის ტერმინოლოგია</h3>
-          <span class="badge-counter" id="glossaryModalCount">592 ტერმინი</span>
+          <span class="badge-counter" id="glossaryModalCount">623 ტერმინი</span>
         </div>
         <button id="closeGlossaryBtn" class="btn-close">&times;</button>
       </div>
@@ -376,7 +414,7 @@
         </div>
       </div>
 
-      <!-- Tab 2: Raw Text Edit Mode (For power bulk edits) -->
+      <!-- Tab 2: Raw Text Edit Mode -->
       <div id="glossaryRawView" class="modal-tab-content" style="display: none;">
         <p class="modal-desc">
           ჩაწერეთ ტერმინები ფორმატში <code>ქართული: English</code> (თითო ხაზზე თითო ტერმინი):
@@ -397,97 +435,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Translation History & Mistakes Analysis Log Modal -->
-  <div id="historyLogModal" class="modal-overlay hidden" style="display: none;">
-    <div class="modal-card modal-large">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <h3>📜 თარგმანის ისტორია და ლოგი</h3>
-          <span class="badge-counter" id="logModalCount">0 ფრაზა</span>
-        </div>
-        <button id="closeLogBtn" class="btn-close">&times;</button>
-      </div>
-
-      <p class="modal-desc">
-        აქ ინახება კონფერენციის განმავლობაში ნათქვამი და ნათარგმნი ყველა წინადადება. შეგიძლიათ გააანალიზოთ შეცდომები, შეინახოთ სტენოგრამა და დაუმატოთ ტერმინები ლექსიკონს:
-      </p>
-
-      <!-- Search in Log -->
-      <div class="glossary-search-bar">
-        <div class="search-input-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="logSearchInput" placeholder="მოძებნეთ ნათარგმნ ფრაზებში..." class="search-input">
-        </div>
-      </div>
-
-      <!-- Log Entries Container -->
-      <div class="log-entries-list" id="logEntriesList">
-        <div class="log-empty-state">
-          <span>ჯერ თარგმანი არ განხორციელებულა. როგორც კი დაიწყება საუბარი, აქ ჩაიწერება სრული სტენოგრამა.</span>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <div class="footer-left">
-          <button id="exportLogCsvBtn" class="btn btn-ghost" title="სტენოგრამის ჩამოტვირთვა CSV ფორმატში">
-            📥 ექსპორტი (CSV)
-          </button>
-          <button id="exportLogTxtBtn" class="btn btn-ghost" title="სტენოგრამის ჩამოტვირთვა ტექსტურად">
-            📄 ექსპორტი (TXT)
-          </button>
-          <button id="exportLogJsonBtn" class="btn btn-ghost" title="სრული ლოგის ჩამოტვირთვა JSON ფორმატში სამომავლო ანალიზისთვის">
-            📦 ექსპორტი (JSON)
-          </button>
-          <button id="clearLogBtn" class="btn btn-ghost text-danger" title="ისტორიის გასუფთავება">
-            🧹 ლოგის გასუფთავება
-          </button>
-        </div>
-        <button id="closeLogBottomBtn" class="btn btn-primary">დახურვა</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Announcement Overlay Card (Intermission, Coffee break, Q&A) -->
-  <div id="stageAnnouncement" class="stage-announcement-card">
-    <span id="announcementIcon" class="stage-announcement-icon">☕</span>
-    <div id="announcementTitle" class="stage-announcement-title">ყავის შესვენება</div>
-    <div id="announcementSub" class="stage-announcement-sub">Coffee Break</div>
-  </div>
-
-  <!-- Stage Subtitle Overlay Container (OBS & Presentation View) -->
-  <main id="overlayContainer" class="overlay-container pos-bottom">
-    
-    <div class="subtitle-card" id="subtitleCard">
-      <!-- Live Preview Badge -->
-      <div class="preview-mode-tag" id="previewModeTag" style="display: none;">
-        <span>👁️ სატესტო გადახედვა (Live Preview)</span>
-      </div>
-
-      <!-- Original Speech Layer -->
-      <div class="speech-layer original-layer" id="originalLayer">
-        <span class="tag-badge" id="originalLangTag">ENG</span>
-        <p class="speech-text original-text" id="originalText">
-          <span class="placeholder-hint">დააჭირეთ „ჩართვა“-ს და დაიწყეთ საუბარი...</span>
-        </p>
-      </div>
-
-      <!-- Translation Layer -->
-      <div class="speech-layer translated-layer" id="translatedLayer">
-        <span class="tag-badge trans-badge" id="targetLangTag">GEO</span>
-        <p class="speech-text translated-text" id="translatedText">
-          <span class="placeholder-hint">აქ გამოჩნდება სინქრონული თარგმანი...</span>
-        </p>
-      </div>
-
-      <!-- Active Glowing Line -->
-      <div class="active-glow-line" id="glowLine"></div>
-    </div>
-
-  </main>
-
-  <!-- Floating Restore Button -->
-  <button id="floatingShowBtn" class="floating-btn" title="პანელის გამოჩენა (H)">⚙️</button>
 
   <script src="app.js"></script>
 </body>

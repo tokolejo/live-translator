@@ -1838,3 +1838,249 @@ body:hover .floating-btn {
   border-color: #38bdf8;
   box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
 }
+
+/* ================= 8. OPERATOR STUDIO CONSOLE LAYOUT ================= */
+
+body.studio-mode {
+  background: #070b14 !important;
+  color: #f8fafc !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body.studio-mode .control-bar.studio-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(11, 17, 32, 0.96);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.studio-workspace {
+  display: grid;
+  grid-template-columns: minmax(250px, 290px) minmax(360px, 1fr) minmax(265px, 310px);
+  gap: 14px;
+  padding: 14px 16px;
+  max-width: 1760px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.studio-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-hint {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.manual-input-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+body.studio-mode .form-input {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #f8fafc;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body.studio-mode .form-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+}
+
+.banner-grid-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.banner-grid-btns .btn-outline-preset {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+}
+
+.banner-grid-btns .btn-outline-preset:hover {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #ffffff;
+}
+
+.speaker-context-box {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.speaker-context-box .ctx-name {
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 2px;
+}
+
+.speaker-context-box .ctx-aff {
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* Center Stage Monitor Preview Box */
+.monitor-card {
+  padding: 12px !important;
+}
+
+.monitor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.monitor-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stage-monitor-box {
+  position: relative;
+  min-height: 220px;
+  max-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mirror projector backgrounds onto #stageMonitorBox only (not the whole studio page) */
+body.studio-mode.style-oled-black .stage-monitor-box { background: #000000 !important; }
+body.studio-mode.style-keynote-pill .stage-monitor-box { background: #030712 !important; }
+body.studio-mode.style-cinema-fade .stage-monitor-box { background: #000000 !important; }
+body.studio-mode.style-broadcast-ticker .stage-monitor-box { background: #000000 !important; }
+body.studio-mode.style-cyber-neon .stage-monitor-box { background: #050814 !important; }
+body.studio-mode.style-academic-slate .stage-monitor-box { background: #0b132b !important; }
+body.studio-mode.style-frosted-glass .stage-monitor-box { background: radial-gradient(circle at top right, #1e1b4b 0%, #090d16 100%) !important; }
+body.studio-mode.style-light-paper .stage-monitor-box { background: #f1f5f9 !important; }
+body.studio-mode.style-chroma-green .stage-monitor-box { background: #00ff00 !important; }
+body.studio-mode.style-chroma-blue .stage-monitor-box { background: #0000ff !important; }
+
+body.studio-mode .stage-monitor-box .overlay-container {
+  min-height: 220px !important;
+  height: 100%;
+  padding: 12px !important;
+}
+
+body.studio-mode .stage-monitor-box .subtitle-card {
+  max-width: 100% !important;
+  padding: 12px 18px !important;
+}
+
+body.studio-mode .stage-monitor-box .original-text {
+  font-size: clamp(12px, calc(var(--orig-font-size) * 0.65), 22px) !important;
+}
+
+body.studio-mode .stage-monitor-box .translated-text {
+  font-size: clamp(16px, calc(var(--trans-font-size) * 0.55), 32px) !important;
+}
+
+/* Scaled Announcement inside Monitor Box */
+body.studio-mode .stage-monitor-box .stage-announcement-card.mini-announcement {
+  position: absolute;
+  width: 88%;
+  padding: 16px 20px;
+  border-radius: 16px;
+}
+
+body.studio-mode .stage-monitor-box .stage-announcement-title {
+  font-size: 18px;
+}
+
+body.studio-mode .stage-monitor-box .stage-announcement-sub {
+  font-size: 12px;
+}
+
+/* Inline Live Log Card */
+.studio-log-card {
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+}
+
+.log-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.search-input-sm {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: #f8fafc;
+  font-size: 12px;
+  width: 190px;
+  outline: none;
+  font-family: inherit;
+}
+
+.search-input-sm:focus {
+  border-color: #38bdf8;
+}
+
+.studio-log-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.log-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 980px) {
+  .studio-workspace {
+    grid-template-columns: 1fr 1fr;
+  }
+  .studio-col-center {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .studio-workspace {
+    grid-template-columns: 1fr;
+  }
+}

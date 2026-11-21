@@ -827,6 +827,10 @@ class LiveSubPro {
     this.bindEvents();
     this.initBroadcastSync();
     this.checkUrlParams();
+    if (this.testModeCheckbox && this.testModeCheckbox.checked) {
+      this.isTestMode = true;
+      this.activateLivePreview();
+    }
   }
 
   checkBrowserSupport() {
@@ -865,10 +869,10 @@ class LiveSubPro {
       }
     });
 
-    // Drawer Toggles
-    this.toggleSettingsBtn.addEventListener('click', () => this.toggleDrawer());
-    this.hideBarBtn.addEventListener('click', () => this.toggleControlBar());
-    this.floatingShowBtn.addEventListener('click', () => this.toggleControlBar());
+    // Drawer Toggles (Safe optional bindings for Studio layout)
+    if (this.toggleSettingsBtn) this.toggleSettingsBtn.addEventListener('click', () => this.toggleDrawer());
+    if (this.hideBarBtn) this.hideBarBtn.addEventListener('click', () => this.toggleControlBar());
+    if (this.floatingShowBtn) this.floatingShowBtn.addEventListener('click', () => this.toggleControlBar());
 
     // Live Preview Events
     if (this.manualTestBtn && this.manualTestInput) {
@@ -1074,6 +1078,20 @@ class LiveSubPro {
         this.activeSpeaker = (typeof IICE_SPEAKERS !== 'undefined')
           ? IICE_SPEAKERS.find(s => s.id === val) || null
           : null;
+        const ctxBox = document.getElementById('speakerContextCard');
+        const ctxName = document.getElementById('speakerCtxName');
+        const ctxAff = document.getElementById('speakerCtxAff');
+        if (ctxBox && ctxName && ctxAff) {
+          if (this.activeSpeaker) {
+            ctxName.textContent = this.activeSpeaker.geo !== this.activeSpeaker.eng
+              ? `${this.activeSpeaker.geo} / ${this.activeSpeaker.eng}`
+              : this.activeSpeaker.eng;
+            ctxAff.textContent = [this.activeSpeaker.affiliation, this.activeSpeaker.type].filter(Boolean).join(' • ');
+            ctxBox.classList.remove('hidden');
+          } else {
+            ctxBox.classList.add('hidden');
+          }
+        }
       });
     }
     if (this.announceSpeakerBtn) {
@@ -1139,7 +1157,17 @@ class LiveSubPro {
       this.openStageBtn.addEventListener('click', () => this.openStageWindow());
     }
 
-    // Banner Controls
+    // Banner Controls (Works both in Studio direct cards and dropdowns)
+    document.querySelectorAll('.banner-opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.getAttribute('data-banner');
+        this.setAnnouncementBanner(type);
+        if (this.bannerDropdown) {
+          this.bannerDropdown.classList.add('hidden');
+        }
+      });
+    });
+
     if (this.bannerMenuBtn && this.bannerDropdown) {
       this.bannerMenuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1150,15 +1178,6 @@ class LiveSubPro {
         if (!this.bannerDropdown.classList.contains('hidden')) {
           this.bannerDropdown.classList.add('hidden');
         }
-      });
-
-      const bannerBtns = this.bannerDropdown.querySelectorAll('.banner-opt-btn');
-      bannerBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const type = btn.getAttribute('data-banner');
-          this.setAnnouncementBanner(type);
-          this.bannerDropdown.classList.add('hidden');
-        });
       });
     }
 
@@ -1223,6 +1242,7 @@ class LiveSubPro {
   }
 
   toggleDrawer() {
+    if (!this.toggleSettingsBtn || !this.settingsDrawer) return;
     this.settingsDrawer.classList.toggle('hidden');
     const isOpen = !this.settingsDrawer.classList.contains('hidden');
     this.toggleSettingsBtn.classList.toggle('btn-primary', isOpen);
@@ -1272,6 +1292,7 @@ class LiveSubPro {
   }
 
   toggleControlBar() {
+    if (!this.floatingShowBtn || !this.controlBar) return;
     this.controlBar.classList.toggle('hidden');
     const isHidden = this.controlBar.classList.contains('hidden');
     this.floatingShowBtn.style.display = isHidden ? 'flex' : 'none';
@@ -1979,6 +2000,7 @@ class LiveSubPro {
           all.sort((a, b) => (b.ts || 0) - (a.ts || 0));
           this.translationLog = all;
           this.updateLogCounters();
+          this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
         };
       };
       req.onerror = (e) => {
@@ -2007,9 +2029,7 @@ class LiveSubPro {
             this.logDb.transaction('logs', 'readwrite').objectStore('logs').put(last);
           } catch (e) {}
         }
-        if (this.historyLogModal && this.historyLogModal.classList.contains('active')) {
-          this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
-        }
+        this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
         return;
       }
     }
@@ -2044,10 +2064,7 @@ class LiveSubPro {
     }
 
     this.updateLogCounters();
-
-    if (this.historyLogModal && this.historyLogModal.classList.contains('active')) {
-      this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
-    }
+    this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
   }
 
   openHistoryLog() {
