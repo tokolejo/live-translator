@@ -1,0 +1,6 @@
+*.pyc
+__pycache__/
+extracted_glossary.json
+extracted_glossary.txt
+iice_full_glossary.txt
+Tezisebi_Extracted/
