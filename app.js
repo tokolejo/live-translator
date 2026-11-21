@@ -650,6 +650,32 @@ class LiveSubPro {
     this.presetBroadcastBtn = document.getElementById('presetBroadcastBtn');
     this.presetObsBtn = document.getElementById('presetObsBtn');
 
+    // Live Preview Elements
+    this.cycleTestPhraseBtn = document.getElementById('cycleTestPhraseBtn');
+    this.testModeCheckbox = document.getElementById('testModeCheckbox');
+    this.previewModeTag = document.getElementById('previewModeTag');
+
+    this.isTestMode = false;
+    this.currentSampleIndex = 0;
+    this.samplePhrases = [
+      {
+        geo: "მოგესალმებით IICE 2026 საერთაშორისო სამეცნიერო კონფერენციაზე.",
+        eng: "Welcome to the IICE 2026 International Scientific Conference."
+      },
+      {
+        geo: "აკადემიკოსი ვლადიმერ ციციშვილი საუბრობს ცეოლითების კრისტალურ სტრუქტურაზე.",
+        eng: "Academician Vladimer Tsitsishvili speaks on the crystal structure of zeolites."
+      },
+      {
+        geo: "შესწავლილია ლითიუმის კარბონატის (Li₂CO₃) მიღების ტექნოლოგიური სქემა და კათოდური შპინელი.",
+        eng: "Electrochemical properties of cathodic spinel for lithium-ion batteries were investigated."
+      },
+      {
+        geo: "მოკლე სატესტო ფრაზა ეკრანზე.",
+        eng: "Short live subtitle test preview on screen."
+      }
+    ];
+
     // Automation
     this.autoFadeSelect = document.getElementById('autoFadeSelect');
 
@@ -744,6 +770,25 @@ class LiveSubPro {
     this.hideBarBtn.addEventListener('click', () => this.toggleControlBar());
     this.floatingShowBtn.addEventListener('click', () => this.toggleControlBar());
 
+    // Live Preview Events
+    if (this.cycleTestPhraseBtn) {
+      this.cycleTestPhraseBtn.addEventListener('click', () => {
+        this.currentSampleIndex = (this.currentSampleIndex + 1) % this.samplePhrases.length;
+        this.activateLivePreview();
+      });
+    }
+
+    if (this.testModeCheckbox) {
+      this.testModeCheckbox.addEventListener('change', (e) => {
+        this.isTestMode = e.target.checked;
+        if (this.isTestMode) {
+          this.activateLivePreview();
+        } else {
+          this.clearPreview();
+        }
+      });
+    }
+
     // AI Speech Controls
     this.toggleCleanSpeech.addEventListener('change', (e) => {
       localStorage.setItem('subpro_clean_speech', e.target.checked);
@@ -756,17 +801,20 @@ class LiveSubPro {
     this.toggleTwoLineLimit.addEventListener('change', (e) => {
       document.body.classList.toggle('cinema-two-lines', e.target.checked);
       localStorage.setItem('subpro_two_lines', e.target.checked);
+      this.ensurePreviewVisible();
     });
 
     // Layer Visibilities
     this.toggleOrigSpeech.addEventListener('change', (e) => {
       document.body.classList.toggle('hide-orig-layer', !e.target.checked);
       localStorage.setItem('subpro_show_orig', e.target.checked);
+      this.ensurePreviewVisible();
     });
 
     this.toggleTransSpeech.addEventListener('change', (e) => {
       document.body.classList.toggle('hide-trans-layer', !e.target.checked);
       localStorage.setItem('subpro_show_trans', e.target.checked);
+      this.ensurePreviewVisible();
     });
 
     // Font Sizes
@@ -775,6 +823,7 @@ class LiveSubPro {
       document.documentElement.style.setProperty('--trans-font-size', size);
       this.transSizeVal.textContent = size;
       localStorage.setItem('subpro_trans_size', e.target.value);
+      this.ensurePreviewVisible();
     });
 
     this.origSizeSlider.addEventListener('input', (e) => {
@@ -782,12 +831,14 @@ class LiveSubPro {
       document.documentElement.style.setProperty('--orig-font-size', size);
       this.origSizeVal.textContent = size;
       localStorage.setItem('subpro_orig_size', e.target.value);
+      this.ensurePreviewVisible();
     });
 
     // Text Alignment
     if (this.textAlignSelect) {
       this.textAlignSelect.addEventListener('change', (e) => {
         this.setTextAlign(e.target.value);
+        this.ensurePreviewVisible();
       });
     }
 
@@ -795,6 +846,7 @@ class LiveSubPro {
     if (this.cardWidthSlider) {
       this.cardWidthSlider.addEventListener('input', (e) => {
         this.setCardWidth(e.target.value);
+        this.ensurePreviewVisible();
       });
     }
 
@@ -802,40 +854,63 @@ class LiveSubPro {
     document.querySelectorAll('.quick-preset-chips .chip-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const w = btn.getAttribute('data-width');
-        if (w) this.setCardWidth(w);
+        if (w) {
+          this.setCardWidth(w);
+          this.ensurePreviewVisible();
+        }
       });
     });
 
     // Style & Position
-    this.overlayStyleSelect.addEventListener('change', (e) => this.setOverlayStyle(e.target.value));
-    this.positionSelect.addEventListener('change', (e) => this.setPosition(e.target.value));
+    this.overlayStyleSelect.addEventListener('change', (e) => {
+      this.setOverlayStyle(e.target.value);
+      this.ensurePreviewVisible();
+    });
+    this.positionSelect.addEventListener('change', (e) => {
+      this.setPosition(e.target.value);
+      this.ensurePreviewVisible();
+    });
     
     // Custom Background Color Picker
     if (this.customBgColorPicker) {
       this.customBgColorPicker.addEventListener('input', (e) => {
         this.setCustomColor(e.target.value);
+        this.ensurePreviewVisible();
       });
     }
     if (this.customBgColorHex) {
       this.customBgColorHex.addEventListener('input', (e) => {
         if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) {
           this.setCustomColor(e.target.value);
+          this.ensurePreviewVisible();
         }
       });
     }
 
     // Quick Stage Presets
     if (this.presetHallBtn) {
-      this.presetHallBtn.addEventListener('click', () => this.applyPreset('hall'));
+      this.presetHallBtn.addEventListener('click', () => {
+        this.applyPreset('hall');
+        this.ensurePreviewVisible();
+      });
     }
     if (this.presetCinemaBtn) {
-      this.presetCinemaBtn.addEventListener('click', () => this.applyPreset('cinema'));
+      this.presetCinemaBtn.addEventListener('click', () => {
+        this.applyPreset('cinema');
+        this.ensurePreviewVisible();
+      });
     }
     if (this.presetBroadcastBtn) {
-      this.presetBroadcastBtn.addEventListener('click', () => this.applyPreset('broadcast'));
+      this.presetBroadcastBtn.addEventListener('click', () => {
+        this.applyPreset('broadcast');
+        this.ensurePreviewVisible();
+      });
     }
     if (this.presetObsBtn) {
-      this.presetObsBtn.addEventListener('click', () => this.applyPreset('obs'));
+      this.presetObsBtn.addEventListener('click', () => {
+        this.applyPreset('obs');
+        this.ensurePreviewVisible();
+      });
     }
 
     this.bgOpacitySlider.addEventListener('input', (e) => {
@@ -843,6 +918,7 @@ class LiveSubPro {
       document.documentElement.style.setProperty('--card-bg-opacity', val);
       this.bgOpacityVal.textContent = `${e.target.value}%`;
       localStorage.setItem('subpro_bg_opacity', e.target.value);
+      this.ensurePreviewVisible();
     });
 
     this.autoFadeSelect.addEventListener('change', (e) => {
@@ -884,7 +960,49 @@ class LiveSubPro {
 
   toggleDrawer() {
     this.settingsDrawer.classList.toggle('hidden');
-    this.toggleSettingsBtn.classList.toggle('btn-primary', !this.settingsDrawer.classList.contains('hidden'));
+    const isOpen = !this.settingsDrawer.classList.contains('hidden');
+    this.toggleSettingsBtn.classList.toggle('btn-primary', isOpen);
+    document.body.classList.toggle('settings-open', isOpen);
+
+    if (isOpen) {
+      this.isTestMode = true;
+      if (this.testModeCheckbox) this.testModeCheckbox.checked = true;
+      this.activateLivePreview();
+    } else {
+      if (this.previewModeTag) this.previewModeTag.style.display = 'none';
+      if (!this.isListening) {
+        this.subtitleCard.classList.remove('live-preview-active');
+      }
+    }
+  }
+
+  activateLivePreview() {
+    if (this.isListening) return;
+    const sample = this.samplePhrases[this.currentSampleIndex];
+    const isGeoToEng = this.currentSrcLang.startsWith('ka');
+    const origStr = isGeoToEng ? sample.geo : sample.eng;
+    const transStr = isGeoToEng ? sample.eng : sample.geo;
+
+    this.originalText.innerHTML = `<span>${this.escapeHtml(origStr)}</span>`;
+    this.translatedText.innerHTML = `<span>${this.escapeHtml(transStr)}</span>`;
+    this.subtitleCard.classList.remove('faded-out');
+    this.subtitleCard.classList.add('live-preview-active');
+    if (this.previewModeTag) this.previewModeTag.style.display = 'inline-flex';
+    clearTimeout(this.fadeoutTimer);
+  }
+
+  ensurePreviewVisible() {
+    if (this.isListening) return;
+    if (!this.settingsDrawer.classList.contains('hidden') && this.isTestMode) {
+      this.activateLivePreview();
+    }
+  }
+
+  clearPreview() {
+    if (this.previewModeTag) this.previewModeTag.style.display = 'none';
+    this.subtitleCard.classList.remove('live-preview-active');
+    this.originalText.innerHTML = '<span class="placeholder-hint">დააჭირეთ „ჩართვა“-ს და დაიწყეთ საუბარი...</span>';
+    this.translatedText.innerHTML = '<span class="placeholder-hint">აქ გამოჩნდება სინქრონული თარგმანი...</span>';
   }
 
   toggleControlBar() {
@@ -1391,6 +1509,8 @@ class LiveSubPro {
 
       this.recognition.onstart = () => {
         this.isListening = true;
+        if (this.previewModeTag) this.previewModeTag.style.display = 'none';
+        this.subtitleCard.classList.remove('live-preview-active');
         this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
         this.micBtn.classList.add('recording');
         this.micBtnText.textContent = 'გათიშვა';

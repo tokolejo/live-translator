@@ -67,6 +67,24 @@
 
     <!-- Expandable Settings Drawer (4 Columns) -->
     <div id="settingsDrawer" class="settings-drawer hidden">
+      <!-- Live Preview Control Header -->
+      <div class="drawer-preview-header">
+        <div class="preview-header-left">
+          <span class="preview-pulse-dot"></span>
+          <span class="preview-header-title">👁️ ლაივ გადახედვა:</span>
+          <span class="preview-header-sub">ქვემოთ ეკრანზე მაშინვე ხედავთ როგორ გამოიყურება ტექსტი</span>
+        </div>
+        <div class="preview-header-actions">
+          <button id="cycleTestPhraseBtn" class="btn-preview-action" title="სხვადასხვა სატესტო ფრაზის გამოცდა">
+            🔄 ფრაზის შეცვლა
+          </button>
+          <label class="preview-toggle-label">
+            <input type="checkbox" id="testModeCheckbox" checked>
+            <span>სატესტო ტექსტი</span>
+          </label>
+        </div>
+      </div>
+
       <div class="drawer-grid">
         
         <!-- Column 1: AI & Translation Intelligence -->
@@ -180,6 +198,17 @@
             </div>
           </div>
 
+          <div class="field-group">
+            <label>განლაგება სლაიდზე:</label>
+            <select id="positionSelect" class="form-select">
+              <option value="pos-bottom" selected>⬇️ ქვედა ხაზი (Safe Margin)</option>
+              <option value="pos-bottom-flush">⏹️ სულ ქვედა კიდე (Flush Bottom)</option>
+              <option value="pos-top">⬆️ ზედა ზოლი (Top Bar)</option>
+              <option value="pos-corner">🏷️ მარცხენა კუთხე (Lower-Third)</option>
+              <option value="pos-center">📺 ცენტრალური ბარათი (Slide Mode)</option>
+            </select>
+          </div>
+
           <div class="slider-group">
             <div class="slider-head">
               <span>ბარათის სიგანე ეკრანზე:</span>
@@ -191,17 +220,6 @@
               <button type="button" class="chip-btn" data-width="92">92% სტანდარტი</button>
               <button type="button" class="chip-btn" data-width="70">70% კომპაქტი</button>
             </div>
-          </div>
-
-          <div class="field-group">
-            <label>განლაგება სლაიდზე:</label>
-            <select id="positionSelect" class="form-select">
-              <option value="pos-bottom" selected>⬇️ ქვედა ხაზი (Safe Margin)</option>
-              <option value="pos-bottom-flush">⏹️ სულ ქვედა კიდე (Flush Bottom)</option>
-              <option value="pos-top">⬆️ ზედა ზოლი (Top Bar)</option>
-              <option value="pos-corner">🏷️ მარცხენა კუთხე (Lower-Third)</option>
-              <option value="pos-center">📺 ცენტრალური ბარათი (Slide Mode)</option>
-            </select>
           </div>
 
           <div class="slider-group">
@@ -272,6 +290,11 @@
   <main id="overlayContainer" class="overlay-container pos-bottom">
     
     <div class="subtitle-card" id="subtitleCard">
+      <!-- Live Preview Badge -->
+      <div class="preview-mode-tag" id="previewModeTag" style="display: none;">
+        <span>👁️ სატესტო გადახედვა (Live Preview)</span>
+      </div>
+
       <!-- Original Speech Layer -->
       <div class="speech-layer original-layer" id="originalLayer">
         <span class="tag-badge" id="originalLangTag">ENG</span>
