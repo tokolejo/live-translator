@@ -14,15 +14,12 @@ const DEFAULT_IICE_GLOSSARY = `ბუნებრივი წყლების
 პოლიმერული შრეებით გამოყოფილი კომპლემენტარული მეტალის ფენების ბაზაზე შექმნილი ფართოზოლოვანი ტერაჰერცული მეტაზდაპირის ფილტრი: Broadband Terahertz Metasurface Filter Based on Polymer-Spaced Complementary Metallic Layers
 მანგანუმისა და დარიშხანის შედარებითი ბიოშეღწევადობა ტრეჰალოზა-ლიპიდური ბიოსურფაქტანტებით გამდიდრებულ Spirulina platensis-ში: Comparative Bioavailability of Manganese and Arsenic in Spirulina platensis Enhanced with Trehalose Lipid Biosurfactants
 პოლიკარბონატის ჰელიოტექნოლოგიური დანადგარის შექმნა და კვლევა ეკოლოგიურად მდგრადი სასოფლო-სამეურნეო პროდუქციის წარმოებისთვის: Development and Investigation of a Polycarbonate Solar Drying Device for Environmentally Sustainable Agricultural Production
-ნ. კუციავა საქართველოს ტექნიკური უნივერსიტეტის აგრარული მეცნიერებებისა და ქიმიური ტექნოლოგიების ფაკულტეტი g.jokhadze@gtu.ge: N. Kutsiava
 მანგანუმის წარმოების ნარჩენებისა და მეორადი პოლიპროპილენის ბაზაზე შემუშავებული კომპოზიტების ტრიბოლოგიური თვისებების კვლევა: INVESTIGATION OF THE TRIBOLOGICAL PROPERTIES OF COMPOSITE MATERIALS SYNTHESIZED ON MANGANESE PRODUCTION WASTE AND RECYCLED POLYPROPYLENE BASES
 მაგნეტიტის ნანონაწილაკებსა და ბუნებრივ ბიოპოლიმერებზე დაფუძნებული ფერო-ნახშირბადოვანი მაგნიტური ნანომასალების შემუშავება: Development of Ferrocarbon Magnetic Nanomaterials Based on Magnetite Nanoparticles and Natural Biopolymers
 მანგანუმის წარმოების ტექნოგენური ნარჩენების გადამუშავების შედეგად მიღებული ამონიუმის ნიტრატის გამოცდა სოფლის მეურნეობაში: Evaluation of ammonium nitrate obtained from the processing of manganese production
 ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტისა და მისი ინსტიტუტების საგამომგონებლო შემოქმედებითი აქტივობა: Inventive Activity at Ivane Javakhishvili Tbilisi State University and Its Institutes
 თელავის სახელმწიფო უნივერსიტეტის აგრარულ, საბუნებისმეტყველო მეცნიერებათა და ტექნოლოგიების ფაკულტეტის დეკანი, საქართველო: Dean of the Faculty of Agricultural and Natural Sciences and Technologies, Telavi State University, Georgia
-პარფიუმერულ-კოსმეტიკური პროდუქციის იმპორტის დინამიკის შედარებითი ანალიზი საქართველოში და საერთაშორისო ბაზარზე – წლებში: Comparative Analysis of Perfumery and Cosmetic Product Import Dynamics in Georgia and the International Market, –
 ხურმის (Diospyros kaki L.) ჯიში ჰაჩიას ნაყოფის კვებითი და ფუნქციური მახასიათებლები მოსავლის აღების სხვადასხვა პერიოდში: Nutritional and Functional Characteristics of Persimmon (Diospyros kaki L.) cv. Hachiya Fruit at Different Harvest Times
-პეროქსიდაზას იზოფორმების ინდუქციის შესწავლა მცენარეზე ,,-ტრინიტროტოლუოლისა და ო-დიქლორბენზოლის ზემოქმედების საპასუხოდ: Investigation of Peroxidase Isoform Induction in Plants in Response to ,,-Trinitrotoluene and o-Dichlorobenzene Exposure
 ლითიუმის კარბონატის (Li₂CO₃) მიღების ტექნოლოგიური სქემა სპოდუმენის მადნიდან საკათოდე შპინელის (LiMn₂O₄) სინთეზისათვის: TECHNOLOGICAL SCHEME FOR THE RECOVERY OF LITHIUM CARBONATE () FROM SPODUMENE ORE FOR THE SYNTHESIS OF CATHODIC SPINEL
 მეტალის და გამხსნელის გავლენა პერიფერიული ,-დი-tertBu-ჩანაცვლებული ბუტილფენოქსიფტალოციანინების ფოტოქიმიურ თვისებებზე: Metal and Solvent Effects on the Photochemical Properties of Peripheral ,-di-tert-Butyl Substituted Phenoxyphthalocyanines
 რობინინით მდიდარი ფლარონინის® წარმოების ნარჩენის ტექნოლოგიური პარამეტრების გაუმჯობესება ფარმაცევტული გამოყენებისთვის: Improving the Technological Properties of a Robinin-Rich Flaronin® By-Product for Pharmaceutical Application
@@ -44,7 +41,6 @@ Moringa oleifera-ზე დაფუძნებული ინოვაცი�
 დოცეტაქსელით დატვირთული PLGA პოლიმერული ნანონაწილაკების ფარმაცევტული ოპტიმიზაციის თანამედროვე მიდგომები: Modern Approaches to the Pharmaceutical Optimization of Docetaxel-Loaded PLGA Polymeric Nanoparticles
 Ni-MOF-ის გამოყენება ნიკელით მოდიფიცირებული ელექტროდების დასამზადებლად წყალბადის გამოყოფის რეაქციისთვის: APPLICATION OF NI-MOF FOR THE FABRICATION OF NICKEL-MODIFIED ELECTRODES FOR THE HYDROGEN EVOLUTION REACTION
 მასალების პლაზმური ჭრისას ხმაურის შემცირების შესაძლებლობა ფოროვანი ხმაურჩამხშობი გარსაცმის გამოყენებით: Possibilities for Noise Reduction in Plasma Cutting of Materials Using a Porous Noise-Absorbing Shroud
-ვულკანური მინიდან ინოვაციურ ტექნოლოგიებამდე. პერლიტის გამოყენების პერსპექტივები თანამდროვე ინდუსტრიაში: From Volcanic Glass to Innovative Technologies: Prospects for Perlite in Modern Industry
 კონსტრუქციული სიახლეები ელექტროლიზური მანგანუმის დიოქსიდისა და წყალბადის მისაღები ელექტროლიზერისათვის: Design novelties for electrolyzer used for receipt of electrolytic manganese dioxide and hydrogen
 კახეთის რეგიონის მინერალური წყლებში იოდისა და ბრომის განსაზღვრა და მისი ნავთობ-გეოლოგიური მნიშვნელობა: Determination of Iodine and Bromine in Mineral Waters of the Kakheti Region and Its Petroleum-Geological Significance
 ბაზიდიალური სოკოებით ლიგნოცელულო ნარჩენების ბიოტრანსფორმაცია კვებითი ღირებულების გაუმჯობესების მიზნით: Biotransformation of Lignocellulosic Waste by Basidiomycetes
@@ -91,7 +87,6 @@ Cs-ის გამოსხივების გამოყენება �
 ბიოდიზელის წარმოების ინოვაციური ტექნოლოგიები და მათი კომერციალიზაცია: Innovative technologies for Biodiesel Production and their Commercialization
 რ. აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი: R. Agladze Institute of Inorganic Chemistry and Electrochemistry
 ვერცხლის კოორდინაციული ნაერთები N- და O-დონორულ ორგანულ ლიგანდებთან: Silver coordination compounds with N- and O-donor organic ligands
-Co(Inh)(Tu)]Cl კომპლექსის ელექტრონული სტრუქტურა და UV-Vis სპექტრი: DFT კვლევა: Electronic Structure and UV-Vis Spectrum of the [Co(Inh)(Tu)]Cl Complex: A DFT Study
 გეოპოლიმერების მიღება გააქტიურებული განატაცი ნაცრების გამოყენებით: GEOPOLYMERS OBTAINED WITH THE USE OF ACTIVATED FLY ASH
 შენახული გოგრის გამოყენების შესაძლებლობები საკონსერვო წარმოებაში: Possibilities for Using Stored Pumpkin in the Canning Industry
 ქიტოზანის მომზადება თაფლის ფუტკრის (Apis mellifera) ბიომასისგან: Preparation of Chitosan from Honeybee (Apis mellifera) Biomass
@@ -102,10 +97,8 @@ Co(Inh)(Tu)]Cl კომპლექსის ელექტრონული 
 ნანო კომპოზიტი ანტიჰელმინთის ფიზიოლოგიური აქტივობის შესწავლა: Study of the Physiological Activity of a Nanocomposite Anthelmintic
 ობის პრობლემა ბიბლიოთეკის საცავებში და მისი აღმოფხვრის გზები: THE PROBLEM OF MOLD IN LIBRARY STORAGE FACILITIES AND METHODS FOR ITS ELIMINATION
 გრაფენის ოქსიდი-ბორის მჟავა-მაგნეტიტის კომპოზიტების მიღება: Preparation of Graphene Oxide-Boric Acid-Magnetite Composites
-აბრეშუმის ფიბროინი, როგორც მატრიცა მზა წამალთფორმებისათვის: Silk Fibroin as a Matrix for Finished Dosage Forms: Formulation, Technology and Biopharmaceutical Evaluation
 სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავება: Processing of Mineral and Secondary Raw Materials
 ოქროშემცველი მადნების გადამუშავების ალტერნატიული მეთოდები: Alternative Methods for Processing Gold-Bearing Ores
-ნახშირბადოვანი დანაფარების როლი CO-ის კატალიზურ ჟანგვაში: სტრუქტურული მოდიფიკაცია და აქტივობის რეგულირება: THE ROLE OF CARBON CO ATINGS IN CO CATALYTIC OXIDATION: STRUCTURAL MODIFICATION AND ACTIVITY REGULATION
 აზერბაიჯანის მეცნიერებათა ეროვნული აკადემია, აზერბაიჯანი: Azerbaijan National Academy of Sciences, Azerbaijan
 მტკვრის მძიმე მეტალებით დაბინძურება და ენერგოეფექტიანობა: Heavy Metal Pollution in the Kura River and Energy Efficiency
 ინდოლშემცველი ლიგანდების ელექტრონული სტრუქტურის შესწავლა: Study of the Electronic Structure of Indole-Containing Ligands
@@ -122,7 +115,6 @@ Co(Inh)(Tu)]Cl კომპლექსის ელექტრონული 
 ზოგიერთი ლანთანოიდის კოორდინაციული ნაერთების სინთეზი: SYNTHESIS OF SOME LANTHANIDE COORDINATION COMPOUNDS
 თ. შ. ჭეიშვილი ; მ. ჯ. მშვილდაძე; ზ. ე. გელიაშვილი: T. Sh. Cheishvili; M. J. Mshvildadze; Z. E. Geliashvili
 გრიგოლ რობაქიძის სახელობის უნივერსიტეტის პროფესორი: Professor at Grigol Robakidze University
-აზერბაიჯანის მეცნიერებათა ეროვნული აკადემიის წევრ: Azerbaijan
 არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი: Institute of Inorganic Chemistry and Electrochemistry
 ნიკელის ფხვნილის მიღება ელექტროქიმიური მეთოდით: Electrochemical Method for Producing Nickel Powder
 ღვინოებში ამინომჟავების შედგენილობის ცვლილება: Changes in the Amino Acid Composition of Wines under Different Heat Treatment Conditions
@@ -138,64 +130,34 @@ Co(Inh)(Tu)]Cl კომპლექსის ელექტრონული 
 ქართული ცეოლითები როგორც კომბინირებული: GEORGIAN ZEOLITES AS COMPONANTS OF COMBINED
 იშვიათ მიწა ფეროგრანატების ოქსიდებიდან: Thermodynamic Approach to the Formation of Rare-Earth Iron Garnets from Initial Oxides
 ახალი ტიპის N-ლაქტოზილამინების სინთეზი: Synthesis of Novel N-Lactosylamines
-L-ლეიცინის კოორდინაცია სპილენძთან(II: სინთეზი, ელემენტური შემადგენლობა და დახასიათება FT-IR სპექტროსკოპიის მეთოდით: Coordination of L-Leucine with Copper(II): Synthesis, Elemental Composition and FT-IR Spectroscopy Characterization
 თბილისი; სტუ-ს ინსტიტუტი „ტექინფორმი: Tbilisi; Institute “Tekinform” of Georgian Technical University
 საერთაშორისო სამეცნიერო კონფერენცია: International Scientific Conference
-საფერისია როგორც შესაბამისი ბირთვის: kernel
-ნინ-აქტივირებული ნახშირის კომპოზიტი: LAC
-ელოს სტატისტიკის ეროვნული სამსახური: Geostat
 და ბიოსამედიცინო პოტენციალის კვლევა: AND THEIR BIOMEDICAL POTENTIAL
 საქართველოს ტექნიკური უნივერსიტეტი: Georgian Technical University
-ელექტრონულ მიკროსკოპზე ჩატარებულმა: SEM
 ქიტოზანის მომზადება თაფლის ფუტკრის: Apis mellifera
-დისპერგირებადი პოლივინილპიროლიდონი: PVPk
-ურ აკუმულატორებში საკათოდე მასალის: LiNiMnCoO
-ის კრიტიკული მიცელური კონცენტრაცია: CMC
-განხილულია ნიკელ-კობალტ-მანგანუმის: NMC
-მასზე წყალბადის გამოყოფის რეაქციის: HER
 ნანოპროცესები და ნანოტექნოლოგიები: Nanoprocesses and Nanotechnologies
-იზოთერმები შეესაბამება ლენგმიურის: Langmuir
-ჟანგბადის ბიოქიმიური მოთხოვნილება: BOD
-მიზანი იყო კარბოქსიმეთილცელულოზის: CMC
-დაფუძნებული იონგაცვლითი პოლიმერის: PPE
-დი-პ-ტოლუოლსულფონმჟავას მარილების: TDADEs
-შეფასება მყარფაზიანი ფერმენტაციის: SSF
-კრიტიკული აგრეგაციის კონცენტრაცია: CAC
 თბილისის სახელმწიფო უნივერსიტეტი: Tbilisi State University
 საერთაშორისო სამეცნიერო კომიტეტი: International Scientific Committee
 მეცნიერება, ინოვაცია და პოლიტიკა: Science, Innovation and Policy
-მსგავს პოლიქლორირებულ ბიფენილებს: DL-PCB
-ატომურ-აბსორბციული სპექტრომეტრია: AAS
 თელავის სახელმწიფო უნივერსიტეტი: Telavi State University
 ყურძნის გადამუშავების ნარჩენები: grape-processing by-products
-დიფერენციალური თერმული ანალიზის: DTA
-ში გელ-შეღწევადი ქრომატოგრაფიით: GPC
-სიღრმული კულტივირების პირობებში: Innova
-ჟანგბადის ქიმიური მოთხოვნილება: COD
-რომელიც ფრუქტოოლიგოსაქარიდების: FOS
 ილიას სახელმწიფო უნივერსიტეტი: Ilia State University
 განახლებადი ენერგიის წყაროები: Renewable Energy Sources
 ნახევარგამტარული თხელი ფენები: Semiconductor Thin Films
 კვლევის მიზანი იყო ხარიშუბლას: Senecio platyphyllus
-დერივატიული თერმოგრავიმეტრიის: DTG
 პირველი ავტორი (ჯ.ჯიხვაშვილი: First Author (J. Jikhvishvili
 ბიოდეგრადირებადი პოლიმერები: Biodegradable Polymers
 სპექტროფოტომეტრიული ანალიზი: Spectrophotometric Analysis
 ასევე ბარეტ-ჯოინერ-ჰალენდას: Barrett-Joyner-Halenda
-ფერო-ნახშირბადოვანი მასალის: FCM
 მონოამონიუმის გლიცირიზინატი: monoammonium glycyrrhizinate
-ქვაში ნაკვეთი ქართული სული: ოთხთა ეკლესიის ქვის ზედაპირების კომპლექსური კვლევა: The Georgian Spirit Carved in Stone
 ჩამდინარე წყლების გაწმენდა: Wastewater Treatment
 საზოგადოებასთან ურთიერთობა: public relations
 გარემოსდაცვითი კომუნიკაცია: environmental communication
 სურსათის ქიმია და ხარისხი: Food Chemistry and Quality
 საზოგადოებრივი ცნობიერება: public awareness
 მეორე ავტორი (რ.კორაშვილი: Second Author (R. Korashvili
-პოლიდისპერსულობის ინდექსი: PDI
-ნატრიუმის დოდეცილსულფატის: SDS
 სუპრამოლეკულური სისტემები: supramolecular systems
 ინტელექტუალური საკუთრება: Intellectual Property
-მინიმალური ბაქტერიციდული: MBC
 მდგრადი სოფლის მეურნეობა: sustainable agriculture
 გაზომვის განუსაზღვრელობა: measurement uncertainty
 ლითიუმ-იონური ბატარეები: Lithium-ion Batteries
@@ -204,14 +166,7 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ფრანჩესკო პაოლო ბუსარდო: Francesco Paolo Busardo
 ხოლო დუბინინ-ასტახოვის: Dubinin-Astakhov
 დარეჯან მარგალიტაშვილი: Darejan Margalitashvili
-ნეიტრალურ მნიშვნელობას: pH
 კლარჯეიშვილი ნაზიბროლა: Klarjeisvili Nazibrola
-დიფენილიზობენზოფურანის: DPBF
-პოლიეთილენტერეფტალატის: PET
-ნმ-ზე ფონური შთანთქმის: OD
-პოლიეთილენგლიკოლისაგან: PEG
-ხოლო გვიანდელ პერიოდში: III
-გრამი ტრიმეზინის მჟავა: HBTC
 ჰეტეროგენული კატალიზი: Heterogeneous Catalysis
 ცირკულარული ეკონომიკა: Circular Economy
 ბრუნაუერ-ემეტ-ტელერის: Brunauer-Emmett-Teller
@@ -223,8 +178,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 მდგრადი ტექნოლოგიები: sustainable technologies
 ეკატერინე მაცაბერიძე: Ekaterine Matsaberidze
 გაზური ქრომატოგრაფია: gas chromatography
-პოლივინილპიროლიდონით: PVP
-პოლივინილპიროლიდონის: PVP K
 ჰიდროფობური სორბენტი: hydrophobic sorbent
 კომერციული საფუვრები: commercial yeast strains
 სამეცნიერო კომიტეტი: Scientific Committee
@@ -240,7 +193,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 გიორგი ამირანაშვილი: Giorgi Amiranashvili
 მინერალური ნედლეული: mineral raw materials
 პოლივინილპიროლიდონი: polyvinylpyrrolidone
-ორთო-დიქლორბენზოლის: ODCB
 სასტენდო მოხსენება: Poster Presentation
 მანგანუმის სულფატი: Manganese Sulfate
 თამაზ მარსაგიშვილი: Tamaz Marsagishvili
@@ -250,9 +202,7 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნ.კ. ქართველიშვილი: N.K. Kartvelishvili
 ამირხანაშვილი კობა: Amirkhanashvili Koba
 ციციშვილი ვლადიმერ: Tsitsishvili Vladimer
-იზოსაქარინის მჟავა: ISA
 ტრეჰალოზა-ლიპიდები: trehalose lipid
-პოლიესტერშარდოვანა: PEU
 გლიცირიზინის მჟავა: glycyrrhizic acid
 თანაური პროდუქტები: fermentation by-products
 თეზისების კრებული: Book of Abstracts
@@ -263,10 +213,8 @@ L-ლეიცინის კოორდინაცია სპილენ�
 მანანა კევლიშვილი: Manana Kevlishvili
 გოგირდოვანი წყალი: Sulfur water
 სამკურნალო წყლები: therapeutic waters
-გრაფენის ოქსიდებს: GOs
 ვ. ვ. სპირიდონოვი: V. V. Spiridonov
 თ.ა. მარსაგიშვილი: T.A. Marsagishvili
-პოლივინილქლორიდზე: PVC
 ყურძნის დაზიანება: grape damage
 უმაღლესი სპირტები: higher alcohols
 ლ. ვ. გვერდწითელი: L. V. Gverdtsiteli
@@ -275,11 +223,9 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნავთობდაბინძურება: oil pollution
 რუსუდან ხვედელიძე: Rusudan Khvedelidze
 სპონტანური დუღილი: spontaneous fermentation
-თბილისი; ელფოსტა: dzamukashvilidavid@gmail.com: Tbilisi Email: dzamukashvilidavid@gmail.com
 ზეპირი მოხსენება: Oral Presentation
 ფსევდოპროტეინები: Pseudoproteins
 გიორგი კვესიტაძე: Giorgi Kvesitadze
-ისლამ მუსტაფაევი: Corr. Member of Azerbaijan National Academy of Sciences, Islam Mustafayev
 ი. მგალობლიშვილი: I. Mgaloblishvili
 მზია ღაღოლიშვილი: Mzia Gagolishvili
 მინერალური წყალი: mineral water
@@ -289,14 +235,12 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნინო გაბიტაშვილი: Nino Gabitashvili
 კ. ამირხანაშვილი: K. Amirkhanasvili
 ბეჟან ჭანკვეტაძე: Bezhan Chankvetadze
-ტრინიტროტოლუოლის: TNT
 ფოტოელექტროლიზი: Photoelectrolysis
 ელექტროკატალიზი: Electrocatalysis
 ნანოკომპოზიტები: Nanocomposites
 ვ. ნ. მაისურაძე: V. N. Maisuradze
 პ. ნიკოლეიშვილი: P. Nikoleishvili
 ნ. ზავრადაშვილი: N. Zavradashvili
-დიფრაქტოგრამები: XRD
 თ. მარსაგიშვილი: T. Marsagishvili
 ი. აბდუჯალილოვი: I. Abdujalilov
 ნინო თაყაიშვილი: Nino Takaishvili
@@ -350,7 +294,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ვაჟა ტყემალაძე: Vazha Tkemaladze
 ნ. ანანიაშვილი: N.Ananiashvili
 პოტენციომეტრია: potentiometry
-გლიცირიზინატის: MAG
 რ. ჩაგელიშვილი: R. Chagelishvili
 გუსეინოვა ლ.შ: Guseynova L.Sh
 ნანოფხვნილები: Nanopowders
@@ -391,7 +334,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 თამარ ბურდული: Tamar Burdulu
 თინა ალექსიძე: Tina Aleksizde
 ს. გვანცელაძე: S. Gvantseladze
-ხელმძღვანელი: საქ. მეცნ. აკად. წევრ: Head: Corr. Member of the Georgian National Academy of Sciences, Dr. Grigor Tatishvili
 ს. კვინიკაძე: S. Kvinikadze
 ე. მდინარაძე: E. Mdinaradze
 მწვანე ქიმია: Green Chemistry
@@ -438,7 +380,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნ.მახალდიანი: N. Makhaldiani
 მ. ფაჯიშვილი: M. Pajishvili
 მაია ცინცაძე: MaiaTsintsadze
-იზონიაზიდისა: Inh
 ნ. დიასამიძე: N. Diasamidze
 მ. ყურაშვილი: M. Kurashvili
 ნ. ხეცურიანი: N. Khetsuriani
@@ -472,7 +413,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ი. კეჟერაძე: I.Kezheradze
 რ. დავითაძე: R. Davitadze
 მ. ბეჟანიძე: M. Bezhanidze
-პოლილაქტიდი: PLA
 ს. ბატიროვი: S. Botirov
 სეიდოვა ხ.ჰ: Seyidova Kh.H
 შ. ჯაფარიძე: Sh. Japaridze
@@ -484,7 +424,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ი. თაბაგარი: I. Tabagari
 რ.ხვედელიძე: Rusudan Khvedelidze
 თ. ალექსიძე: Tina Aleksizde
-ფუნგიციდური: MFC
 კ. ქარჩხაძე: K. Karchkhadze
 ც. კოლოტაძე: Ts. Kolotadze
 ლ. წიკლაური: L Tsiklauri
@@ -494,7 +433,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნ. ნეფარიძე: N. Nepharidze
 ნ. გიორგაძე: N. Giorgadze
 ქ.მახაშვილი: K.Makhashvili
-დილანთანოიდ: III
 მ. არძენაძე: M. Ardzenadze
 დ. ჩიქოვანი: D. Chikovani
 ი. ჯაფარიძე: I. Djafaridze
@@ -507,12 +445,10 @@ L-ლეიცინის კოორდინაცია სპილენ�
 თ. ცინცაძე: T. Tsintsadze
 მოდერატორი: Moderator
 ზ. ამირიძე: Z. Amiridze
-დიაგრამები: t-plots
 ნ. ნიორაძე: N. Nioradze
 მ.ძოწენიძე: M. Dzotsenidze
 ბ. ბატოკიო: B. Battochio
 შ. კეკუტია: S. Kekutia
-მაგნეტიტის: FeO
 ე. ჭიღლაძე: E. Tchighladze
 ჰიდროქიმია: hydrochemistry
 ც.ბასილაძე: T. Basiladze
@@ -530,7 +466,6 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ნ.გეგეშიძე: N.Gegeshidze
 ა.ქამადაძე: A.Kamadadze
 ნ.ენდელაძე: N.Endeladze
-კომპლექსის: CHNOSCoCl
 გ. ფხაკაძე: G. Pkhakadze
 ქ. არჩვაძე: K. Archvadze
 თ. გვაზავა: T. Gvazava
@@ -583,18 +518,14 @@ L-ლეიცინის კოორდინაცია სპილენ�
 ანოტაცია: Abstract
 საფერავი: Saperavi
 ე.ჩხაიძე: E. Chkhaidze
-მდივანი: დოქტ. ნათელა ანანიაშვილი: Secretary: Dr. Natela Ananiashvili
 თ.როყვა: T. Rokva
 ლ.როყვა: L. Rokva
 გაშრობა: drying
 ჭიათურა: Chiatura
 პერლიტი: perlite
-მეთოდით: QUARRY WATERS HEAVY METALIONS
 თეზისი: Abstract
 კლერტი: grape stems
-რკინის: III
-ფენოლი: phenol
-მოლი: def-SVP`;
+ფენოლი: phenol`;
 
 class LiveSubPro {
   constructor() {
@@ -654,6 +585,8 @@ class LiveSubPro {
     this.cycleTestPhraseBtn = document.getElementById('cycleTestPhraseBtn');
     this.testModeCheckbox = document.getElementById('testModeCheckbox');
     this.previewModeTag = document.getElementById('previewModeTag');
+    this.manualTestInput = document.getElementById('manualTestInput');
+    this.manualTestBtn = document.getElementById('manualTestBtn');
 
     this.isTestMode = false;
     this.currentSampleIndex = 0;
@@ -827,6 +760,24 @@ class LiveSubPro {
     this.floatingShowBtn.addEventListener('click', () => this.toggleControlBar());
 
     // Live Preview Events
+    if (this.manualTestBtn && this.manualTestInput) {
+      const runManual = () => {
+        const txt = this.manualTestInput.value.trim();
+        if (!txt) return;
+        this.originalText.innerHTML = `<span>${this.escapeHtml(txt)}</span>`;
+        this.subtitleCard.classList.remove('faded-out');
+        this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, true);
+        this.handleTranslation(txt, true);
+      };
+      this.manualTestBtn.addEventListener('click', runManual);
+      this.manualTestInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          runManual();
+        }
+      });
+    }
+
     if (this.cycleTestPhraseBtn) {
       this.cycleTestPhraseBtn.addEventListener('click', () => {
         this.currentSampleIndex = (this.currentSampleIndex + 1) % this.samplePhrases.length;
@@ -1036,7 +987,7 @@ class LiveSubPro {
     }
 
     // Filter Chips
-    const chips = document.querySelectorAll('.chip-btn');
+    const chips = document.querySelectorAll('.filter-chip');
     chips.forEach(chip => {
       chip.addEventListener('click', () => {
         chips.forEach(c => c.classList.remove('active'));
@@ -1393,7 +1344,9 @@ class LiveSubPro {
     let punctuated = text.trim();
     if (!punctuated) return '';
 
-    punctuated = punctuated.charAt(0).toUpperCase() + punctuated.slice(1);
+    if (/^[a-z]/.test(punctuated)) {
+      punctuated = punctuated.charAt(0).toUpperCase() + punctuated.slice(1);
+    }
 
     if (this.currentSrcLang.startsWith('ka')) {
       punctuated = punctuated.replace(/\s+(რომ|მაგრამ|თუმცა|რადგან|ამიტომ|ხოლო|როდესაც)\b/gi, ', $1');
@@ -1422,11 +1375,13 @@ class LiveSubPro {
   polishTranslation(text) {
     if (!text) return '';
     let clean = text
+      .replace(/\b(Ladimer|Vladimir)\s+Tsitsishvili\b/gi, 'Vladimer Tsitsishvili')
+      .replace(/\bLadimer\b/g, 'Vladimer')
       .replace(/\s+([.,!?;:])/g, '$1')
       .replace(/([.,!?;:])([^\s\d.,!?;:])/g, '$1 $2')
       .replace(/\s+/g, ' ')
       .trim();
-    if (clean.length > 0) {
+    if (/^[a-z]/.test(clean)) {
       clean = clean.charAt(0).toUpperCase() + clean.slice(1);
     }
     return clean;
@@ -1457,16 +1412,28 @@ class LiveSubPro {
     if (tab === 'table') {
       if (this.tabTableViewBtn) this.tabTableViewBtn.classList.add('active');
       if (this.tabRawViewBtn) this.tabRawViewBtn.classList.remove('active');
-      if (this.glossaryTableView) this.glossaryTableView.classList.remove('hidden');
-      if (this.glossaryRawView) this.glossaryRawView.classList.add('hidden');
+      if (this.glossaryTableView) {
+        this.glossaryTableView.classList.remove('hidden');
+        this.glossaryTableView.style.display = 'flex';
+      }
+      if (this.glossaryRawView) {
+        this.glossaryRawView.classList.add('hidden');
+        this.glossaryRawView.style.display = 'none';
+      }
       if (this.glossaryInput) {
         this.parseGlossary(this.glossaryInput.value);
       }
     } else {
       if (this.tabRawViewBtn) this.tabRawViewBtn.classList.add('active');
       if (this.tabTableViewBtn) this.tabTableViewBtn.classList.remove('active');
-      if (this.glossaryRawView) this.glossaryRawView.classList.remove('hidden');
-      if (this.glossaryTableView) this.glossaryTableView.classList.add('hidden');
+      if (this.glossaryRawView) {
+        this.glossaryRawView.classList.remove('hidden');
+        this.glossaryRawView.style.display = 'flex';
+      }
+      if (this.glossaryTableView) {
+        this.glossaryTableView.classList.add('hidden');
+        this.glossaryTableView.style.display = 'none';
+      }
       if (this.glossaryInput) {
         this.glossaryInput.value = this.buildGlossaryText();
       }
@@ -1489,7 +1456,7 @@ class LiveSubPro {
   }
 
   loadGlossary() {
-    const GLOSSARY_VER = '2026_conference_v2';
+    const GLOSSARY_VER = '2026_conference_v3_clean';
     const savedVer = localStorage.getItem('subpro_glossary_ver');
     let raw = localStorage.getItem('subpro_glossary');
     if (savedVer !== GLOSSARY_VER || !raw) {
@@ -1512,7 +1479,7 @@ class LiveSubPro {
       if (this.glossaryInput) this.glossaryInput.value = raw;
     }
     localStorage.setItem('subpro_glossary', raw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
     this.parseGlossary(raw);
     this.closeGlossaryModal();
   }
@@ -1522,7 +1489,7 @@ class LiveSubPro {
       if (this.glossaryInput) this.glossaryInput.value = DEFAULT_IICE_GLOSSARY;
       this.parseGlossary(DEFAULT_IICE_GLOSSARY);
       localStorage.setItem('subpro_glossary', DEFAULT_IICE_GLOSSARY);
-      localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+      localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
     }
   }
 
@@ -1551,31 +1518,40 @@ class LiveSubPro {
             category: this.categorizeTerm(geoText, engText)
           });
 
-          const leftEsc = left.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const rightEsc = right.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const buildTermRegex = (term, isGeo) => {
+            const esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            if (isGeo) {
+              return new RegExp(`(?<![\\u10A0-\\u10FF])${esc}(?![\\u10A0-\\u10FF])`, 'g');
+            }
+            const isShortUpperAcronym = term.length <= 6 && /^[A-Z0-9-]+$/.test(term);
+            const flags = isShortUpperAcronym ? 'g' : 'gi';
+            return new RegExp(`(?<![A-Za-z0-9])${esc}(?![A-Za-z0-9])`, flags);
+          };
 
-          if (leftIsGeo) {
-            this.geoToEngRules.push({
-              regex: new RegExp(leftEsc, 'gi'),
-              to: right,
-              len: left.length
-            });
-            this.engToGeoRules.push({
-              regex: new RegExp(rightEsc, 'gi'),
-              to: left,
-              len: right.length
-            });
-          } else {
-            this.engToGeoRules.push({
-              regex: new RegExp(leftEsc, 'gi'),
-              to: right,
-              len: left.length
-            });
-            this.geoToEngRules.push({
-              regex: new RegExp(rightEsc, 'gi'),
-              to: left,
-              len: right.length
-            });
+          if (left.length >= 2 && right.length >= 2) {
+            if (leftIsGeo) {
+              this.geoToEngRules.push({
+                regex: buildTermRegex(left, true),
+                to: right,
+                len: left.length
+              });
+              this.engToGeoRules.push({
+                regex: buildTermRegex(right, false),
+                to: left,
+                len: right.length
+              });
+            } else {
+              this.engToGeoRules.push({
+                regex: buildTermRegex(left, false),
+                to: right,
+                len: left.length
+              });
+              this.geoToEngRules.push({
+                regex: buildTermRegex(right, true),
+                to: left,
+                len: right.length
+              });
+            }
           }
         }
       }
@@ -1589,7 +1565,11 @@ class LiveSubPro {
       this.glossaryCount.textContent = totalPairs;
     }
     if (this.glossaryModalCount) {
-      this.glossaryModalCount.textContent = totalPairs;
+      this.glossaryModalCount.textContent = `${totalPairs} ტერმინი`;
+    }
+    const countAllEl = document.getElementById('countAll');
+    if (countAllEl) {
+      countAllEl.textContent = totalPairs;
     }
 
     this.filterGlossary();
@@ -1598,6 +1578,10 @@ class LiveSubPro {
   filterGlossary() {
     const query = (this.glossarySearchInput ? this.glossarySearchInput.value : '').toLowerCase().trim();
     const cat = this.glossaryCurrentCategory || 'all';
+
+    if (this.clearGlossarySearchBtn) {
+      this.clearGlossarySearchBtn.style.display = query ? 'block' : 'none';
+    }
 
     let filtered = this.glossaryEntries;
 
@@ -1685,7 +1669,7 @@ class LiveSubPro {
     this.glossaryEntries.unshift(newEntry);
     const updatedRaw = this.buildGlossaryText();
     localStorage.setItem('subpro_glossary', updatedRaw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
     if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
 
     // Clear inputs
@@ -1700,7 +1684,7 @@ class LiveSubPro {
     this.glossaryEntries = this.glossaryEntries.filter(e => e.id !== id);
     const updatedRaw = this.buildGlossaryText();
     localStorage.setItem('subpro_glossary', updatedRaw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
     if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
     this.parseGlossary(updatedRaw);
   }
@@ -1720,6 +1704,17 @@ class LiveSubPro {
 
   // --- Translation History Logging Methods ---
 
+  updateLogCounters() {
+    const count = this.translationLog.length;
+    if (this.logCountBadge) {
+      this.logCountBadge.textContent = count;
+    }
+    const logModalCount = document.getElementById('logModalCount');
+    if (logModalCount) {
+      logModalCount.textContent = `${count} ფრაზა`;
+    }
+  }
+
   loadTranslationLog() {
     try {
       const saved = localStorage.getItem('subpro_translation_log');
@@ -1727,9 +1722,7 @@ class LiveSubPro {
     } catch (e) {
       this.translationLog = [];
     }
-    if (this.logCountBadge) {
-      this.logCountBadge.textContent = this.translationLog.length;
-    }
+    this.updateLogCounters();
   }
 
   logTranslation(original, translated, srcLang, tgtLang) {
@@ -1766,9 +1759,7 @@ class LiveSubPro {
       console.warn('Could not save translation log to localStorage:', e);
     }
 
-    if (this.logCountBadge) {
-      this.logCountBadge.textContent = this.translationLog.length;
-    }
+    this.updateLogCounters();
 
     if (this.historyLogModal && this.historyLogModal.classList.contains('active')) {
       this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
@@ -1912,7 +1903,7 @@ class LiveSubPro {
       try {
         localStorage.removeItem('subpro_translation_log');
       } catch (e) {}
-      if (this.logCountBadge) this.logCountBadge.textContent = '0';
+      this.updateLogCounters();
       this.renderLogEntries();
     }
   }
@@ -2286,7 +2277,6 @@ class LiveSubPro {
     if (!clauseText || clauseText.trim() === '') return;
 
     let polished = this.cleanDisfluencies(clauseText);
-    polished = this.applyGlossary(polished);
     polished = this.applySmartPunctuation(polished, isFinal);
 
     if (polished === this.lastProcessedSpeech && !isFinal) return;
@@ -2299,10 +2289,27 @@ class LiveSubPro {
       const srcCode = this.currentSrcLang.split('-')[0];
       const tgtCode = this.currentTgtLang;
 
-      let translated = await this.fetchTranslation(polished, srcCode, tgtCode);
+      // Check for exact official conference paper title or full institutional phrase (>= 25 chars)
+      let translated = null;
+      const cleanLower = clauseText.trim().toLowerCase().replace(/[.!?]+$/, '');
+      if (cleanLower.length >= 25 && this.glossaryEntries.length > 0) {
+        const exactTitleMatch = this.glossaryEntries.find(e => {
+          const srcTerm = (tgtCode === 'en' ? e.geo : e.eng).toLowerCase();
+          return srcTerm === cleanLower;
+        });
+        if (exactTitleMatch) {
+          translated = tgtCode === 'en' ? exactTitleMatch.eng : exactTitleMatch.geo;
+        }
+      }
+
+      if (!translated) {
+        translated = await this.fetchTranslation(polished, srcCode, tgtCode);
+        if (translated) {
+          translated = this.applyGlossary(translated, tgtCode);
+        }
+      }
 
       if (translated) {
-        translated = this.applyGlossary(translated, tgtCode);
         translated = this.polishTranslation(translated);
         if (isFinal && !/[.!?]$/.test(translated)) {
           translated += '.';
@@ -2329,11 +2336,19 @@ class LiveSubPro {
       if (seq === this.translationSeq) {
         this.subtitleCard.classList.remove('speaking');
         this.resetFadeoutTimer();
-        this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+        if (this.isListening) {
+          this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+        } else {
+          this.updateStatus('idle', 'მზადაა');
+        }
       }
     } catch (err) {
       console.error('Translation error:', err);
-      this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+      if (this.isListening) {
+        this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+      } else {
+        this.updateStatus('idle', 'მზადაა');
+      }
     }
   }
 
