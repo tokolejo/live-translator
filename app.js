@@ -525,7 +525,109 @@ Cs-ის გამოსხივების გამოყენება �
 პერლიტი: perlite
 თეზისი: Abstract
 კლერტი: grape stems
-ფენოლი: phenol`;
+ფენოლი: phenol
+სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები: Fundamental and Technological Aspects of Processing Mineral and Secondary Raw Materials
+რაფიელ აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი: R. Agladze Institute of Inorganic Chemistry and Electrochemistry
+თანამედროვე ტენდენციები ქიმიაში, ქიმიურ ტექნოლოგიებსა და მომიჯნავე დარგებში: Contemporary Trends in Chemistry, Chemical Technologies and Related Fields
+გამოყენებითი ქიმიის განყოფილება: Department of Applied Chemistry
+ფუნდამენტური კვლევებისა და კომპოზიციური მასალების სინთეზის განყოფილება: Department of Fundamental Research and Synthesis of Composite Materials
+კატალიზური პროცესების განყოფილება: Department of Catalytic Processes
+კოორდინაციული ნაერთების განყოფილება: Department of Coordination Compounds
+გია ტატიშვილი: Gia Tatishvili
+გიგლა წურწუმია: Gigla Tsurtsumia
+ალეკო კალანდია: Aleko Kalandia
+არაზ დოვლატოვი: Dovlatov Araz
+არჩილ ბენაშვილი: Archil Benashvili
+დავრონ ეშტურსუნოვი: Davron Eshtursunov
+ელენა რაზკაზოვა: Elena Razkazova
+ელენე ჭიღლაძე: Elene Chighladze
+ელიზა მარქარაშვილი: Eliza Markarashvili
+ეტიბარ ისმაილოვი: Etibar Ismailov
+თამარ დავითაია: Tamar Davitaia
+თამარ პეტრიაშვილი: Tamar Petriashvili
+თინიკო გაბრაშვილი: Tiniko Gabrashvili
+ია მგალობლიშვილი: Ia Mgaloblishvili
+იამზე კეჟერაძე: Iamze Kezheradze
+ილხომჯონ აბდუჯალილოვი: Ilxomjon Abdujalilov
+ისლამ მუსტაფაევი: Islam Mustafayev
+კარენ სიმონიანი: Karen Simonyan
+ლალი ღურჭუმელია: Lali Ghurchumelia
+მარიამ ბეჟანიძე: Mariam Bezhanidze
+მარიამ მელაშვილი: Mariam Melashvili
+მარიამი ცაგარეიშვილი: Mariami Tsagareishvili
+მეჰმეტ ასლანი: Mehmet Aslan
+ნათელა ძებისაშვილი: Natela Dzebisashvili
+ნიკოლოზ ნიორაძე: Nikoloz Nioradze
+ნინო ზავრადაშვილი: Nino Zavradashvili
+ნუგზარი ბუაჩიძე: Nugzari Buachidze
+ნურლან ალმასი: Nurlan Almas
+პაატა ნიკოლეიშვილი: Paata Nikoleishvili
+რამაზი გახოკიძე: Ramazi Gakhokidze
+რუსუდან გიგაური: Rusudan Gigauri
+სატიენდრა კუმარ სატიარტი: Satyendra Kumar Satyarthi
+ქეთევან მახაშვილი: Ketevan Makhashvili
+შალვა ბატიაშვილი: Shalva Batiashvili
+ხაიალა სეიდოვა: Khayala Seyidova
+ჰასან აკანი: Hasan Akan
+გულნაზი კაიშაური: Gulnazi Kaishauri
+ზეინაბ განბარლი: Zeynab Ganbarli
+თეიმურ აგაევი: Teymur Agayev
+რასმია მამადოვა: Rasmiyya Mammadova
+სევინჯ ჯავადოვა: Sevinj Javadova
+აიგუნ რუსტამოვა: Aygun Rustamova
+გიორგი ცაგარელი: Giorgi Tsagareli
+დილნოზა ოტკუროვა: Dilnoza Otkurova
+ელენა შაფაქიძე: Elena Shapakidze
+ვერა ვარაზაშვილი: Vera Varazashvili
+ვერა მაისურაძე: Vera Maisuradze
+თეიმურაზი როყვა: Teimurazi Rokva
+თემურ ჩახუნაშვილი: Temur Chakhunashvili
+თეონა კორკოტაძე: Teona Korkotadze
+ირადა მალიკოვა: İrada Malikova
+ლამარა ზუროშვილი: Lamara Zuroshvili
+ლაშა ხვიჩია: Lasha Khvichia
+ლელა წიკლაური: Lela Tsiklauri
+მაგდა დავითაშვილი: Magda Davitashvili
+მანანა მამარდაშვილი: Manana Mamardashvili
+მანაფ მანაფოვი: Manaf Manafov
+მარინე ნადირაშვილი: Marine Nadirashvili
+ნადირა ჰასანხანოვა: Nadira Hasankhanova
+ნათელა ანანიაშვილი: Natela Ananiashvili
+ნარმინ დადაშოვა: Narmin Dadashova
+ნიაზბეკ იბრაევი: Niyazbek Ibrayev
+ნინო ბიჭიაშვილი: Nino Bichiashvili
+ნინო გელხვიიძე: Nino Gelkhviidze
+ნინო კვირკველია: Nino Kvirkvelia
+სევილ ხალილოვა: Sevil Khalilova
+სევინჯ ოსმანოვა: Sevinj Osmanova
+სერგეი სოლოვიოვი: Sergiy Soloviev
+ქეთევან ებრალიძე: Ketevan Ebralidze
+აბდუკარიმ ზიოტოვი: Abdukarim Ziyotov
+ადჰამ რაფიკოვი: Adham Rafikov
+ანასტასია დვალიშვილი: Anastasia Dvalishvili
+გულნარა ბალარჯიშვილი: Gulnara Balarjishvili
+გულნარა ყიფიანი: Gulnara Kipiani
+გულნურ მამედოვა: Gulnur Mamedova
+დარეჯან დუღაშვილი: Darejan Dughashvili
+დილგამ თაგიევი: Dilgam Tagiyev
+დილფუზა ისლამოვა: Dilfuza Islamova
+ვახტანგ ბარბაქაძე: Vakhtang Barbakadze
+ვუსალა მაჯიდზადე: Vusala Majidzade
+თამარ ნასუაშვილი: Tamar Nasuashvili
+თეიმურაზ ჭეიშვილი: Teimuraz Cheishvili
+ილკინ ახუნდოვი: Ilkin Akhundov
+იუსუფჯონ ფაიზულაევი: Yusufjon Fayzullayev
+ლიანა ენუქიძე: Liana Enukidze
+მარინე ავალიანი: Marine Avaliani
+მარინე მაჭავარიანი: Marine Machavariani
+მოჰინურ პულატოვა: Mohinur Pulatova
+ნათია ბარბაქაძე: Natia Barbakadze
+ნინო ბურკიაშვილი: Nino Burkiashvili
+ნინო ქარქაშაძე: Nino Karkashadze
+სევილ ჯაფაროვა: Sevil Jafarova
+ფატიმა მუსტაფაევა: Fatima Mustafayeva`;
+
+const IICE_SPEAKERS = [{"id": "IICE-2026-076", "geo": "ალეკო კალანდია", "eng": "Aleko Kalandia", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "სსიპ ბათუმის შოთა რუსთაველის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-027", "geo": "არაზ დოვლატოვი", "eng": "Dovlatov Araz", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Chemistry of the Ministry of Science and Education of the Republic of Azerbaijan", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-013", "geo": "არაზ დოვლატოვი", "eng": "Araz Dovlatov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry, Ministry of Science and Education of the Republic of Azerbaijan", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-043", "geo": "არჩილ ბენაშვილი", "eng": "Archil Benashvili", "topic": "IV. სამეცნიერო ინოვაციების პოპულარიზაცია და კომერციალიზაცია", "affiliation": "თსუ, რაფიელ აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, თბილისი, საქართველო", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-202", "geo": "გიგლა წურწუმია", "eng": "Gigla Tsurtsumia", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "თსუ, რ.აგლაძის სახ.არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-128", "geo": "დავრონ ეშტურსუნოვი", "eng": "Davron Eshtursunov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "National University of Uzbekistan", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-064", "geo": "დარეჯან მარგალიტაშვილი", "eng": "Darejan Margalitashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "იაკობ გოგებაშვილის სახელობის თელავის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-066", "geo": "ელენა რაზკაზოვა", "eng": "Elena Razkazova", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Chemical Engineering-Bulgarian Academy of Sciences", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-097", "geo": "ელენე ჭიღლაძე", "eng": "Elene Chighladze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-055", "geo": "ელიზა მარქარაშვილი", "eng": "Eliza Markarashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-091", "geo": "ეტიბარ ისმაილოვი", "eng": "Etibar Ismailov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry, Ministry of Science and Education of the Republic of Azerbaijan", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-115", "geo": "ვენკო ბეშკოვი", "eng": "Venko Beschkov", "topic": "III. მწვანე ქიმია", "affiliation": "Bulgaria", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-023", "geo": "ვლადიმერ ციციშვილი", "eng": "Vladimer Tsitsishvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "საქართველოს მეცნიერებათა ეროვნული აკადემია", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-103", "geo": "თამარ დავითაია", "eng": "Tamar Davitaia", "topic": "III. მწვანე ქიმია", "affiliation": "ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის რაფიელ აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუ", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-106", "geo": "თამარ პეტრიაშვილი", "eng": "Tamar Petriashvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ა. თვალჭრელიძის სახელობის მინერალური ნედლეულის კავკასიის ინსტიტუტი, თსუ, საქართველო", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-098", "geo": "თინიკო გაბრაშვილი", "eng": "Tiniko Gabrashvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-059", "geo": "ია მგალობლიშვილი", "eng": "Ia Mgaloblishvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ვლადიმერ ჭავჭანიძის სახელობის კიბერნეტიკის ინსტიტუტი, საქართველოს ტექნიკური უნივერსიტეტი, ნანოკომპოზიტების ლაბორატორია, ", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-081", "geo": "იამზე კეჟერაძე", "eng": "Iamze Kezheradze", "topic": "III. მწვანე ქიმია", "affiliation": "ბათუმის შოთა რუსთაველის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-122", "geo": "ილხომჯონ აბდუჯალილოვი", "eng": "Ilxomjon Abdujalilov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "National University of Uzbekistan named after Mirzo Ulug'bek", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-107", "geo": "ისლამ მუსტაფაევი", "eng": "Islam Mustafayev", "topic": "III. მწვანე ქიმია", "affiliation": "İnstitute of Physics Ministry of Science and Education", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-110", "geo": "კარენ სიმონიანი", "eng": "Karen Simonyan", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "A.B. Nalbandyan Institute of Chemical Physics, National Academy of Sciences, Republic of Armenia", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-051", "geo": "ლალი ღურჭუმელია", "eng": "Lali Ghurchumelia", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "თსუ რ. აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, თბილისი, საქართველო.      თსუ რ. აგლაძის არაორგანული ქიმი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-096", "geo": "მარიამ ბეჟანიძე", "eng": "Mariam Bezhanidze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "რ. აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, საქართველო", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-119", "geo": "მარიამ მელაშვილი", "eng": "Mariam Melashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "Planetary, Canada", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-120", "geo": "მარიამი ცაგარეიშვილი", "eng": "Mariami Tsagareishvili", "topic": "III. მწვანე ქიმია", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-019", "geo": "მეჰმეტ ასლანი", "eng": "Mehmet Aslan", "topic": "III. მწვანე ქიმია", "affiliation": "Harran University, Türkiye", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-063", "geo": "ნათელა ძებისაშვილი", "eng": "Natela Dzebisashvili", "topic": "III. მწვანე ქიმია", "affiliation": "ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის რაფიელ აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუ", "type": "ზეპირი მოხსენება (Oral)", "format": "Online"}, {"id": "IICE-2026-056", "geo": "ნიკოლოზ ნიორაძე", "eng": "Nikoloz Nioradze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "თსუ, რ. აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, საქართველო", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-067", "geo": "ნინო ზავრადაშვილი", "eng": "Nino Zavradashvili", "topic": "III. მწვანე ქიმია", "affiliation": "ქიმიისა და მოლეკულური ინჟინერიის ინსტიტუტი, საქართველოს აგრარული უნივერსიტეტი, საქართველო", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-062", "geo": "ნუგზარი ბუაჩიძე", "eng": "Nugzari Buachidze", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტის ჰიდრომეტეოროლოგიის ინსტიტუტი", "type": "ზეპირი მოხსენება (Oral)", "format": "Online"}, {"id": "IICE-2026-093", "geo": "ნურლან ალმასი", "eng": "Nurlan Almas", "topic": "VI. STEM+P: მეცნიერება, ინოვაცია და პოლიტიკა", "affiliation": "Astana IT University/Kazakhstan", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-048", "geo": "პაატა ნიკოლეიშვილი", "eng": "Paata Nikoleishvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "თსუ, რ.აგლაძის სახ. არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-121", "geo": "რამაზი გახოკიძე", "eng": "Ramazi Gakhokidze", "topic": "III. მწვანე ქიმია", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-046", "geo": "რუსუდან გიგაური", "eng": "Rusudan Gigauri", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "თსუ - რ. აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-071", "geo": "სატიენდრა კუმარ სატიარტი", "eng": "Satyendra Kumar Satyarthi", "topic": "III. მწვანე ქიმია", "affiliation": "Innovation Center for Nanoscience and Technology, A.B. Nalbandyan Institute of Chemical Physics Yerevan- 0014, Armenia", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-117", "geo": "სტეფანო ბელუჩი", "eng": "Stefano Bellucci", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "INFN Laboratori Nazionali di Frascati, Italy", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-050", "geo": "ქეთევან მახაშვილი", "eng": "Ketevan Makhashvili", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-049", "geo": "ქეთევან მახაშვილი", "eng": "Ketevan Makhashvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-045", "geo": "ქეთევან მახაშვილი", "eng": "Ketevan Makhashvili", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-044", "geo": "ქეთევან მახაშვილი", "eng": "Ketevan Makhashvili", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-029", "geo": "შალვა ბატიაშვილი", "eng": "Shalva Batiashvili", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "იაკობ გოგებაშვილის სახელობის თელავის სახელმწიფო უნივერსიტეტი", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-125", "geo": "ხაიალა სეიდოვა", "eng": "Khayala Seyidova", "topic": "III. მწვანე ქიმია", "affiliation": "İnstitute of Petrochemical Processes named after Y.H.Mammadaliyev", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-017", "geo": "ჰასან აკანი", "eng": "Hasan Akan", "topic": "III. მწვანე ქიმია", "affiliation": "Harran University, Turkiye", "type": "ზეპირი მოხსენება (Oral)", "format": "In-Person"}, {"id": "IICE-2026-126", "geo": "გულნაზი კაიშაური", "eng": "Gulnazi Kaishauri", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტის ბიოტექნოლოგიის ცენტრი. საქართველო", "type": "online", "format": "In-Person"}, {"id": "IICE-2026-114", "geo": "ზეინაბ განბარლი", "eng": "Zeynab Ganbarli", "topic": "III. მწვანე ქიმია", "affiliation": "İnstitute of the petrochemical processes of ministry of science and education of Zzerbaijan/ Azerbaijan state oil and in", "type": "online", "format": "Online"}, {"id": "IICE-2026-078", "geo": "თეიმურ აგაევი", "eng": "Teymur Agayev", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Physics of the Ministry of Science and Education of the Republic of Azerbaijan", "type": "online", "format": "Online"}, {"id": "IICE-2026-127", "geo": "რასმია მამადოვა", "eng": "Rasmiyya Mammadova", "topic": "III. მწვანე ქიმია", "affiliation": "Azerbaijan (Azerbaijan State Oil and Industrial University)", "type": "online", "format": "Online"}, {"id": "IICE-2026-074", "geo": "სევინჯ ჯავადოვა", "eng": "Sevinj Javadova", "topic": "III. მწვანე ქიმია", "affiliation": "“Institute of Chemistry” PLE Ministry of Science and Education of the Republic of Azerbaijan", "type": "online", "format": "In-Person"}, {"id": "IICE-2026-089", "geo": "აიგუნ რუსტამოვა", "eng": "Aygun Rustamova", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry, Ministry of Science and Education of the Republic of Azerbaijan", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-095", "geo": "გიორგი ცაგარელი", "eng": "Giorgi Tsagareli", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი, რ. აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-088", "geo": "დილნოზა ოტკუროვა", "eng": "Dilnoza Otkurova", "topic": "III. მწვანე ქიმია", "affiliation": "Tashkent institute of textile and light industry", "type": "სასტენდო მოხსენება (Poster)", "format": "Online"}, {"id": "IICE-2026-021", "geo": "ელენა შაფაქიძე", "eng": "Elena Shapakidze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ალექსანდრე თვალჭრელიძის სახელობის მინერლური ნედლეულის ინსტიტუტი / ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივე", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-070", "geo": "ვერა ვარაზაშვილი", "eng": "Vera Varazashvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "თსუ, რაფიელ აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, თბილისი, საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-105", "geo": "ვერა მაისურაძე", "eng": "Vera Maisuradze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ა. თვალჭრელიძის სახელობის მინერალური ნედლეულის კავკასიის ინსტიტუტი, თსუ, საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-065", "geo": "თეიმურაზი როყვა", "eng": "Teimurazi Rokva", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "თსუ, რ.აგლაძის  სახელობის  არორგანული  ქიმიისა  და  ელექტროქიმიის  ინსტიტუტი, თბილისი,  საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-102", "geo": "თემურ ჩახუნაშვილი", "eng": "Temur Chakhunashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "ი. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის რ. აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, ს", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-082", "geo": "თეონა კორკოტაძე", "eng": "Teona Korkotadze", "topic": "III. მწვანე ქიმია", "affiliation": "თსსუ-ის ი. ქუთათელაძის ფარმაკოქიმიის ინსტიტუტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-037", "geo": "ირადა მალიკოვა", "eng": "İrada Malikova", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry of Ministry of Science and Education of Republic of Azerbaijan", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-085", "geo": "ლამარა ზუროშვილი", "eng": "Lamara Zuroshvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "იაკობ გოგებაშვილის თელავის სახელმწიფო უნივერსიტეტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-111", "geo": "ლაშა ხვიჩია", "eng": "Lasha Khvichia", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "სტუ - ჰიდროგეოლოგიისა და საინჟინრო გეოლოგიის ინსტიტუტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-086", "geo": "ლელა წიკლაური", "eng": "Lela Tsiklauri", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "იაკობ გოგებაშვილის თელავის სახელმწიფო უნივერსიტეტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-041", "geo": "მაგდა დავითაშვილი", "eng": "Magda Davitashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "იაკობ გოგებაშვილის თელავის სახელმწიფო უნივერსიტეტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-080", "geo": "მანანა მამარდაშვილი", "eng": "Manana Mamardashvili", "topic": "III. მწვანე ქიმია", "affiliation": "თსუ, რ.აგლაძის სახ. არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-039", "geo": "მანაფ მანაფოვი", "eng": "Manaf Manafov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry of Ministry of Science and Education of Republic of Azerbaijan, Baku St. Az-1143, H.Javid Ave. 11", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-104", "geo": "მარინე ნადირაშვილი", "eng": "Marine Nadirashvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ა. თვალჭრელიძის სახელობის მინერალური ნედლეულის კავკასიის ინსტიტუტი, თსუ, საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-068", "geo": "ნადირა ჰასანხანოვა", "eng": "Nadira Hasankhanova", "topic": "III. მწვანე ქიმია", "affiliation": "Academician Y.H. Mammadaliyev Institute of Petrochemical Processes of the Ministry of Science and Education of the Repub", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-060", "geo": "ნათელა ანანიაშვილი", "eng": "Natela Ananiashvili", "topic": "III. მწვანე ქიმია", "affiliation": "თსუ.არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი, საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-053", "geo": "ნარმინ დადაშოვა", "eng": "Narmin Dadashova", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Petrochemical Processes named after Yusif Mammadaliyev, Ministry of Science and Education of the Republic o", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-112", "geo": "ნიაზბეკ იბრაევი", "eng": "Niyazbek Ibrayev", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Buketov Karaganda State University/Kazakhstan", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-109", "geo": "ნინო ბიჭიაშვილი", "eng": "Nino Bichiashvili", "topic": "IV. სამეცნიერო ინოვაციების პოპულარიზაცია და კომერციალიზაცია", "affiliation": "რაფიელ აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი/თსუ/საქართველო", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-083", "geo": "ნინო გელხვიიძე", "eng": "Nino Gelkhviidze", "topic": "III. მწვანე ქიმია", "affiliation": "თსსუ", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-077", "geo": "ნინო კვირკველია", "eng": "Nino Kvirkvelia", "topic": "III. მწვანე ქიმია", "affiliation": "თსუ, რ.აგლაძის სახ. არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-090", "geo": "სევილ ხალილოვა", "eng": "Sevil Khalilova", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry, Ministry of Science and Education of the Republic of Azerbaijan", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-079", "geo": "სევინჯ ოსმანოვა", "eng": "Sevinj Osmanova", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Institute of Chemistry, Ministry of Science and Education of the Republic of Azerbaijan", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-113", "geo": "სერგეი სოლოვიოვი", "eng": "Sergiy Soloviev", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "L.V. Pisarzhevskii Institute of Physical Chemistry of the National Academy of Sciences of Ukraine, Kyiv, Ukraine", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-092", "geo": "ქეთევან ებრალიძე", "eng": "Ketevan Ebralidze", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი, პეტრე მელიქიშვილის სახელობის ფიზიკური და ორგანული ქიმიის ", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-129", "geo": "ხაიალა სეიდოვა", "eng": "Khayala Seyidova", "topic": "III. მწვანე ქიმია", "affiliation": "1)Azerbaijan State University of Oil and Industry 2)İnstitute of Petrochemical Processes named after Y.H.Mammadaliyev", "type": "სასტენდო მოხსენება (Poster)", "format": "In-Person"}, {"id": "IICE-2026-057", "geo": "აბდუკარიმ ზიოტოვი", "eng": "Abdukarim Ziyotov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "National University of Uzbekistan", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-087", "geo": "ადჰამ რაფიკოვი", "eng": "Adham Rafikov", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "Tashkent institute of textile and light industry", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-073", "geo": "აკიფ ალიევი", "eng": "Akif Aliyev", "topic": "III. მწვანე ქიმია", "affiliation": "“Institute of Chemistry” PLE Ministry of Science and Education of the Republic of Azerbaijan", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-118", "geo": "ანასტასია დვალიშვილი", "eng": "Anastasia Dvalishvili", "topic": "III. მწვანე ქიმია", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-054", "geo": "გულნარა ბალარჯიშვილი", "eng": "Gulnara Balarjishvili", "topic": "III. მწვანე ქიმია", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის პეტრე მელიქიშვილის ფიზიკური და ორგანული ქიმიის ინსტიტუტი,", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-100", "geo": "გულნარა ყიფიანი", "eng": "Gulnara Kipiani", "topic": "III. მწვანე ქიმია", "affiliation": "თსუ, რაფიელ აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-116", "geo": "გულნურ მამედოვა", "eng": "Gulnur Mamedova", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Polymer Materials, Sumgait State University (Public Legal Entity), Ministry of Science and Education of Aze", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-058", "geo": "დარეჯან დუღაშვილი", "eng": "Darejan Dughashvili", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის რაფიელ აგლაძის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუ", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-072", "geo": "დილგამ თაგიევი", "eng": "Dilgam Tagiyev", "topic": "III. მწვანე ქიმია", "affiliation": "“Institute of Chemistry” PLE Ministry of Science and Education of the Republic of Azerbaijan", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-084", "geo": "დილფუზა ისლამოვა", "eng": "Dilfuza Islamova", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "Tashkent institute of textile and light industry", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-035", "geo": "ვახტანგ ბარბაქაძე", "eng": "Vakhtang Barbakadze", "topic": "III. მწვანე ქიმია", "affiliation": "თბილისის სახელმწიფო სამედიცინო უნივერსიტეტი, ი. ქუთათელაძის ფარმაკოქიმიის ინსტიტუტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-075", "geo": "ვუსალა მაჯიდზადე", "eng": "Vusala Majidzade", "topic": "III. მწვანე ქიმია", "affiliation": "“Institute of Chemistry” PLE Ministry of Science and Education of the Republic of Azerbaijan", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-101", "geo": "თამაზ მარსაგიშვილი", "eng": "Tamazi Marsagishvili", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "R. Agladze Institute of Inorganic Chemistry and Electrochemistry (IICE) of Iv. Javakhishvili Tbilisi State University (T", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-108", "geo": "თამარ ნასუაშვილი", "eng": "Tamar Nasuashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "რაფიელ აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქიმიის ინსტიტუტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-069", "geo": "თეიმურაზ ჭეიშვილი", "eng": "Teimuraz Cheishvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "საქართველოს ტექნიკური უნივერსიტეტი", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-124", "geo": "ილკინ ახუნდოვი", "eng": "Ilkin Akhundov", "topic": "III. მწვანე ქიმია", "affiliation": "Azerbaijan State Oil and Industry University", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-047", "geo": "იუსუფჯონ ფაიზულაევი", "eng": "Yusufjon Fayzullayev", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "Academic Lyceum of the Tashkent Institute of Chemical Technology, Uzbekistan", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-061", "geo": "ლიანა ენუქიძე", "eng": "Liana Enukidze", "topic": "V. სურსათის ქიმია და ხარისხი", "affiliation": "რ. აგლაძის სახ. არაორგანული ქიმიისა და ელექტროქიმიის  ინსტიტუტი,  თსუ, საქართველო", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-015", "geo": "მარინე ავალიანი", "eng": "Marine Avaliani", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ი. ჯავახიშვილის სახ. თსუ რ. აგლაძის არაორგანული ქიმიის და ელექტროქიმიის ინსტიტუტი", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-099", "geo": "მარინე მაჭავარიანი", "eng": "Marine Machavariani", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის (თსუ) რ. აგლაძის სახელობის არაორგანული ქიმიისა და ელექტროქი", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-042", "geo": "მოჰინურ პულატოვა", "eng": "Mohinur Pulatova", "topic": "III. მწვანე ქიმია", "affiliation": "National University of Uzbekistan named after Mirzo Ulug'bek", "type": "abstract_only", "format": "In-Person"}, {"id": "IICE-2026-094", "geo": "ნათია ბარბაქაძე", "eng": "Natia Barbakadze", "topic": "I. ნანოპროცესები და ნანოტექნოლოგიები", "affiliation": "ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-052", "geo": "ნინო ბურკიაშვილი", "eng": "Nino Burkiashvili", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "თბილისის სახელმწიფო უნივერსიტეტი, პეტრე მელიქიშვილის სახელობის ფიზიკური და ორგანული ქიმიის ინსტიტუტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-033", "geo": "ნინო ქარქაშაძე", "eng": "Nino Karkashadze", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "ივ. ჯავახიშვილის სახ. თბილისის სახელმწიფო უნივერსიტეტი, პეტრე მელიქიშვილის სახ. ფიზიკური და ორგანული ქიმიის ინსტიტუტი", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-025", "geo": "სევილ ჯაფაროვა", "eng": "Sevil Jafarova", "topic": "II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები", "affiliation": "Institute of Chemistry Ministry of Science and Education of Azerbaijan", "type": "abstract_only", "format": "Online"}, {"id": "IICE-2026-123", "geo": "ფატიმა მუსტაფაევა", "eng": "Fatima Mustafayeva", "topic": "III. მწვანე ქიმია", "affiliation": "Institute of Polymer Materials under Sumgayit State University, Ministry of Science and Education Republic of Azerbaijan", "type": "abstract_only", "format": "Online"}];
 
 class LiveSubPro {
   constructor() {
@@ -667,6 +769,12 @@ class LiveSubPro {
     this.clearLogBtn = document.getElementById('clearLogBtn');
     this.logDb = null;
 
+    // Conference Track & Speaker Context Elements
+    this.trackSelect = document.getElementById('trackSelect');
+    this.speakerSelect = document.getElementById('speakerSelect');
+    this.announceSpeakerBtn = document.getElementById('announceSpeakerBtn');
+    this.activeSpeaker = null;
+
     // State Variables
     this.isListening = false;
     this.recognition = null;
@@ -713,6 +821,7 @@ class LiveSubPro {
     this.loadSettings();
     this.loadTranslationLog();
     this.loadGlossary();
+    this.initTrackAndSpeakers();
     this.loadAudioDevices();
     this.startWatchdog();
     this.bindEvents();
@@ -950,6 +1059,25 @@ class LiveSubPro {
     }
     if (this.resetGlossaryBtn) {
       this.resetGlossaryBtn.addEventListener('click', () => this.resetToIiceGlossary());
+    }
+
+    // Conference Track & Speaker Context
+    if (this.trackSelect) {
+      this.trackSelect.addEventListener('change', (e) => {
+        localStorage.setItem('subpro_active_track', e.target.value);
+        this.populateSpeakers(e.target.value);
+      });
+    }
+    if (this.speakerSelect) {
+      this.speakerSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        this.activeSpeaker = (typeof IICE_SPEAKERS !== 'undefined')
+          ? IICE_SPEAKERS.find(s => s.id === val) || null
+          : null;
+      });
+    }
+    if (this.announceSpeakerBtn) {
+      this.announceSpeakerBtn.addEventListener('click', () => this.announceCurrentSpeaker());
     }
 
     // Glossary Tabs & Tools
@@ -1332,9 +1460,83 @@ class LiveSubPro {
     }
   }
 
+  initTrackAndSpeakers() {
+    if (!this.trackSelect) return;
+    const savedTrack = localStorage.getItem('subpro_active_track') || 'all';
+    this.trackSelect.value = savedTrack;
+    this.populateSpeakers(savedTrack);
+  }
+
+  populateSpeakers(track) {
+    if (!this.speakerSelect || typeof IICE_SPEAKERS === 'undefined') return;
+    let list = IICE_SPEAKERS;
+    if (track && track !== 'all') {
+      list = IICE_SPEAKERS.filter(s => s.topic === track);
+    }
+
+    let html = '<option value="">-- აირჩიეთ მომხსენებელი --</option>';
+    list.forEach(s => {
+      const icon = (s.type || '').includes('Oral') ? '🎤' : ((s.type || '').toLowerCase().includes('online') ? '💻' : '📄');
+      const label = s.geo !== s.eng ? `${s.geo} (${s.eng})` : s.eng;
+      html += `<option value="${this.escapeHtml(s.id)}">${icon} ${this.escapeHtml(label)}</option>`;
+    });
+    this.speakerSelect.innerHTML = html;
+    this.activeSpeaker = null;
+  }
+
+  announceCurrentSpeaker() {
+    if (!this.activeSpeaker) {
+      alert('პირველ რიგში აირჩიეთ მომხსენებელი სიიდან.');
+      return;
+    }
+    const s = this.activeSpeaker;
+    const icon = '🎤';
+    const title = s.geo !== s.eng ? `${s.geo} / ${s.eng}` : s.eng;
+    const sub = [s.affiliation, s.topic].filter(Boolean).join(' • ');
+
+    this.currentBanner = { icon, title, sub };
+    if (this.stageAnnouncement) {
+      if (this.announcementIcon) this.announcementIcon.textContent = icon;
+      if (this.announcementTitle) this.announcementTitle.textContent = title;
+      if (this.announcementSub) this.announcementSub.textContent = sub;
+      this.stageAnnouncement.classList.add('active');
+    }
+    this.broadcastBanner(true, icon, title, sub);
+  }
+
+  fixSpeechRecognitionErrors(text) {
+    if (!text) return '';
+    let fixed = text;
+    if (this.currentSrcLang.startsWith('ka')) {
+      fixed = fixed
+        // Fix Chrome ASR systematic distortions observed in real Georgian conference audio
+        .replace(/(რა\s*ფილ\s*აგლაძ|რაფილ\s*აგლაძ|რაფილაძ|რაფია\s*აგლაძ|რაფიალაძ|რაფელ\s*აგლაძ|რ\.\s*ფილაგლაძ)/gi, 'რაფიელ აგლაძ')
+        .replace(/არა\s*ორგანული\s*(ექიმის|ექიმი|ქიმის|ქიმია)/gi, 'არაორგანული ქიმიის')
+        .replace(/არაორგანული\s*(ექიმის|ქიმის)/gi, 'არაორგანული ქიმიის')
+        .replace(/ორგანული\s*(ექიმის|ქიმის)/gi, 'ორგანული ქიმიის')
+        .replace(/ელექტრო\s*ქიმის(?![ა-ჰ])/gi, 'ელექტროქიმიის')
+        .replace(/ფარმაკო\s*ქიმის(?![ა-ჰ])/gi, 'ფარმაკოქიმიის')
+        .replace(/(?<![ა-ჰ])ქიმის(?![ა-ჰ])/gi, 'ქიმიის')
+        .replace(/მწვანე\s*(ექიმი|ექიმის|ქიმის)/gi, 'მწვანე ქიმიის')
+        .replace(/\b(20[-\s]*36|20126|20[-\s]*26|2\s+26)(?=\s*(წლის|წელს|წლისა|კონფერენც))/gi, '2026')
+        .replace(/\b206(?=\s*(წლის|წელს)\s*კონფერენც)/gi, '2026')
+        .replace(/(?<![ა-ჰ])და\s+არსების(?![ა-ჰ])/gi, 'დაარსების')
+        .replace(/(?<![ა-ჰ])წლის\s+თავს(?![ა-ჰ])/gi, 'წლისთავს')
+        .replace(/(?<![ა-ჰ])ინთეზის(?![ა-ჰ])/gi, 'სინთეზის')
+        .replace(/(?<![ა-ჰ])ეკლეს\s+ურსათის/gi, 'ეკოლოგიისა და სურსათის')
+        .replace(/(?<![ა-ჰ])ურსათის(?![ა-ჰ])/gi, 'სურსათის')
+        .replace(/(?<![ა-ჰ])მომიწინავე(?![ა-ჰ])/gi, 'მოწინავე')
+        .replace(/(?<![ა-ჰ])ჩვენ\s+დირექტორი(?![ა-ჰ])/gi, 'ჩვენი დირექტორი')
+        .replace(/(?<![ა-ჰ])შესალმებით(?![ა-ჰ])/gi, 'მოგესალმებით')
+        .replace(/(?<![ა-ჰ])ნანო\s+ნაწილაკ/gi, 'ნანონაწილაკ');
+    }
+    return fixed;
+  }
+
   cleanDisfluencies(text) {
-    if (!this.toggleCleanSpeech.checked || !text) return text;
-    let cleaned = text;
+    if (!text) return '';
+    let cleaned = this.fixSpeechRecognitionErrors(text);
+    if (!this.toggleCleanSpeech.checked) return cleaned.replace(/\s+/g, ' ').trim();
     if (this.currentSrcLang.startsWith('ka')) {
       cleaned = cleaned.replace(this.geoFillers, '');
     } else {
@@ -1461,7 +1663,7 @@ class LiveSubPro {
   }
 
   loadGlossary() {
-    const GLOSSARY_VER = '2026_conference_v3_clean';
+    const GLOSSARY_VER = '2026_conference_v4_speakers';
     const savedVer = localStorage.getItem('subpro_glossary_ver');
     let raw = localStorage.getItem('subpro_glossary');
     if (savedVer !== GLOSSARY_VER || !raw) {
@@ -1484,7 +1686,7 @@ class LiveSubPro {
       if (this.glossaryInput) this.glossaryInput.value = raw;
     }
     localStorage.setItem('subpro_glossary', raw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v4_speakers');
     this.parseGlossary(raw);
     this.closeGlossaryModal();
   }
@@ -1494,7 +1696,7 @@ class LiveSubPro {
       if (this.glossaryInput) this.glossaryInput.value = DEFAULT_IICE_GLOSSARY;
       this.parseGlossary(DEFAULT_IICE_GLOSSARY);
       localStorage.setItem('subpro_glossary', DEFAULT_IICE_GLOSSARY);
-      localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
+      localStorage.setItem('subpro_glossary_ver', '2026_conference_v4_speakers');
     }
   }
 
@@ -1674,7 +1876,7 @@ class LiveSubPro {
     this.glossaryEntries.unshift(newEntry);
     const updatedRaw = this.buildGlossaryText();
     localStorage.setItem('subpro_glossary', updatedRaw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v4_speakers');
     if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
 
     // Clear inputs
@@ -1689,7 +1891,7 @@ class LiveSubPro {
     this.glossaryEntries = this.glossaryEntries.filter(e => e.id !== id);
     const updatedRaw = this.buildGlossaryText();
     localStorage.setItem('subpro_glossary', updatedRaw);
-    localStorage.setItem('subpro_glossary_ver', '2026_conference_v3_clean');
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v4_speakers');
     if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
     this.parseGlossary(updatedRaw);
   }
@@ -1785,10 +1987,23 @@ class LiveSubPro {
     const cleanTrans = translated.trim();
     if (!cleanOrig || !cleanTrans) return;
 
-    // Avoid immediate duplicate of the exact same entry
+    // Avoid duplicate rows for interim-to-final transitions (even differing only by trailing period '.')
+    const stripPunct = s => s.replace(/[.!?]+$/, '').trim().toLowerCase();
     if (this.translationLog.length > 0) {
       const last = this.translationLog[0];
-      if (last.original === cleanOrig && last.translated === cleanTrans) return;
+      if (stripPunct(last.original) === stripPunct(cleanOrig)) {
+        last.original = cleanOrig;
+        last.translated = cleanTrans;
+        if (this.logDb) {
+          try {
+            this.logDb.transaction('logs', 'readwrite').objectStore('logs').put(last);
+          } catch (e) {}
+        }
+        if (this.historyLogModal && this.historyLogModal.classList.contains('active')) {
+          this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
+        }
+        return;
+      }
     }
 
     const now = new Date();

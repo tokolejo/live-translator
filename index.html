@@ -137,6 +137,29 @@
             </label>
           </div>
 
+          <div class="field-group" style="margin-top: 4px;">
+            <label>🎯 მიმართულება (სექცია):</label>
+            <select id="trackSelect" class="form-select">
+              <option value="all">🌐 ყველა მიმართულება (IICE 2026)</option>
+              <option value="I. ნანოპროცესები და ნანოტექნოლოგიები">I. ნანოპროცესები და ნანოტექნოლოგიები</option>
+              <option value="II. სასარგებლო წიაღისეულისა და მეორადი ნედლეულის გადამუშავების ფუნდამენტური და ტექნოლოგიური ასპექტები">II. წიაღისეული და მეორადი ნედლეული</option>
+              <option value="III. მწვანე ქიმია">III. მწვანე ქიმია</option>
+              <option value="IV. სამეცნიერო ინოვაციების პოპულარიზაცია და კომერციალიზაცია">IV. ინოვაციების კომერციალიზაცია</option>
+              <option value="V. სურსათის ქიმია და ხარისხი">V. სურსათის ქიმია და ხარისხი</option>
+              <option value="VI. STEM+P: მეცნიერება, ინოვაცია და პოლიტიკა">VI. STEM+P და პოლიტიკა</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>🗣️ მომხსენებელი (Oral/სექცია):</label>
+            <div style="display: flex; gap: 6px;">
+              <select id="speakerSelect" class="form-select" style="flex: 1;">
+                <option value="">-- აირჩიეთ მომხსენებელი --</option>
+              </select>
+              <button id="announceSpeakerBtn" class="btn btn-ghost" style="padding: 4px 8px;" title="მომხსენებლის წარდგენის ბანერი პროექტორზე">📢</button>
+            </div>
+          </div>
+
           <button id="openGlossaryBtn" class="btn btn-outline-full">
             📖 ტერმინების ლექსიკონი (<span id="glossaryCount">0</span>)
           </button>
