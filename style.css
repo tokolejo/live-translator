@@ -74,8 +74,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   padding: 8px 16px;
-  gap: 12px;
+  gap: 10px;
   min-height: 52px;
 }
 
@@ -239,7 +240,9 @@ body {
 .bar-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
 }
 
 /* Buttons */

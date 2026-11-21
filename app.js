@@ -1160,9 +1160,11 @@ class LiveSubPro {
     this.subtitleCard.classList.add('live-preview-active');
     if (this.previewModeTag) this.previewModeTag.style.display = 'inline-flex';
     clearTimeout(this.fadeoutTimer);
+    this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
   }
 
   ensurePreviewVisible() {
+    this.broadcastStyleUpdate();
     if (this.isListening) return;
     if (!this.settingsDrawer.classList.contains('hidden') && this.isTestMode) {
       this.activateLivePreview();
@@ -1330,6 +1332,9 @@ class LiveSubPro {
 
     localStorage.setItem('subpro_src_lang', this.currentSrcLang);
     localStorage.setItem('subpro_tgt_lang', this.currentTgtLang);
+
+    this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
+    this.ensurePreviewVisible();
 
     // If currently listening, seamlessly switch language
     if (this.recognition && this.isListening) {
@@ -2351,10 +2356,11 @@ class LiveSubPro {
     const opacity = this.bgOpacitySlider ? this.bgOpacitySlider.value : (localStorage.getItem('subpro_bg_opacity') || '85');
     const transSize = this.transSizeSlider ? this.transSizeSlider.value : (localStorage.getItem('subpro_trans_size') || '36');
     const origSize = this.origSizeSlider ? this.origSizeSlider.value : (localStorage.getItem('subpro_orig_size') || '20');
-    const place = this.positionSelect ? this.positionSelect.value : (localStorage.getItem('subpro_position') || 'pos-bottom');
-    const align = localStorage.getItem('subpro_text_align') || 'align-center';
+    const pos = this.positionSelect ? this.positionSelect.value : (localStorage.getItem('subpro_position') || 'pos-bottom');
+    const align = this.textAlignSelect ? this.textAlignSelect.value : (localStorage.getItem('subpro_text_align') || 'align-center');
     const showOrig = this.toggleOrigSpeech ? this.toggleOrigSpeech.checked : true;
     const showTrans = this.toggleTransSpeech ? this.toggleTransSpeech.checked : true;
+    const twoLines = this.toggleTwoLineLimit ? this.toggleTwoLineLimit.checked : true;
     const autofade = this.autoFadeSelect ? this.autoFadeSelect.value : '5000';
 
     this.broadcast.postMessage({
@@ -2364,10 +2370,11 @@ class LiveSubPro {
       bgOpacity: parseInt(opacity, 10),
       transSize: parseInt(transSize, 10),
       origSize: parseInt(origSize, 10),
-      placement: place.replace('pos-', 'place-'),
-      alignment: align.replace('align-', ''),
+      pos,
+      align,
       showOrig,
       showTrans,
+      twoLines,
       autofade: parseInt(autofade, 10),
       customBgColor: localStorage.getItem('subpro_custom_color') || '#0f172a'
     });

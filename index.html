@@ -48,6 +48,21 @@
 
       <!-- Action Buttons -->
       <div class="bar-right">
+        <button id="openStageBtn" class="btn btn-stage" title="პროექტორის/მეორე ეკრანის ცალკე ფანჯარა (Stage Display)">
+          <span>🖥️ პროექტორი</span>
+        </button>
+        <div class="banner-dropdown-wrap">
+          <button id="bannerMenuBtn" class="btn btn-ghost" title="საინფორმაციო ბანერები ეკრანზე">
+            <span>📢 ბანერი ▾</span>
+          </button>
+          <div id="bannerDropdown" class="banner-dropdown hidden">
+            <button class="banner-opt-btn" data-banner="break">☕ ყავის შესვენება / Break</button>
+            <button class="banner-opt-btn" data-banner="qa">❓ კითხვა-პასუხი / Q&A</button>
+            <button class="banner-opt-btn" data-banner="pause">⏱️ ტექნიკური პაუზა / Pause</button>
+            <div class="banner-dropdown-divider"></div>
+            <button class="banner-opt-btn banner-opt-clear" data-banner="clear">✕ ბანერის გათიშვა</button>
+          </div>
+        </div>
         <button id="openLogBtn" class="btn btn-ghost" title="თარგმანის ისტორია და ლოგი">
           <span>📜 ლოგი (<span id="logCountBadge">0</span>)</span>
         </button>
@@ -55,15 +70,15 @@
           <span id="fullscreenIcon">⛶</span>
           <span class="fullscreen-text">სრული ეკრანი (F)</span>
         </button>
-        <button id="clearScreenBtn" class="btn btn-ghost" title="ეკრანის გასუფთავება (C)">
-          <span>🧹 გასუფთავება</span>
+        <button id="clearScreenBtn" class="btn btn-ghost text-panic" title="ეკრანის მომენტალური გასუფთავება (C ან Esc)">
+          <span>🚨 გასუფთავება (C)</span>
         </button>
         <button id="toggleSettingsBtn" class="btn btn-ghost" title="პარამეტრების პანელი">
           <span>⚙️ პარამეტრები</span>
         </button>
         <button id="hideBarBtn" class="btn btn-dark" title="მენიუს დამალვა (H)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span class="hide-text">OBS რეჟიმი (H)</span>
+          <span class="hide-text">OBS (H)</span>
         </button>
       </div>
     </div>
