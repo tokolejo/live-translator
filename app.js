@@ -822,6 +822,7 @@ class LiveSubPro {
     this.loadTranslationLog();
     this.loadGlossary();
     this.initTrackAndSpeakers();
+    this.initCollapsibleCards();
     this.loadAudioDevices();
     this.startWatchdog();
     this.bindEvents();
@@ -1482,6 +1483,35 @@ class LiveSubPro {
         }
       }, fadeMs);
     }
+  }
+
+  initCollapsibleCards() {
+    let collapsedIds = [];
+    try {
+      const saved = localStorage.getItem('subpro_collapsed_cards');
+      collapsedIds = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      collapsedIds = [];
+    }
+
+    const cards = document.querySelectorAll('.drawer-card[data-card-id]');
+    cards.forEach(card => {
+      const cid = card.getAttribute('data-card-id');
+      if (collapsedIds.includes(cid)) {
+        card.classList.add('collapsed');
+      }
+      const header = card.querySelector('.card-collapse-header');
+      if (header) {
+        header.addEventListener('click', () => {
+          card.classList.toggle('collapsed');
+          const nextCollapsed = Array.from(document.querySelectorAll('.drawer-card[data-card-id].collapsed'))
+            .map(el => el.getAttribute('data-card-id'));
+          try {
+            localStorage.setItem('subpro_collapsed_cards', JSON.stringify(nextCollapsed));
+          } catch (e) {}
+        });
+      }
+    });
   }
 
   initTrackAndSpeakers() {
