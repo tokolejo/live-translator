@@ -15,25 +15,178 @@
       overflow: hidden;
       user-select: none;
     }
-    .stage-helper-hint {
+
+    /* Full 100vh on stage since there is no permanent header */
+    .overlay-container {
+      min-height: 100vh !important;
+    }
+
+    /* Auto-Hiding Quick Control Toolbar for Projector Screen */
+    .stage-quick-bar {
       position: fixed;
-      top: 18px;
-      right: 18px;
-      padding: 8px 16px;
-      background: rgba(0, 0, 0, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      color: #94a3b8;
-      font-size: 13px;
-      font-weight: 500;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75);
       z-index: 9999;
+      opacity: 0;
       pointer-events: none;
-      transition: opacity 1.5s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      max-width: 96vw;
+    }
+
+    .stage-quick-bar.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .sc-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 8px;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .sc-group:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .sc-label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-right: 2px;
+    }
+
+    .sc-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .sc-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #ffffff;
+    }
+
+    .sc-btn.active {
+      background: #2563eb;
+      border-color: #3b82f6;
+      color: #ffffff;
+    }
+
+    .sc-btn-primary {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .sc-val {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #38bdf8;
+      min-width: 34px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .sc-select {
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #f8fafc;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
     }
   </style>
 </head>
 <body class="style-oled-black align-center">
-  <div id="stageHint" class="stage-helper-hint">დააჭირეთ F ან ორჯერ დაკლიკეთ სრული ეკრანისთვის</div>
+
+  <!-- Auto-Hiding Quick Control Toolbar (Appears on Mouse Move) -->
+  <div id="stageQuickBar" class="stage-quick-bar visible">
+    <!-- Position -->
+    <div class="sc-group" title="ტექსტის მდებარეობა ეკრანზე">
+      <span class="sc-label">პოზიცია:</span>
+      <button class="sc-btn sc-pos-btn" data-pos="pos-top" title="ეკრანის ზევით">⬆️</button>
+      <button class="sc-btn sc-pos-btn" data-pos="pos-center" title="ეკრანის ცენტრში">⏺️</button>
+      <button class="sc-btn sc-pos-btn active" data-pos="pos-bottom" title="ეკრანის ძირში">⬇️</button>
+    </div>
+
+    <!-- Alignment -->
+    <div class="sc-group" title="ტექსტის სწორება">
+      <button class="sc-btn sc-align-btn" data-align="align-left" title="მარცხნივ">⬅️</button>
+      <button class="sc-btn sc-align-btn active" data-align="align-center" title="ცენტრში">↔️</button>
+      <button class="sc-btn sc-align-btn" data-align="align-right" title="მარჯვნივ">➡️</button>
+    </div>
+
+    <!-- Translation Font Size -->
+    <div class="sc-group" title="თარგმანის შრიფტის ზომა">
+      <span class="sc-label">თარგმანი:</span>
+      <button class="sc-btn" id="scTransDec">A-</button>
+      <span class="sc-val" id="scTransVal">36px</span>
+      <button class="sc-btn" id="scTransInc">A+</button>
+    </div>
+
+    <!-- Original Font Size & Toggle -->
+    <div class="sc-group" title="ორიგინალის შრიფტი და ჩვენება">
+      <button class="sc-btn active" id="scToggleOrig" title="ორიგინალი ტექსტის ჩვენება/დამალვა">👁️ ორიგინალი</button>
+      <button class="sc-btn" id="scOrigDec">a-</button>
+      <span class="sc-val" id="scOrigVal">20px</span>
+      <button class="sc-btn" id="scOrigInc">a+</button>
+    </div>
+
+    <!-- Width % -->
+    <div class="sc-group" title="ბარათის სიგანე ეკრანზე">
+      <span class="sc-label">სიგანე:</span>
+      <button class="sc-btn sc-width-btn" data-width="80">80%</button>
+      <button class="sc-btn sc-width-btn" data-width="92">92%</button>
+      <button class="sc-btn sc-width-btn" data-width="100">100%</button>
+    </div>
+
+    <!-- Style Selector -->
+    <div class="sc-group">
+      <select id="scStyleSelect" class="sc-select" title="ფონის დიზაინი">
+        <option value="style-oled-black">🖤 OLED შავი</option>
+        <option value="style-keynote-pill">🌑 Keynote მინა</option>
+        <option value="style-cinema-fade">🎬 კინო ჩრდილი</option>
+        <option value="style-broadcast-ticker">📺 Broadcast ზოლი</option>
+        <option value="style-academic-slate">🏛️ აკადემიური</option>
+        <option value="style-cyber-neon">🌌 Cyber ნეონი</option>
+        <option value="style-light-paper">☀️ დღის თეთრი</option>
+        <option value="style-clean-transparent">🪟 გამჭვირვალე</option>
+      </select>
+    </div>
+
+    <!-- Actions -->
+    <div class="sc-group">
+      <button class="sc-btn" id="scClearBtn" title="გასუფთავება (C)">🧹</button>
+      <button class="sc-btn sc-btn-primary" id="scFullscreenBtn" title="სრული ეკრანი (F)">⛶ სრული ეკრანი</button>
+    </div>
+  </div>
 
   <!-- Announcement Overlay Card (Intermission, Coffee break, Q&A) -->
   <div id="stageAnnouncement" class="stage-announcement-card">
@@ -42,12 +195,11 @@
     <div id="announcementSub" class="stage-announcement-sub">Coffee Break</div>
   </div>
 
-  <!-- Stage Subtitle Overlay Container (Exact match with index.html classes) -->
+  <!-- Stage Subtitle Overlay Container -->
   <main id="overlayContainer" class="overlay-container pos-bottom">
     <div class="subtitle-card" id="subtitleCard">
       <!-- Original Speech Layer -->
       <div class="speech-layer original-layer" id="originalLayer">
-        <span class="tag-badge" id="originalLangTag">ENG</span>
         <p class="speech-text original-text" id="originalText">
           <span class="placeholder-hint">მზადაა პროექტორის ტრანსლაციისთვის...</span>
         </p>
@@ -55,7 +207,6 @@
 
       <!-- Translation Layer -->
       <div class="speech-layer translated-layer" id="translatedLayer">
-        <span class="tag-badge trans-badge" id="targetLangTag">GEO</span>
         <p class="speech-text translated-text" id="translatedText">
           <span class="placeholder-hint">IICE 2026 Live Subtitles Ready</span>
         </p>

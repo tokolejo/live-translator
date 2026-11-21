@@ -2326,8 +2326,20 @@ class LiveSubPro {
   initBroadcastSync() {
     if (!this.broadcast) return;
     this.broadcast.onmessage = (e) => {
-      if (e.data && e.data.type === 'request_state') {
+      if (!e.data) return;
+      if (e.data.type === 'request_state') {
         this.broadcastFullState();
+      } else if (e.data.type === 'stage_style_sync' && e.data.styles) {
+        const s = e.data.styles;
+        if (s.bgStyle) this.setOverlayStyle(s.bgStyle);
+        if (s.pos) this.setPosition(s.pos);
+        if (s.align) this.setTextAlign(s.align);
+        if (s.cardWidth) this.setCardWidth(s.cardWidth);
+        if (s.transSize && s.origSize) this.setFontSizes(s.transSize, s.origSize);
+        if (s.showOrig !== undefined && this.toggleOrigSpeech) {
+          this.toggleOrigSpeech.checked = s.showOrig;
+          document.body.classList.toggle('hide-orig-layer', !s.showOrig);
+        }
       }
     };
   }

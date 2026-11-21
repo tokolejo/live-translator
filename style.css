@@ -779,15 +779,7 @@ body.hide-orig-layer .translated-layer {
 }
 
 .tag-badge {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  flex-shrink: 0;
+  display: none !important;
 }
 
 .tag-badge.trans-badge {
