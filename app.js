@@ -1079,6 +1079,9 @@ class LiveSubPro {
     if (this.announceSpeakerBtn) {
       this.announceSpeakerBtn.addEventListener('click', () => this.announceCurrentSpeaker());
     }
+    if (this.stageAnnouncement) {
+      this.stageAnnouncement.addEventListener('click', () => this.setAnnouncementBanner('clear'));
+    }
 
     // Glossary Tabs & Tools
     if (this.tabTableViewBtn && this.tabRawViewBtn) {
@@ -1490,18 +1493,23 @@ class LiveSubPro {
       return;
     }
     const s = this.activeSpeaker;
-    const icon = '🎤';
     const title = s.geo !== s.eng ? `${s.geo} / ${s.eng}` : s.eng;
     const sub = [s.affiliation, s.topic].filter(Boolean).join(' • ');
 
-    this.currentBanner = { icon, title, sub };
+    // Toggle off if the same speaker banner is already active
+    if (this.currentBanner && this.currentBanner.title === title && this.stageAnnouncement && this.stageAnnouncement.classList.contains('active')) {
+      this.setAnnouncementBanner('clear');
+      return;
+    }
+
+    this.currentBanner = { icon: '', title, sub };
     if (this.stageAnnouncement) {
-      if (this.announcementIcon) this.announcementIcon.textContent = icon;
+      if (this.announcementIcon) this.announcementIcon.textContent = '';
       if (this.announcementTitle) this.announcementTitle.textContent = title;
       if (this.announcementSub) this.announcementSub.textContent = sub;
       this.stageAnnouncement.classList.add('active');
     }
-    this.broadcastBanner(true, icon, title, sub);
+    this.broadcastBanner(true, '', title, sub);
   }
 
   fixSpeechRecognitionErrors(text) {

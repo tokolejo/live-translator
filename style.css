@@ -1779,7 +1779,7 @@ body:hover .floating-btn {
   backdrop-filter: blur(24px);
   border: 2px solid rgba(56, 189, 248, 0.5);
   border-radius: 28px;
-  padding: 44px 70px;
+  padding: 36px 56px;
   text-align: center;
   color: #ffffff;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
@@ -1787,6 +1787,7 @@ body:hover .floating-btn {
   opacity: 0;
   pointer-events: none;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
 .stage-announcement-card.active {
@@ -1796,9 +1797,7 @@ body:hover .floating-btn {
 }
 
 .stage-announcement-icon {
-  font-size: 60px;
-  margin-bottom: 14px;
-  display: block;
+  display: none !important;
 }
 
 .stage-announcement-title {
