@@ -708,6 +708,18 @@ class LiveSubPro {
     this.glossaryItemsList = document.getElementById('glossaryItemsList');
     this.exportGlossaryBtn = document.getElementById('exportGlossaryBtn');
 
+    // Stage Display & Banner Elements
+    this.openStageBtn = document.getElementById('openStageBtn');
+    this.bannerMenuBtn = document.getElementById('bannerMenuBtn');
+    this.bannerDropdown = document.getElementById('bannerDropdown');
+    this.stageAnnouncement = document.getElementById('stageAnnouncement');
+    this.announcementIcon = document.getElementById('announcementIcon');
+    this.announcementTitle = document.getElementById('announcementTitle');
+    this.announcementSub = document.getElementById('announcementSub');
+    this.audioDeviceSelect = document.getElementById('audioDeviceSelect');
+    this.toggleWatchdog = document.getElementById('toggleWatchdog');
+    this.broadcast = new BroadcastChannel('iice_subtitles_sync');
+
     // History Log Elements
     this.openLogBtn = document.getElementById('openLogBtn');
     this.logCountBadge = document.getElementById('logCountBadge');
@@ -737,6 +749,13 @@ class LiveSubPro {
     this.analyser = null;
     this.meterAnimFrame = null;
 
+    // Watchdog & Audio Device State
+    this.selectedAudioDeviceId = localStorage.getItem('subpro_audio_device') || 'default';
+    this.lastSpeechActivityTime = Date.now();
+    this.audioEnergyActive = false;
+    this.watchdogInterval = null;
+    this.currentBanner = null;
+
     // Default: English to Georgian (International conference)
     this.currentSrcLang = 'en-US';
     this.currentTgtLang = 'ka';
@@ -753,7 +772,10 @@ class LiveSubPro {
     this.loadSettings();
     this.loadTranslationLog();
     this.loadGlossary();
+    this.loadAudioDevices();
+    this.startWatchdog();
     this.bindEvents();
+    this.initBroadcastSync();
     this.checkUrlParams();
   }
 
@@ -1022,6 +1044,46 @@ class LiveSubPro {
       this.exportGlossaryBtn.addEventListener('click', () => this.exportGlossaryFile());
     }
 
+    // Stage Display Window Button
+    if (this.openStageBtn) {
+      this.openStageBtn.addEventListener('click', () => this.openStageWindow());
+    }
+
+    // Banner Controls
+    if (this.bannerMenuBtn && this.bannerDropdown) {
+      this.bannerMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.bannerDropdown.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', () => {
+        if (!this.bannerDropdown.classList.contains('hidden')) {
+          this.bannerDropdown.classList.add('hidden');
+        }
+      });
+
+      const bannerBtns = this.bannerDropdown.querySelectorAll('.banner-opt-btn');
+      bannerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-banner');
+          this.setAnnouncementBanner(type);
+          this.bannerDropdown.classList.add('hidden');
+        });
+      });
+    }
+
+    // Audio Device Selector
+    if (this.audioDeviceSelect) {
+      this.audioDeviceSelect.addEventListener('change', (e) => {
+        this.selectedAudioDeviceId = e.target.value;
+        localStorage.setItem('subpro_audio_device', e.target.value);
+        if (this.isListening) {
+          this.stopAudioMeter();
+          this.setupAudioMeter();
+        }
+      });
+    }
+
     // Translation History Log Modal
     if (this.openLogBtn) {
       this.openLogBtn.addEventListener('click', () => this.openHistoryLog());
@@ -1055,7 +1117,12 @@ class LiveSubPro {
         this.toggleFullscreen();
       } else if (e.key === 'c' || e.key === 'C') {
         this.clearScreen();
-      } else if (e.code === 'Space') {
+      } else if (e.key === 'Escape') {
+        this.clearScreen();
+        this.setAnnouncementBanner('clear');
+      } else if (e.key === 'x' || e.key === 'X') {
+        this.swapLanguages();
+      } else if (e.key === 'p' || e.key === 'P' || e.code === 'Space') {
         e.preventDefault();
         this.toggleListening();
       }
@@ -1281,6 +1348,7 @@ class LiveSubPro {
     this.subtitleCard.classList.remove('speaking');
     this.audioBar.style.width = '0%';
     this.lastProcessedSpeech = '';
+    this.broadcastClear();
   }
 
   resetFadeoutTimer() {
@@ -1934,7 +2002,10 @@ class LiveSubPro {
   async startAudioMeter() {
     try {
       if (this.audioStream) return;
-      this.audioStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      const audioConstraints = (this.selectedAudioDeviceId && this.selectedAudioDeviceId !== 'default')
+        ? { deviceId: { exact: this.selectedAudioDeviceId } }
+        : true;
+      this.audioStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
 
@@ -1960,6 +2031,7 @@ class LiveSubPro {
         const avg = sum / bufferLength;
         const percent = Math.min(100, Math.round((avg / 64) * 100));
         this.audioBar.style.width = `${Math.max(4, percent)}%`;
+        this.audioEnergyActive = percent > 14;
 
         if (percent > 20) {
           this.subtitleCard.classList.add('speaking');
@@ -2051,6 +2123,7 @@ class LiveSubPro {
         const activeWords = (finalTranscript || interimTranscript).trim();
 
         if (activeWords) {
+          this.lastSpeechActivityTime = Date.now();
           let displaySpeech = this.cleanDisfluencies(activeWords);
           displaySpeech = this.enforceCinemaLength(displaySpeech);
           this.originalText.innerHTML = `<span>${this.escapeHtml(displaySpeech)}</span>`;
@@ -2058,6 +2131,7 @@ class LiveSubPro {
           this.subtitleCard.classList.remove('faded-out');
           this.subtitleCard.classList.add('speaking');
           this.resetFadeoutTimer();
+          this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, true);
 
           clearTimeout(this.transTimer);
           if (finalTranscript.trim()) {
@@ -2156,6 +2230,7 @@ class LiveSubPro {
         translated = this.enforceCinemaLength(translated);
 
         this.translatedText.innerHTML = `<span>${this.escapeHtml(translated)}</span>`;
+        this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
 
         if (isFinal) {
           this.logTranslation(clauseText, translated, srcCode, tgtCode);
@@ -2240,9 +2315,196 @@ class LiveSubPro {
     this.statusBadge.className = `status-badge status-${type}`;
     this.statusBadge.textContent = msg;
   }
+
+  // --- Dual-Screen Stage Broadcast & Watchdog Methods ---
+
+  initBroadcastSync() {
+    if (!this.broadcast) return;
+    this.broadcast.onmessage = (e) => {
+      if (e.data && e.data.type === 'request_state') {
+        this.broadcastFullState();
+      }
+    };
+  }
+
+  broadcastSubtitles(origHtml, transHtml, isSpeaking) {
+    if (!this.broadcast) return;
+    this.broadcast.postMessage({
+      type: 'subtitles',
+      origHtml,
+      transHtml,
+      origTag: this.originalLangTag ? this.originalLangTag.textContent : '',
+      transTag: this.targetLangTag ? this.targetLangTag.textContent : '',
+      isSpeaking
+    });
+  }
+
+  broadcastClear() {
+    if (!this.broadcast) return;
+    this.broadcast.postMessage({ type: 'clear' });
+  }
+
+  broadcastStyleUpdate() {
+    if (!this.broadcast) return;
+    const style = localStorage.getItem('subpro_overlay_style') || 'style-oled-black';
+    const cardWidth = this.cardWidthSlider ? this.cardWidthSlider.value : (localStorage.getItem('subpro_card_width') || '92');
+    const opacity = this.bgOpacitySlider ? this.bgOpacitySlider.value : (localStorage.getItem('subpro_bg_opacity') || '85');
+    const transSize = this.transSizeSlider ? this.transSizeSlider.value : (localStorage.getItem('subpro_trans_size') || '36');
+    const origSize = this.origSizeSlider ? this.origSizeSlider.value : (localStorage.getItem('subpro_orig_size') || '20');
+    const place = this.positionSelect ? this.positionSelect.value : (localStorage.getItem('subpro_position') || 'pos-bottom');
+    const align = localStorage.getItem('subpro_text_align') || 'align-center';
+    const showOrig = this.toggleOrigSpeech ? this.toggleOrigSpeech.checked : true;
+    const showTrans = this.toggleTransSpeech ? this.toggleTransSpeech.checked : true;
+    const autofade = this.autoFadeSelect ? this.autoFadeSelect.value : '5000';
+
+    this.broadcast.postMessage({
+      type: 'style',
+      bgStyle: style,
+      cardWidth: parseInt(cardWidth, 10),
+      bgOpacity: parseInt(opacity, 10),
+      transSize: parseInt(transSize, 10),
+      origSize: parseInt(origSize, 10),
+      placement: place.replace('pos-', 'place-'),
+      alignment: align.replace('align-', ''),
+      showOrig,
+      showTrans,
+      autofade: parseInt(autofade, 10),
+      customBgColor: localStorage.getItem('subpro_custom_color') || '#0f172a'
+    });
+  }
+
+  broadcastBanner(active, icon, title, sub) {
+    if (!this.broadcast) return;
+    this.broadcast.postMessage({
+      type: 'banner',
+      active,
+      icon,
+      title,
+      sub
+    });
+  }
+
+  broadcastFullState() {
+    this.broadcastStyleUpdate();
+    if (this.currentBanner) {
+      this.broadcastBanner(true, this.currentBanner.icon, this.currentBanner.title, this.currentBanner.sub);
+    }
+    if (this.originalText && this.translatedText) {
+      this.broadcastSubtitles(
+        this.originalText.innerHTML,
+        this.translatedText.innerHTML,
+        this.subtitleCard ? this.subtitleCard.classList.contains('speaking') : false
+      );
+    }
+  }
+
+  openStageWindow() {
+    const win = window.open('stage.html', 'IICE_Stage_Display', 'width=1280,height=720,menubar=no,toolbar=no,location=no,status=no');
+    if (win) {
+      win.focus();
+      setTimeout(() => this.broadcastFullState(), 600);
+    } else {
+      alert('ბრაუზერმა დაბლოკა pop-up ფანჯარა. გთხოვთ დართოთ pop-up ნებართვა მისამართების ზოლში.');
+    }
+  }
+
+  setAnnouncementBanner(type) {
+    if (!this.stageAnnouncement) return;
+    if (type === 'clear') {
+      this.currentBanner = null;
+      this.stageAnnouncement.classList.remove('active');
+      this.broadcastBanner(false);
+      return;
+    }
+
+    let icon = '☕';
+    let title = 'ყავის შესვენება';
+    let sub = 'Coffee Break';
+
+    if (type === 'break') {
+      icon = '☕';
+      title = 'ყავის შესვენება';
+      sub = 'Coffee Break';
+    } else if (type === 'qa') {
+      icon = '❓';
+      title = 'კითხვა-პასუხის სესია';
+      sub = 'Questions & Answers (Q&A)';
+    } else if (type === 'pause') {
+      icon = '⏱️';
+      title = 'ტექნიკური პაუზა';
+      sub = 'Technical Intermission';
+    }
+
+    this.currentBanner = { icon, title, sub };
+    if (this.announcementIcon) this.announcementIcon.textContent = icon;
+    if (this.announcementTitle) this.announcementTitle.textContent = title;
+    if (this.announcementSub) this.announcementSub.textContent = sub;
+
+    this.stageAnnouncement.classList.add('active');
+    this.broadcastBanner(true, icon, title, sub);
+  }
+
+  async loadAudioDevices() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return;
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioInputs = devices.filter(d => d.kind === 'audioinput');
+      if (this.audioDeviceSelect && audioInputs.length > 0) {
+        let optionsHtml = '';
+        audioInputs.forEach((dev, idx) => {
+          const label = dev.label || `მიკროფონი #${idx + 1}`;
+          const isSelected = dev.deviceId === this.selectedAudioDeviceId ? 'selected' : '';
+          optionsHtml += `<option value="${dev.deviceId}" ${isSelected}>🎙️ ${this.escapeHtml(label)}</option>`;
+        });
+        this.audioDeviceSelect.innerHTML = optionsHtml;
+      }
+    } catch (err) {
+      console.warn('Audio device enumeration note:', err);
+    }
+  }
+
+  startWatchdog() {
+    if (this.watchdogInterval) clearInterval(this.watchdogInterval);
+    this.watchdogInterval = setInterval(() => {
+      if (!this.isListening) return;
+      if (this.toggleWatchdog && !this.toggleWatchdog.checked) return;
+
+      const now = Date.now();
+      const timeSinceLastEvent = now - this.lastSpeechActivityTime;
+
+      // If sound energy is present in microphone, but SpeechRecognition hasn't fired in 4.5 seconds
+      if (this.audioEnergyActive && timeSinceLastEvent > 4500) {
+        console.warn('⚡ Watchdog: Silent drop detected from Chrome SpeechRecognition. Auto-healing...');
+        this.lastSpeechActivityTime = now;
+        this.autoHealSpeechRecognition();
+      }
+    }, 2000);
+  }
+
+  autoHealSpeechRecognition() {
+    if (!this.isListening) return;
+    try {
+      if (this.recognition) {
+        this.recognition.abort();
+      }
+    } catch (e) {}
+    setTimeout(() => {
+      if (this.isListening && this.recognition) {
+        try {
+          this.recognition.start();
+          console.log('⚡ Watchdog: SpeechRecognition auto-healed successfully!');
+        } catch (err) {
+          console.warn('Watchdog restart retry:', err);
+        }
+      }
+    }, 120);
+  }
+
 }
 
 // Start application
 window.addEventListener('DOMContentLoaded', () => {
   window.subApp = new LiveSubPro();
+
+
 });

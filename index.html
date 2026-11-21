@@ -236,7 +236,22 @@
 
         <!-- Column 4: Audio & Timing Automation & Presets -->
         <div class="drawer-card">
-          <div class="card-title">🎙️ ავტომატიკა და პროფილები</div>
+          <div class="card-title">🎙️ აუდიო, ავტომატიკა და პროფილები</div>
+
+          <div class="field-group">
+            <label>🎤 მიკროფონის აპარატურა:</label>
+            <select id="audioDeviceSelect" class="form-select">
+              <option value="default">🎙️ ნაგულისხმევი მიკროფონი (Default)</option>
+            </select>
+          </div>
+
+          <div class="toggle-row">
+            <span class="row-label">⚡ Watchdog ავტო-გაცოცხლება</span>
+            <label class="switch">
+              <input type="checkbox" id="toggleWatchdog" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
 
           <div class="field-group">
             <label>ტექსტის გაქრობა სიჩუმისას:</label>
@@ -386,6 +401,13 @@
         <button id="closeLogBottomBtn" class="btn btn-primary">დახურვა</button>
       </div>
     </div>
+  </div>
+
+  <!-- Announcement Overlay Card (Intermission, Coffee break, Q&A) -->
+  <div id="stageAnnouncement" class="stage-announcement-card">
+    <span id="announcementIcon" class="stage-announcement-icon">☕</span>
+    <div id="announcementTitle" class="stage-announcement-title">ყავის შესვენება</div>
+    <div id="announcementSub" class="stage-announcement-sub">Coffee Break</div>
   </div>
 
   <!-- Stage Subtitle Overlay Container (OBS & Presentation View) -->
