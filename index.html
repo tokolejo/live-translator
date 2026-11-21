@@ -98,9 +98,39 @@
             <div id="speakerCtxAff" class="ctx-aff"></div>
           </div>
 
+          <div id="autoSpeakerPrompt" class="auto-speaker-prompt hidden">
+            <span id="autoSpeakerLabel" class="auto-speaker-label">💡 გადავრთოთ მომხსენებელზე?</span>
+            <div class="auto-speaker-actions">
+              <button type="button" id="acceptAutoSpeakerBtn" class="btn btn-xs btn-primary">✓ გადართვა</button>
+              <button type="button" id="dismissAutoSpeakerBtn" class="btn btn-xs btn-secondary" title="დახურვა">✕</button>
+            </div>
+          </div>
+
           <button id="announceSpeakerBtn" class="btn btn-outline-full" title="არჩეული მომხსენებლის წარდგენის ბანერი პროექტორზე">
             📢 პროექტორზე წარდგენა
           </button>
+        </div>
+      </div>
+
+      <!-- Session Playlist / Speaker Queue Card -->
+      <div class="drawer-card" data-card-id="playlist">
+        <button type="button" class="card-collapse-header">
+          <span class="card-title">⏭️ დღის განრიგი <span id="playlistCountPill" class="mini-count-pill">0</span></span>
+          <span class="collapse-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <div class="playlist-toolbar">
+            <button type="button" id="addSpeakerToPlaylistBtn" class="btn btn-xs btn-secondary" title="მიმდინარე მომხსენებლის დამატება რიგში">+ დამატება</button>
+            <button type="button" id="loadTrackPlaylistBtn" class="btn btn-xs btn-secondary" title="არჩეული სექციის მომხსენებლების ჩატვირთვა">📥 სექცია</button>
+            <button type="button" id="clearPlaylistBtn" class="btn btn-xs btn-danger-outline" title="რიგის გასუფთავება">🗑️</button>
+          </div>
+          <div id="sessionPlaylistItems" class="playlist-items-list">
+            <div class="playlist-empty-hint">რიგი ცარიელია — დაამატეთ მომხსენებლები ან ჩატვირთეთ სექცია.</div>
+          </div>
+          <div class="playlist-nav-footer">
+            <button type="button" id="prevSpeakerBtn" class="btn btn-xs btn-secondary">⏮️ წინა</button>
+            <button type="button" id="nextSpeakerBtn" class="btn btn-xs btn-primary" style="flex: 1;">⏭️ შემდეგი მომხსენებელი</button>
+          </div>
         </div>
       </div>
 
@@ -174,6 +204,9 @@
                     <span class="placeholder-hint">დააჭირეთ „ჩართვა“-ს და დაიწყეთ საუბარი...</span>
                   </p>
                 </div>
+                <div class="speech-layer rolling-prev-layer hidden" id="rollingPrevLayer">
+                  <p class="speech-text rolling-prev-text" id="rollingPrevText"></p>
+                </div>
                 <div class="speech-layer translated-layer" id="translatedLayer">
                   <span class="tag-badge trans-badge" id="targetLangTag">GEO</span>
                   <p class="speech-text translated-text" id="translatedText">
@@ -239,46 +272,62 @@
             </select>
           </div>
 
-          <div class="toggle-row">
-            <span class="row-label">⚡ Watchdog ავტო-გაცოცხლება</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleWatchdog" checked>
-              <span class="slider"></span>
-            </label>
+          <div class="slider-group">
+            <div class="slider-head">
+              <span>🎚️ ხმაურის ზღვარი (Noise Gate):</span>
+              <span id="noiseGateVal" class="val-pill">8%</span>
+            </div>
+            <input type="range" id="noiseGateSlider" min="0" max="40" value="8" class="range-input">
           </div>
 
-          <div class="toggle-row">
-            <span class="row-label">🧹 პარაზიტი სიტყვების გაწმენდა</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleCleanSpeech" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+          <div class="sub-accordion" data-sub-id="audio-ai">
+            <button type="button" class="sub-acc-header">
+              <span>⚙️ მეტყველების დამუშავება</span>
+              <span class="sub-acc-chevron">▾</span>
+            </button>
+            <div class="sub-acc-body">
+              <div class="toggle-row">
+                <span class="row-label">⚡ Watchdog ავტო-გაცოცხლება</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleWatchdog" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
 
-          <div class="toggle-row">
-            <span class="row-label">🔤 ჭკვიანი პუნქტუაცია</span>
-            <label class="switch">
-              <input type="checkbox" id="togglePunctuation" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+              <div class="toggle-row">
+                <span class="row-label">🧹 პარაზიტი სიტყვების გაწმენდა</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleCleanSpeech" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
 
-          <div class="toggle-row">
-            <span class="row-label">📺 2-ხაზიანი ლიმიტი (კინო)</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleTwoLineLimit" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+              <div class="toggle-row">
+                <span class="row-label">🔤 ჭკვიანი პუნქტუაცია</span>
+                <label class="switch">
+                  <input type="checkbox" id="togglePunctuation" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
 
-          <div class="field-group">
-            <label>ტექსტის გაქრობა სიჩუმისას:</label>
-            <select id="autoFadeSelect" class="form-select">
-              <option value="5000" selected>⏱️ 5 წამში (რეკომენდებული)</option>
-              <option value="8000">⏱️ 8 წამში</option>
-              <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
-              <option value="0">🚫 არასდროს (დარჩეს)</option>
-            </select>
+              <div class="toggle-row">
+                <span class="row-label">📺 2-ხაზიანი ლიმიტი (კინო)</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleTwoLineLimit" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="field-group">
+                <label>ტექსტის გაქრობა სიჩუმისას:</label>
+                <select id="autoFadeSelect" class="form-select">
+                  <option value="5000" selected>⏱️ 5 წამში (რეკომენდებული)</option>
+                  <option value="8000">⏱️ 8 წამში</option>
+                  <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
+                  <option value="0">🚫 არასდროს (დარჩეს)</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -298,101 +347,133 @@
             <button type="button" class="btn btn-outline-preset" id="presetObsBtn">🪟 OBS</button>
           </div>
 
-          <div class="field-group">
-            <label>დიზაინის სტილი:</label>
-            <select id="overlayStyleSelect" class="form-select">
-              <option value="style-keynote-pill">🍏 Apple Keynote Pill</option>
-              <option value="style-oled-black" selected>🌌 OLED Pure Black (დარბაზი)</option>
-              <option value="style-cinema-fade">🎬 Cinema Bottom Fade</option>
-              <option value="style-broadcast-ticker">📺 Broadcast News Ticker</option>
-              <option value="style-cyber-neon">💎 Cyber Neon</option>
-              <option value="style-academic-slate">🏛️ Academic Slate</option>
-              <option value="style-frosted-glass">🔮 Frosted Glass</option>
-              <option value="style-ghost-outline">👻 Ghost Outline</option>
-              <option value="style-clean-transparent">🪟 Clean Transparent</option>
-              <option value="style-light-paper">☀️ Studio Light (თეთრი)</option>
-              <option value="style-chroma-green">🟩 Green Screen (OBS)</option>
-              <option value="style-chroma-blue">🟦 Blue Screen (OBS)</option>
-              <option value="style-custom-color">🎨 Custom Color</option>
-            </select>
-          </div>
+          <div class="sub-accordion" data-sub-id="vis-style">
+            <button type="button" class="sub-acc-header">
+              <span>🎨 დიზაინი და ფენები</span>
+              <span class="sub-acc-chevron">▾</span>
+            </button>
+            <div class="sub-acc-body">
+              <div class="field-group">
+                <label>დიზაინის სტილი:</label>
+                <select id="overlayStyleSelect" class="form-select">
+                  <option value="style-keynote-pill">🍏 Apple Keynote Pill</option>
+                  <option value="style-oled-black" selected>🌌 OLED Pure Black (დარბაზი)</option>
+                  <option value="style-cinema-fade">🎬 Cinema Bottom Fade</option>
+                  <option value="style-broadcast-ticker">📺 Broadcast News Ticker</option>
+                  <option value="style-cyber-neon">💎 Cyber Neon</option>
+                  <option value="style-academic-slate">🏛️ Academic Slate</option>
+                  <option value="style-frosted-glass">🔮 Frosted Glass</option>
+                  <option value="style-ghost-outline">👻 Ghost Outline</option>
+                  <option value="style-clean-transparent">🪟 Clean Transparent</option>
+                  <option value="style-light-paper">☀️ Studio Light (თეთრი)</option>
+                  <option value="style-chroma-green">🟩 Green Screen (OBS)</option>
+                  <option value="style-chroma-blue">🟦 Blue Screen (OBS)</option>
+                  <option value="style-custom-color">🎨 Custom Color</option>
+                </select>
+              </div>
 
-          <div class="field-group" id="customColorGroup" style="display: none;">
-            <label>საკუთარი ფერი:</label>
-            <div class="color-picker-row">
-              <input type="color" id="customBgColorPicker" value="#0f172a" class="color-picker-input">
-              <input type="text" id="customBgColorHex" value="#0f172a" class="form-input-hex" maxlength="7">
+              <div class="field-group" id="customColorGroup" style="display: none;">
+                <label>საკუთარი ფერი:</label>
+                <div class="color-picker-row">
+                  <input type="color" id="customBgColorPicker" value="#0f172a" class="color-picker-input">
+                  <input type="text" id="customBgColorHex" value="#0f172a" class="form-input-hex" maxlength="7">
+                </div>
+              </div>
+
+              <div class="toggle-row">
+                <span class="row-label">სპიკერის ტექსტი (ორიგინალი)</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleOrigSpeech" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-row">
+                <span class="row-label">სინქრონული თარგმანი</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleTransSpeech" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggle-row">
+                <span class="row-label">👁️ 2-ხაზიანი კონტექსტი</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleRollingContext" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="slider-group" id="rollingOpacityGroup">
+                <div class="slider-head">
+                  <span>წინა ხაზის გამჭვირვალობა:</span>
+                  <span id="rollingOpacityVal" class="val-pill">50%</span>
+                </div>
+                <input type="range" id="rollingOpacitySlider" min="10" max="90" value="50" class="range-input">
+              </div>
             </div>
           </div>
 
-          <div class="toggle-row">
-            <span class="row-label">სპიკერის ტექსტი (ორიგინალი)</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleOrigSpeech" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+          <div class="sub-accordion" data-sub-id="vis-layout">
+            <button type="button" class="sub-acc-header">
+              <span>📐 ზომა, სიგანე და პოზიცია</span>
+              <span class="sub-acc-chevron">▾</span>
+            </button>
+            <div class="sub-acc-body">
+              <div class="slider-group">
+                <div class="slider-head">
+                  <span>თარგმანის შრიფტი:</span>
+                  <span id="transSizeVal" class="val-pill">36px</span>
+                </div>
+                <input type="range" id="transSizeSlider" min="18" max="120" value="36" class="range-input">
+              </div>
 
-          <div class="toggle-row">
-            <span class="row-label">სინქრონული თარგმანი</span>
-            <label class="switch">
-              <input type="checkbox" id="toggleTransSpeech" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
+              <div class="slider-group">
+                <div class="slider-head">
+                  <span>ორიგინალის შრიფტი:</span>
+                  <span id="origSizeVal" class="val-pill">20px</span>
+                </div>
+                <input type="range" id="origSizeSlider" min="14" max="80" value="20" class="range-input">
+              </div>
 
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>თარგმანის შრიფტი:</span>
-              <span id="transSizeVal" class="val-pill">36px</span>
-            </div>
-            <input type="range" id="transSizeSlider" min="18" max="120" value="36" class="range-input">
-          </div>
+              <div class="slider-group">
+                <div class="slider-head">
+                  <span>სიგანე პროექტორზე:</span>
+                  <span id="cardWidthVal" class="val-pill">92%</span>
+                </div>
+                <input type="range" id="cardWidthSlider" min="40" max="100" value="92" class="range-input">
+                <div class="quick-preset-chips">
+                  <button type="button" class="chip-btn" data-width="100">100%</button>
+                  <button type="button" class="chip-btn" data-width="92">92%</button>
+                  <button type="button" class="chip-btn" data-width="70">70%</button>
+                </div>
+              </div>
 
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>ორიგინალის შრიფტი:</span>
-              <span id="origSizeVal" class="val-pill">20px</span>
-            </div>
-            <input type="range" id="origSizeSlider" min="14" max="80" value="20" class="range-input">
-          </div>
+              <div class="slider-group">
+                <div class="slider-head">
+                  <span>ფონის გამჭვირვალობა:</span>
+                  <span id="bgOpacityVal" class="val-pill">85%</span>
+                </div>
+                <input type="range" id="bgOpacitySlider" min="0" max="100" value="85" class="range-input">
+              </div>
 
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>სიგანე პროექტორზე:</span>
-              <span id="cardWidthVal" class="val-pill">92%</span>
-            </div>
-            <input type="range" id="cardWidthSlider" min="40" max="100" value="92" class="range-input">
-            <div class="quick-preset-chips">
-              <button type="button" class="chip-btn" data-width="100">100%</button>
-              <button type="button" class="chip-btn" data-width="92">92%</button>
-              <button type="button" class="chip-btn" data-width="70">70%</button>
-            </div>
-          </div>
-
-          <div class="slider-group">
-            <div class="slider-head">
-              <span>ფონის გამჭვირვალობა:</span>
-              <span id="bgOpacityVal" class="val-pill">85%</span>
-            </div>
-            <input type="range" id="bgOpacitySlider" min="0" max="100" value="85" class="range-input">
-          </div>
-
-          <div class="field-group">
-            <label>პოზიცია და სწორება:</label>
-            <div style="display: flex; gap: 6px;">
-              <select id="positionSelect" class="form-select" style="flex: 1;">
-                <option value="pos-bottom" selected>⬇️ ქვევით</option>
-                <option value="pos-bottom-flush">⏹️ სულ ძირში</option>
-                <option value="pos-top">⬆️ ზევით</option>
-                <option value="pos-corner">🏷️ კუთხეში</option>
-                <option value="pos-center">📺 ცენტრში</option>
-              </select>
-              <select id="textAlignSelect" class="form-select" style="flex: 1;">
-                <option value="align-center" selected>↔️ ცენტრი</option>
-                <option value="align-left">⬅️ მარცხნივ</option>
-                <option value="align-right">➡️ მარჯვნივ</option>
-              </select>
+              <div class="field-group">
+                <label>პოზიცია და სწორება:</label>
+                <div style="display: flex; gap: 6px;">
+                  <select id="positionSelect" class="form-select" style="flex: 1;">
+                    <option value="pos-bottom" selected>⬇️ ქვევით</option>
+                    <option value="pos-bottom-flush">⏹️ სულ ძირში</option>
+                    <option value="pos-top">⬆️ ზევით</option>
+                    <option value="pos-corner">🏷️ კუთხეში</option>
+                    <option value="pos-center">📺 ცენტრში</option>
+                  </select>
+                  <select id="textAlignSelect" class="form-select" style="flex: 1;">
+                    <option value="align-center" selected>↔️ ცენტრი</option>
+                    <option value="align-left">⬅️ მარცხნივ</option>
+                    <option value="align-right">➡️ მარჯვნივ</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>

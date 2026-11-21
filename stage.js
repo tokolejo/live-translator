@@ -10,6 +10,8 @@ class StageDisplay {
     this.overlayContainer = document.getElementById('overlayContainer');
     this.subtitleCard = document.getElementById('subtitleCard');
     this.originalText = document.getElementById('originalText');
+    this.rollingPrevLayer = document.getElementById('rollingPrevLayer');
+    this.rollingPrevText = document.getElementById('rollingPrevText');
     this.translatedText = document.getElementById('translatedText');
     this.stageAnnouncement = document.getElementById('stageAnnouncement');
     this.announcementIcon = document.getElementById('announcementIcon');
@@ -45,6 +47,8 @@ class StageDisplay {
       align: 'align-center',
       showOrig: true,
       showTrans: true,
+      rollingEnabled: true,
+      rollingOpacity: 50,
       twoLines: true,
       autofade: 5000,
       customBgColor: '#0f172a'
@@ -72,6 +76,8 @@ class StageDisplay {
     this.state.align = localStorage.getItem('subpro_text_align') || 'align-center';
     this.state.showOrig = localStorage.getItem('subpro_show_orig') !== 'false';
     this.state.showTrans = localStorage.getItem('subpro_show_trans') !== 'false';
+    this.state.rollingEnabled = localStorage.getItem('subpro_rolling_enabled') !== 'false';
+    this.state.rollingOpacity = parseInt(localStorage.getItem('subpro_rolling_opacity') || '50', 10);
     this.state.twoLines = localStorage.getItem('subpro_two_lines') !== 'false';
     this.state.autofade = parseInt(localStorage.getItem('subpro_autofade') || '5000', 10);
     this.state.customBgColor = localStorage.getItem('subpro_custom_color') || '#0f172a';
@@ -253,6 +259,11 @@ class StageDisplay {
     if (data.origHtml !== undefined && this.originalText) {
       this.originalText.innerHTML = data.origHtml;
     }
+    if (data.rollingPrevHtml !== undefined && this.rollingPrevText && this.rollingPrevLayer) {
+      this.rollingPrevText.innerHTML = data.rollingPrevHtml;
+      const hasPrev = Boolean(data.rollingPrevHtml && data.rollingPrevHtml.trim());
+      this.rollingPrevLayer.classList.toggle('hidden', !hasPrev || !this.state.rollingEnabled);
+    }
     if (data.transHtml !== undefined && this.translatedText) {
       this.translatedText.innerHTML = data.transHtml;
     }
@@ -271,6 +282,8 @@ class StageDisplay {
 
   clearScreen() {
     if (this.originalText) this.originalText.innerHTML = '';
+    if (this.rollingPrevText) this.rollingPrevText.innerHTML = '';
+    if (this.rollingPrevLayer) this.rollingPrevLayer.classList.add('hidden');
     if (this.translatedText) this.translatedText.innerHTML = '';
     if (this.subtitleCard) {
       this.subtitleCard.classList.add('faded-out');
@@ -361,6 +374,18 @@ class StageDisplay {
     if (data.showTrans !== undefined) {
       document.body.classList.toggle('hide-trans-layer', !data.showTrans);
     }
+    if (data.rollingEnabled !== undefined) {
+      document.body.classList.toggle('hide-rolling-context', !data.rollingEnabled);
+      if (this.rollingPrevLayer) {
+        const hasPrev = Boolean(this.rollingPrevText && this.rollingPrevText.innerHTML.trim());
+        this.rollingPrevLayer.classList.toggle('hidden', !hasPrev || !data.rollingEnabled);
+      }
+    }
+    if (data.rollingOpacity !== undefined) {
+      const opVal = parseInt(data.rollingOpacity, 10);
+      const normOp = (!isNaN(opVal) ? opVal : 50) / 100;
+      document.documentElement.style.setProperty('--rolling-prev-opacity', normOp);
+    }
     if (data.twoLines !== undefined) {
       document.body.classList.toggle('cinema-two-lines', data.twoLines);
     }
@@ -372,7 +397,7 @@ class StageDisplay {
   handleBanner(data) {
     if (!this.stageAnnouncement) return;
     if (data.active) {
-      if (this.announcementIcon) this.announcementIcon.textContent = data.icon || '☕';
+      if (this.announcementIcon) this.announcementIcon.textContent = (data.icon !== undefined) ? data.icon : '☕';
       if (this.announcementTitle) this.announcementTitle.textContent = data.title || '';
       if (this.announcementSub) this.announcementSub.textContent = data.sub || '';
       this.stageAnnouncement.classList.add('active');

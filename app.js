@@ -654,10 +654,16 @@ class LiveSubPro {
     this.toggleCleanSpeech = document.getElementById('toggleCleanSpeech');
     this.togglePunctuation = document.getElementById('togglePunctuation');
     this.toggleTwoLineLimit = document.getElementById('toggleTwoLineLimit');
+    this.noiseGateSlider = document.getElementById('noiseGateSlider');
+    this.noiseGateVal = document.getElementById('noiseGateVal');
 
     // Drawer Controls - Visibility & Typography
     this.toggleOrigSpeech = document.getElementById('toggleOrigSpeech');
     this.toggleTransSpeech = document.getElementById('toggleTransSpeech');
+    this.toggleRollingContext = document.getElementById('toggleRollingContext');
+    this.rollingOpacitySlider = document.getElementById('rollingOpacitySlider');
+    this.rollingOpacityVal = document.getElementById('rollingOpacityVal');
+    this.rollingOpacityGroup = document.getElementById('rollingOpacityGroup');
     this.transSizeSlider = document.getElementById('transSizeSlider');
     this.transSizeVal = document.getElementById('transSizeVal');
     this.origSizeSlider = document.getElementById('origSizeSlider');
@@ -718,6 +724,8 @@ class LiveSubPro {
     this.overlayContainer = document.getElementById('overlayContainer');
     this.subtitleCard = document.getElementById('subtitleCard');
     this.originalText = document.getElementById('originalText');
+    this.rollingPrevLayer = document.getElementById('rollingPrevLayer');
+    this.rollingPrevText = document.getElementById('rollingPrevText');
     this.translatedText = document.getElementById('translatedText');
     this.originalLangTag = document.getElementById('originalLangTag');
     this.targetLangTag = document.getElementById('targetLangTag');
@@ -773,7 +781,24 @@ class LiveSubPro {
     this.trackSelect = document.getElementById('trackSelect');
     this.speakerSelect = document.getElementById('speakerSelect');
     this.announceSpeakerBtn = document.getElementById('announceSpeakerBtn');
+    this.autoSpeakerPrompt = document.getElementById('autoSpeakerPrompt');
+    this.autoSpeakerLabel = document.getElementById('autoSpeakerLabel');
+    this.acceptAutoSpeakerBtn = document.getElementById('acceptAutoSpeakerBtn');
+    this.dismissAutoSpeakerBtn = document.getElementById('dismissAutoSpeakerBtn');
     this.activeSpeaker = null;
+    this.pendingAutoSpeaker = null;
+    this.dismissedSpeakerMap = new Map();
+
+    // Session Playlist Elements
+    this.addSpeakerToPlaylistBtn = document.getElementById('addSpeakerToPlaylistBtn');
+    this.loadTrackPlaylistBtn = document.getElementById('loadTrackPlaylistBtn');
+    this.clearPlaylistBtn = document.getElementById('clearPlaylistBtn');
+    this.sessionPlaylistItems = document.getElementById('sessionPlaylistItems');
+    this.prevSpeakerBtn = document.getElementById('prevSpeakerBtn');
+    this.nextSpeakerBtn = document.getElementById('nextSpeakerBtn');
+    this.playlistCountPill = document.getElementById('playlistCountPill');
+    this.sessionPlaylist = [];
+    this.playlistIndex = -1;
 
     // State Variables
     this.isListening = false;
@@ -787,6 +812,8 @@ class LiveSubPro {
     this.translationLog = [];
     this.transCache = new Map();
     this.lastProcessedSpeech = '';
+    this.prevFinalTranslated = '';
+    this.activeFinalTranslated = '';
     this.audioContext = null;
     this.audioStream = null;
     this.analyser = null;
@@ -794,6 +821,8 @@ class LiveSubPro {
 
     // Watchdog & Audio Device State
     this.selectedAudioDeviceId = localStorage.getItem('subpro_audio_device') || 'default';
+    this.noiseGateThreshold = parseInt(localStorage.getItem('subpro_noise_gate') ?? '8', 10);
+    this.lastNoisePassTime = Date.now();
     this.lastSpeechActivityTime = Date.now();
     this.audioEnergyActive = false;
     this.watchdogInterval = null;
@@ -822,7 +851,9 @@ class LiveSubPro {
     this.loadTranslationLog();
     this.loadGlossary();
     this.initTrackAndSpeakers();
+    this.initSessionPlaylist();
     this.initCollapsibleCards();
+    this.initSubAccordions();
     this.loadAudioDevices();
     this.startWatchdog();
     this.bindEvents();
@@ -927,6 +958,15 @@ class LiveSubPro {
       this.ensurePreviewVisible();
     });
 
+    if (this.noiseGateSlider) {
+      this.noiseGateSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10) || 0;
+        this.noiseGateThreshold = val;
+        if (this.noiseGateVal) this.noiseGateVal.textContent = `${val}%`;
+        localStorage.setItem('subpro_noise_gate', val);
+      });
+    }
+
     // Layer Visibilities
     this.toggleOrigSpeech.addEventListener('change', (e) => {
       document.body.classList.toggle('hide-orig-layer', !e.target.checked);
@@ -939,6 +979,20 @@ class LiveSubPro {
       localStorage.setItem('subpro_show_trans', e.target.checked);
       this.ensurePreviewVisible();
     });
+
+    if (this.toggleRollingContext) {
+      this.toggleRollingContext.addEventListener('change', (e) => {
+        this.applyRollingContextState(e.target.checked, this.rollingOpacitySlider ? this.rollingOpacitySlider.value : 50);
+        this.broadcastStyleUpdate();
+      });
+    }
+
+    if (this.rollingOpacitySlider) {
+      this.rollingOpacitySlider.addEventListener('input', (e) => {
+        this.applyRollingContextState(this.toggleRollingContext ? this.toggleRollingContext.checked : true, e.target.value);
+        this.broadcastStyleUpdate();
+      });
+    }
 
     // Font Sizes
     this.transSizeSlider.addEventListener('input', (e) => {
@@ -1075,35 +1129,41 @@ class LiveSubPro {
     }
     if (this.speakerSelect) {
       this.speakerSelect.addEventListener('change', (e) => {
-        const val = e.target.value;
-        this.activeSpeaker = (typeof IICE_SPEAKERS !== 'undefined')
-          ? IICE_SPEAKERS.find(s => s.id === val) || null
-          : null;
-        const ctxBox = document.getElementById('speakerContextCard');
-        const ctxName = document.getElementById('speakerCtxName');
-        const ctxAff = document.getElementById('speakerCtxAff');
-        if (ctxBox && ctxName && ctxAff) {
-          if (this.activeSpeaker) {
-            ctxName.textContent = this.activeSpeaker.geo !== this.activeSpeaker.eng
-              ? `${this.activeSpeaker.geo} / ${this.activeSpeaker.eng}`
-              : this.activeSpeaker.eng;
-            const abs = (typeof IICE_ABSTRACTS_DB !== 'undefined') ? IICE_ABSTRACTS_DB[this.activeSpeaker.id] : null;
-            let meta = [this.activeSpeaker.affiliation, this.activeSpeaker.type].filter(Boolean).join(' • ');
-            if (abs) {
-              const kwCount = (abs.kwg ? abs.kwg.length : 0) + (abs.kwe ? abs.kwe.length : 0);
-              const pairCount = abs.pairs ? abs.pairs.length : 0;
-              const titleText = this.currentSrcLang.startsWith('ka') ? (abs.tg || abs.te) : (abs.te || abs.tg);
-              meta += `\n📘 თეზისი: ${pairCount} წყვილი • ${kwCount} ტერმინი`;
-              if (titleText) meta += `\n„${titleText.slice(0, 95)}${titleText.length > 95 ? '...' : ''}“`;
-            }
-            ctxAff.style.whiteSpace = 'pre-line';
-            ctxAff.textContent = meta;
-            ctxBox.classList.remove('hidden');
-          } else {
-            ctxBox.classList.add('hidden');
-          }
-        }
+        this.selectSpeakerById(e.target.value);
       });
+    }
+    if (this.acceptAutoSpeakerBtn) {
+      this.acceptAutoSpeakerBtn.addEventListener('click', () => {
+        if (this.pendingAutoSpeaker) {
+          this.selectSpeakerById(this.pendingAutoSpeaker.id, true);
+        }
+        this.hideAutoSpeakerPrompt();
+      });
+    }
+    if (this.dismissAutoSpeakerBtn) {
+      this.dismissAutoSpeakerBtn.addEventListener('click', () => {
+        if (this.pendingAutoSpeaker) {
+          this.dismissedSpeakerMap.set(this.pendingAutoSpeaker.id, Date.now());
+        }
+        this.hideAutoSpeakerPrompt();
+      });
+    }
+
+    // Session Playlist Controls
+    if (this.addSpeakerToPlaylistBtn) {
+      this.addSpeakerToPlaylistBtn.addEventListener('click', () => this.addActiveSpeakerToPlaylist());
+    }
+    if (this.loadTrackPlaylistBtn) {
+      this.loadTrackPlaylistBtn.addEventListener('click', () => this.loadTrackSpeakersToPlaylist());
+    }
+    if (this.clearPlaylistBtn) {
+      this.clearPlaylistBtn.addEventListener('click', () => this.clearSessionPlaylist());
+    }
+    if (this.prevSpeakerBtn) {
+      this.prevSpeakerBtn.addEventListener('click', () => this.stepPlaylist(-1));
+    }
+    if (this.nextSpeakerBtn) {
+      this.nextSpeakerBtn.addEventListener('click', () => this.stepPlaylist(1));
     }
     if (this.announceSpeakerBtn) {
       this.announceSpeakerBtn.addEventListener('click', () => this.announceCurrentSpeaker());
@@ -1475,6 +1535,10 @@ class LiveSubPro {
   clearScreen() {
     this.originalText.innerHTML = '<span class="placeholder-hint">გასუფთავებულია...</span>';
     this.translatedText.innerHTML = '<span class="placeholder-hint">გასუფთავებულია...</span>';
+    if (this.rollingPrevText) this.rollingPrevText.innerHTML = '';
+    if (this.rollingPrevLayer) this.rollingPrevLayer.classList.add('hidden');
+    this.prevFinalTranslated = '';
+    this.activeFinalTranslated = '';
     this.subtitleCard.classList.remove('speaking');
     this.audioBar.style.width = '0%';
     this.lastProcessedSpeech = '';
@@ -1522,6 +1586,294 @@ class LiveSubPro {
         });
       }
     });
+  }
+
+  initSubAccordions() {
+    let collapsedSubs = [];
+    try {
+      const saved = localStorage.getItem('subpro_collapsed_subs');
+      collapsedSubs = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      collapsedSubs = [];
+    }
+
+    document.querySelectorAll('.sub-accordion[data-sub-id]').forEach(acc => {
+      const sid = acc.getAttribute('data-sub-id');
+      if (collapsedSubs.includes(sid)) {
+        acc.classList.add('collapsed');
+      }
+      const btn = acc.querySelector('.sub-acc-header');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          acc.classList.toggle('collapsed');
+          const nextCollapsed = Array.from(document.querySelectorAll('.sub-accordion[data-sub-id].collapsed'))
+            .map(el => el.getAttribute('data-sub-id'));
+          try {
+            localStorage.setItem('subpro_collapsed_subs', JSON.stringify(nextCollapsed));
+          } catch (e) {}
+        });
+      }
+    });
+  }
+
+  selectSpeakerById(speakerId, ensureTrackVisible = false) {
+    const sp = (typeof IICE_SPEAKERS !== 'undefined')
+      ? IICE_SPEAKERS.find(s => s.id === speakerId) || null
+      : null;
+
+    if (ensureTrackVisible && sp && this.trackSelect && this.trackSelect.value !== 'all' && this.trackSelect.value !== sp.topic) {
+      this.trackSelect.value = 'all';
+      localStorage.setItem('subpro_active_track', 'all');
+      this.populateSpeakers('all');
+    }
+
+    this.activeSpeaker = sp;
+    if (this.speakerSelect) {
+      this.speakerSelect.value = sp ? sp.id : '';
+    }
+
+    const ctxBox = document.getElementById('speakerContextCard');
+    const ctxName = document.getElementById('speakerCtxName');
+    const ctxAff = document.getElementById('speakerCtxAff');
+    if (ctxBox && ctxName && ctxAff) {
+      if (sp) {
+        ctxName.textContent = sp.geo !== sp.eng ? `${sp.geo} / ${sp.eng}` : sp.eng;
+        const abs = (typeof IICE_ABSTRACTS_DB !== 'undefined') ? IICE_ABSTRACTS_DB[sp.id] : null;
+        let meta = [sp.affiliation, sp.type].filter(Boolean).join(' • ');
+        if (abs) {
+          const kwCount = (abs.kwg ? abs.kwg.length : 0) + (abs.kwe ? abs.kwe.length : 0);
+          const pairCount = abs.pairs ? abs.pairs.length : 0;
+          const titleText = this.currentSrcLang.startsWith('ka') ? (abs.tg || abs.te) : (abs.te || abs.tg);
+          meta += `\n📘 თეზისი: ${pairCount} წყვილი • ${kwCount} ტერმინი`;
+          if (titleText) meta += `\n„${titleText.slice(0, 95)}${titleText.length > 95 ? '...' : ''}“`;
+        }
+        ctxAff.style.whiteSpace = 'pre-line';
+        ctxAff.textContent = meta;
+        ctxBox.classList.remove('hidden');
+      } else {
+        ctxBox.classList.add('hidden');
+      }
+    }
+
+    if (sp) {
+      const idx = this.sessionPlaylist.indexOf(sp.id);
+      if (idx !== -1) {
+        this.playlistIndex = idx;
+        this.saveAndRenderPlaylist();
+      }
+      this.hideAutoSpeakerPrompt();
+    }
+  }
+
+  showAutoSpeakerPrompt(speaker) {
+    if (!this.autoSpeakerPrompt || !this.autoSpeakerLabel || !speaker) return;
+    if (this.activeSpeaker && this.activeSpeaker.id === speaker.id) return;
+    const dismissedAt = this.dismissedSpeakerMap.get(speaker.id);
+    if (dismissedAt && (Date.now() - dismissedAt) < 60000) return;
+
+    this.pendingAutoSpeaker = speaker;
+    const shortName = speaker.geo && speaker.geo !== speaker.eng ? speaker.geo : speaker.eng;
+    this.autoSpeakerLabel.textContent = `💡 გადავრთოთ: ${shortName}?`;
+    this.autoSpeakerPrompt.classList.remove('hidden');
+  }
+
+  hideAutoSpeakerPrompt() {
+    this.pendingAutoSpeaker = null;
+    if (this.autoSpeakerPrompt) {
+      this.autoSpeakerPrompt.classList.add('hidden');
+    }
+  }
+
+  detectSpeakerInSpeech(text) {
+    if (!text || text.trim().length < 5 || typeof IICE_SPEAKERS === 'undefined') return null;
+    const normalized = text.toLowerCase().trim();
+    let bestSpeaker = null;
+    let bestScore = 0;
+
+    for (const s of IICE_SPEAKERS) {
+      let score = 0;
+      const gParts = (s.geo || '').toLowerCase().trim().split(/\s+/).filter(Boolean);
+      const eParts = (s.eng || '').toLowerCase().trim().split(/\s+/).filter(Boolean);
+
+      if (gParts.length >= 2) {
+        const last = gParts[gParts.length - 1];
+        const first = gParts[0];
+        if (last.length >= 5) {
+          const lastStem = last.endsWith('ი') ? last.slice(0, -1) : last;
+          if (normalized.includes(lastStem)) {
+            score += 2;
+            const firstStem = first.length >= 4 ? (first.endsWith('ი') ? first.slice(0, -1) : first) : first;
+            if (firstStem.length >= 3 && normalized.includes(firstStem)) {
+              score += 3;
+            }
+          }
+        }
+      }
+
+      if (eParts.length >= 2) {
+        const eLast = eParts[eParts.length - 1];
+        const eFirst = eParts[0];
+        if (eLast.length >= 5 && normalized.includes(eLast)) {
+          score += 2;
+          if (eFirst.length >= 3 && normalized.includes(eFirst)) {
+            score += 3;
+          }
+        }
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestSpeaker = s;
+      }
+    }
+
+    return bestScore >= 2 ? bestSpeaker : null;
+  }
+
+  initSessionPlaylist() {
+    try {
+      const saved = localStorage.getItem('subpro_session_playlist');
+      this.sessionPlaylist = saved ? JSON.parse(saved) : [];
+      if (!Array.isArray(this.sessionPlaylist)) this.sessionPlaylist = [];
+      const savedIdx = parseInt(localStorage.getItem('subpro_playlist_idx') || '-1', 10);
+      this.playlistIndex = isNaN(savedIdx) ? -1 : savedIdx;
+    } catch (e) {
+      this.sessionPlaylist = [];
+      this.playlistIndex = -1;
+    }
+    this.renderSessionPlaylist();
+  }
+
+  saveAndRenderPlaylist() {
+    try {
+      localStorage.setItem('subpro_session_playlist', JSON.stringify(this.sessionPlaylist));
+      localStorage.setItem('subpro_playlist_idx', String(this.playlistIndex));
+    } catch (e) {}
+    this.renderSessionPlaylist();
+  }
+
+  addActiveSpeakerToPlaylist() {
+    if (!this.activeSpeaker) {
+      alert('პირველ რიგში აირჩიეთ მომხსენებელი ზედა სიიდან.');
+      return;
+    }
+    if (!this.sessionPlaylist.includes(this.activeSpeaker.id)) {
+      this.sessionPlaylist.push(this.activeSpeaker.id);
+    }
+    this.playlistIndex = this.sessionPlaylist.indexOf(this.activeSpeaker.id);
+    this.saveAndRenderPlaylist();
+  }
+
+  loadTrackSpeakersToPlaylist() {
+    if (typeof IICE_SPEAKERS === 'undefined') return;
+    const track = this.trackSelect ? this.trackSelect.value : 'all';
+    let pool = track === 'all' ? IICE_SPEAKERS : IICE_SPEAKERS.filter(s => s.topic === track);
+    const oralPool = pool.filter(s => (s.type || '').includes('Oral') || (s.type || '').toLowerCase().includes('online'));
+    const chosen = oralPool.length > 0 ? oralPool : pool;
+
+    let added = 0;
+    for (const s of chosen) {
+      if (!this.sessionPlaylist.includes(s.id)) {
+        this.sessionPlaylist.push(s.id);
+        added++;
+      }
+    }
+    if (this.playlistIndex < 0 && this.sessionPlaylist.length > 0) {
+      this.playlistIndex = 0;
+      this.selectSpeakerById(this.sessionPlaylist[0], true);
+    } else {
+      this.saveAndRenderPlaylist();
+    }
+  }
+
+  clearSessionPlaylist() {
+    this.sessionPlaylist = [];
+    this.playlistIndex = -1;
+    this.saveAndRenderPlaylist();
+  }
+
+  stepPlaylist(delta) {
+    if (this.sessionPlaylist.length === 0) return;
+    let nextIdx = this.playlistIndex + delta;
+    if (nextIdx < 0) nextIdx = 0;
+    if (nextIdx >= this.sessionPlaylist.length) nextIdx = this.sessionPlaylist.length - 1;
+    this.playlistIndex = nextIdx;
+    this.selectSpeakerById(this.sessionPlaylist[nextIdx], true);
+    this.saveAndRenderPlaylist();
+  }
+
+  renderSessionPlaylist() {
+    if (this.playlistCountPill) {
+      this.playlistCountPill.textContent = String(this.sessionPlaylist.length);
+    }
+    if (!this.sessionPlaylistItems || typeof IICE_SPEAKERS === 'undefined') return;
+
+    if (this.sessionPlaylist.length === 0) {
+      this.sessionPlaylistItems.innerHTML = '<div class="playlist-empty-hint">რიგი ცარიელია — დაამატეთ მომხსენებლები ან ჩატვირთეთ სექცია.</div>';
+      return;
+    }
+
+    const spMap = new Map(IICE_SPEAKERS.map(s => [s.id, s]));
+    this.sessionPlaylistItems.innerHTML = '';
+
+    this.sessionPlaylist.forEach((id, idx) => {
+      const sp = spMap.get(id);
+      if (!sp) return;
+      const row = document.createElement('div');
+      row.className = 'playlist-item-row' + (idx === this.playlistIndex ? ' active' : '');
+      const label = sp.geo && sp.geo !== sp.eng ? sp.geo : sp.eng;
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'playlist-item-text';
+      textSpan.textContent = `${idx + 1}. ${label}`;
+      textSpan.title = `${sp.geo} / ${sp.eng} — ${sp.topic}`;
+
+      const rmBtn = document.createElement('button');
+      rmBtn.type = 'button';
+      rmBtn.className = 'playlist-item-remove';
+      rmBtn.textContent = '×';
+      rmBtn.title = 'ამოშლა რიგიდან';
+      rmBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.sessionPlaylist.splice(idx, 1);
+        if (this.playlistIndex >= this.sessionPlaylist.length) {
+          this.playlistIndex = this.sessionPlaylist.length - 1;
+        }
+        this.saveAndRenderPlaylist();
+      });
+
+      row.addEventListener('click', () => {
+        this.playlistIndex = idx;
+        this.selectSpeakerById(id, true);
+        this.saveAndRenderPlaylist();
+      });
+
+      row.appendChild(textSpan);
+      row.appendChild(rmBtn);
+      this.sessionPlaylistItems.appendChild(row);
+    });
+  }
+
+  applyRollingContextState(enabled, opacityPct) {
+    const isEnabled = Boolean(enabled);
+    const op = parseInt(opacityPct, 10);
+    const normPct = isNaN(op) ? 50 : Math.min(90, Math.max(10, op));
+
+    if (this.toggleRollingContext) this.toggleRollingContext.checked = isEnabled;
+    if (this.rollingOpacitySlider) this.rollingOpacitySlider.value = normPct;
+    if (this.rollingOpacityVal) this.rollingOpacityVal.textContent = `${normPct}%`;
+    if (this.rollingOpacityGroup) this.rollingOpacityGroup.classList.toggle('disabled-group', !isEnabled);
+
+    document.body.classList.toggle('hide-rolling-context', !isEnabled);
+    document.documentElement.style.setProperty('--rolling-prev-opacity', normPct / 100);
+
+    if (this.rollingPrevLayer) {
+      const hasPrev = Boolean(this.rollingPrevText && this.rollingPrevText.innerHTML.trim());
+      this.rollingPrevLayer.classList.toggle('hidden', !hasPrev || !isEnabled);
+    }
+
+    localStorage.setItem('subpro_rolling_enabled', isEnabled);
+    localStorage.setItem('subpro_rolling_opacity', normPct);
   }
 
   initTrackAndSpeakers() {
@@ -1580,6 +1932,7 @@ class LiveSubPro {
       fixed = fixed
         // Fix Chrome ASR systematic distortions observed in real Georgian conference audio
         .replace(/(რა\s*ფილ\s*აგლაძ|რაფილ\s*აგლაძ|რაფილაძ|რაფია\s*აგლაძ|რაფიალაძ|რაფელ\s*აგლაძ|რ\.\s*ფილაგლაძ)/gi, 'რაფიელ აგლაძ')
+        .replace(/(იცი\s*შვილი|ციცის\s*შვილი|ციტვ\s*ციციშვილი|ციციშ\s*ვილი|ციცი\s*შვილი)/gi, 'ციციშვილი')
         .replace(/არა\s*ორგანული\s*(ექიმის|ექიმი|ქიმის|ქიმია)/gi, 'არაორგანული ქიმიის')
         .replace(/არაორგანული\s*(ექიმის|ქიმის)/gi, 'არაორგანული ქიმიის')
         .replace(/ორგანული\s*(ექიმის|ქიმის)/gi, 'ორგანული ქიმიის')
@@ -2449,11 +2802,20 @@ class LiveSubPro {
     const cleanSpeech = localStorage.getItem('subpro_clean_speech') !== 'false';
     const smartPunct = localStorage.getItem('subpro_smart_punct') !== 'false';
     const twoLines = localStorage.getItem('subpro_two_lines') !== 'false';
+    const noiseGate = localStorage.getItem('subpro_noise_gate') ?? '8';
+    const rollingEnabled = localStorage.getItem('subpro_rolling_enabled') !== 'false';
+    const rollingOpacity = localStorage.getItem('subpro_rolling_opacity') || '50';
 
     this.toggleCleanSpeech.checked = cleanSpeech;
     this.togglePunctuation.checked = smartPunct;
     this.toggleTwoLineLimit.checked = twoLines;
     document.body.classList.toggle('cinema-two-lines', twoLines);
+
+    this.noiseGateThreshold = parseInt(noiseGate, 10) || 0;
+    if (this.noiseGateSlider) this.noiseGateSlider.value = this.noiseGateThreshold;
+    if (this.noiseGateVal) this.noiseGateVal.textContent = `${this.noiseGateThreshold}%`;
+
+    this.applyRollingContextState(rollingEnabled, rollingOpacity);
 
     this.toggleOrigSpeech.checked = showOrig;
     document.body.classList.toggle('hide-orig-layer', !showOrig);
@@ -2538,6 +2900,9 @@ class LiveSubPro {
         const percent = Math.min(100, Math.round((avg / 64) * 100));
         this.audioBar.style.width = `${Math.max(4, percent)}%`;
         this.audioEnergyActive = percent > 14;
+        if (this.noiseGateThreshold <= 0 || percent >= this.noiseGateThreshold) {
+          this.lastNoisePassTime = Date.now();
+        }
 
         if (percent > 20) {
           this.subtitleCard.classList.add('speaking');
@@ -2632,8 +2997,13 @@ class LiveSubPro {
         }
 
         if (finalTranscript.trim()) {
+          const rawFinalWords = finalTranscript.trim().split(/\s+/);
+          if (this.analyser && this.noiseGateThreshold > 0 && rawFinalWords.length <= 4 && (Date.now() - this.lastNoisePassTime) > 1800) {
+            this.committedWordsInCurrentIndex = 0;
+            return;
+          }
           this.lastSpeechActivityTime = Date.now();
-          const fWords = finalTranscript.trim().split(/\s+/);
+          const fWords = rawFinalWords;
           const remainingFinal = fWords.slice(this.committedWordsInCurrentIndex).join(' ').trim();
           this.committedWordsInCurrentIndex = 0;
 
@@ -2654,8 +3024,12 @@ class LiveSubPro {
         }
 
         if (interimTranscript.trim()) {
+          const rawInterimWords = interimTranscript.trim().split(/\s+/);
+          if (this.analyser && this.noiseGateThreshold > 0 && rawInterimWords.length <= 3 && (Date.now() - this.lastNoisePassTime) > 1800) {
+            return;
+          }
           this.lastSpeechActivityTime = Date.now();
-          const iWords = interimTranscript.trim().split(/\s+/);
+          const iWords = rawInterimWords;
 
           // Safety guard if Chrome revises & shortens hypothesis slightly
           if (iWords.length < this.committedWordsInCurrentIndex) {
@@ -2770,6 +3144,11 @@ class LiveSubPro {
     let polished = this.cleanDisfluencies(clauseText);
     polished = this.applySmartPunctuation(polished, isFinal);
 
+    const detectedSpeaker = this.detectSpeakerInSpeech(polished);
+    if (detectedSpeaker) {
+      this.showAutoSpeakerPrompt(detectedSpeaker);
+    }
+
     if (polished === this.lastProcessedSpeech && !isFinal) return;
     this.lastProcessedSpeech = polished;
 
@@ -2824,6 +3203,25 @@ class LiveSubPro {
 
         // Latest-Request-Wins Guard: Prevents older slower requests from overwriting newer text
         if (seq === this.translationSeq) {
+          let prevLine = '';
+          if (isFinal) {
+            if (this.activeFinalTranslated && this.activeFinalTranslated !== translated) {
+              this.prevFinalTranslated = this.activeFinalTranslated;
+            }
+            this.activeFinalTranslated = translated;
+            prevLine = this.prevFinalTranslated || '';
+          } else {
+            prevLine = (this.activeFinalTranslated && this.activeFinalTranslated !== translated)
+              ? this.activeFinalTranslated
+              : (this.prevFinalTranslated || '');
+          }
+
+          if (this.rollingPrevText && this.rollingPrevLayer) {
+            this.rollingPrevText.innerHTML = prevLine ? `<span>${this.escapeHtml(prevLine)}</span>` : '';
+            const rollingOn = !this.toggleRollingContext || this.toggleRollingContext.checked;
+            this.rollingPrevLayer.classList.toggle('hidden', !prevLine || !rollingOn);
+          }
+
           this.translatedText.innerHTML = `<span>${this.escapeHtml(translated)}</span>`;
           this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
         }
@@ -2938,9 +3336,12 @@ class LiveSubPro {
 
   broadcastSubtitles(origHtml, transHtml, isSpeaking) {
     if (!this.broadcast) return;
+    const rollingEnabled = !this.toggleRollingContext || this.toggleRollingContext.checked;
+    const rollingPrevHtml = (rollingEnabled && this.rollingPrevText) ? this.rollingPrevText.innerHTML : '';
     this.broadcast.postMessage({
       type: 'subtitles',
       origHtml,
+      rollingPrevHtml,
       transHtml,
       origTag: this.originalLangTag ? this.originalLangTag.textContent : '',
       transTag: this.targetLangTag ? this.targetLangTag.textContent : '',
@@ -2964,6 +3365,8 @@ class LiveSubPro {
     const align = this.textAlignSelect ? this.textAlignSelect.value : (localStorage.getItem('subpro_text_align') || 'align-center');
     const showOrig = this.toggleOrigSpeech ? this.toggleOrigSpeech.checked : true;
     const showTrans = this.toggleTransSpeech ? this.toggleTransSpeech.checked : true;
+    const rollingEnabled = this.toggleRollingContext ? this.toggleRollingContext.checked : true;
+    const rollingOpacity = this.rollingOpacitySlider ? parseInt(this.rollingOpacitySlider.value, 10) : 50;
     const twoLines = this.toggleTwoLineLimit ? this.toggleTwoLineLimit.checked : true;
     const autofade = this.autoFadeSelect ? this.autoFadeSelect.value : '5000';
 
@@ -2978,6 +3381,8 @@ class LiveSubPro {
       align,
       showOrig,
       showTrans,
+      rollingEnabled,
+      rollingOpacity: isNaN(rollingOpacity) ? 50 : rollingOpacity,
       twoLines,
       autofade: parseInt(autofade, 10),
       customBgColor: localStorage.getItem('subpro_custom_color') || '#0f172a'
