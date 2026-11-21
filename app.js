@@ -663,7 +663,9 @@ class LiveSubPro {
     this.logEntriesList = document.getElementById('logEntriesList');
     this.exportLogCsvBtn = document.getElementById('exportLogCsvBtn');
     this.exportLogTxtBtn = document.getElementById('exportLogTxtBtn');
+    this.exportLogJsonBtn = document.getElementById('exportLogJsonBtn');
     this.clearLogBtn = document.getElementById('clearLogBtn');
+    this.logDb = null;
 
     // State Variables
     this.isListening = false;
@@ -1059,6 +1061,9 @@ class LiveSubPro {
     }
     if (this.exportLogTxtBtn) {
       this.exportLogTxtBtn.addEventListener('click', () => this.exportLogAs('txt'));
+    }
+    if (this.exportLogJsonBtn) {
+      this.exportLogJsonBtn.addEventListener('click', () => this.exportLogAs('json'));
     }
     if (this.clearLogBtn) {
       this.clearLogBtn.addEventListener('click', () => this.clearHistoryLog());
@@ -1716,13 +1721,62 @@ class LiveSubPro {
   }
 
   loadTranslationLog() {
+    this.translationLog = [];
+    // Fast initial read from localStorage fallback if any, then load full archive from IndexedDB
+    let legacyEntries = [];
     try {
       const saved = localStorage.getItem('subpro_translation_log');
-      this.translationLog = saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      this.translationLog = [];
-    }
+      if (saved) {
+        legacyEntries = JSON.parse(saved);
+        if (Array.isArray(legacyEntries)) {
+          this.translationLog = legacyEntries;
+        }
+      }
+    } catch (e) {}
     this.updateLogCounters();
+
+    if (!window.indexedDB) return;
+
+    try {
+      const req = indexedDB.open('IICE_Translator_DB', 1);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('logs')) {
+          const store = db.createObjectStore('logs', { keyPath: 'id' });
+          store.createIndex('ts', 'ts', { unique: false });
+        }
+      };
+      req.onsuccess = (e) => {
+        this.logDb = e.target.result;
+        const tx = this.logDb.transaction('logs', 'readwrite');
+        const store = tx.objectStore('logs');
+
+        // Migrate any legacy localStorage entries seamlessly into IndexedDB
+        if (legacyEntries.length > 0) {
+          legacyEntries.forEach((item, idx) => {
+            if (!item.ts) item.ts = Date.now() - idx;
+            store.put(item);
+          });
+          try {
+            localStorage.removeItem('subpro_translation_log');
+          } catch (err) {}
+        }
+
+        const getAllReq = store.getAll();
+        getAllReq.onsuccess = () => {
+          const all = getAllReq.result || [];
+          // Sort newest first by timestamp
+          all.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+          this.translationLog = all;
+          this.updateLogCounters();
+        };
+      };
+      req.onerror = (e) => {
+        console.warn('IndexedDB note:', e);
+      };
+    } catch (err) {
+      console.warn('IndexedDB unavailable, using localStorage fallback:', err);
+    }
   }
 
   logTranslation(original, translated, srcLang, tgtLang) {
@@ -1741,6 +1795,7 @@ class LiveSubPro {
     const timeStr = now.toLocaleTimeString('ka-GE', { hour12: false });
     const entry = {
       id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+      ts: Date.now(),
       time: timeStr,
       original: cleanOrig,
       translated: cleanTrans,
@@ -1748,15 +1803,21 @@ class LiveSubPro {
       tgtLang: tgtLang || 'ka'
     };
 
+    // Unbounded full-conference archive in RAM + non-blocking async insert to IndexedDB
     this.translationLog.unshift(entry);
-    if (this.translationLog.length > 1000) {
-      this.translationLog = this.translationLog.slice(0, 1000);
-    }
 
-    try {
-      localStorage.setItem('subpro_translation_log', JSON.stringify(this.translationLog));
-    } catch (e) {
-      console.warn('Could not save translation log to localStorage:', e);
+    if (this.logDb) {
+      try {
+        const tx = this.logDb.transaction('logs', 'readwrite');
+        tx.objectStore('logs').put(entry);
+      } catch (e) {
+        console.warn('IndexedDB write note:', e);
+      }
+    } else {
+      try {
+        const capped = this.translationLog.slice(0, 1500);
+        localStorage.setItem('subpro_translation_log', JSON.stringify(capped));
+      } catch (e) {}
     }
 
     this.updateLogCounters();
@@ -1833,7 +1894,7 @@ class LiveSubPro {
     if (entries.length > 120) {
       html += `
         <div style="text-align: center; padding: 12px; color: #94a3b8; font-size: 12px;">
-          ჩანს ბოლო 120 ჩანაწერი ${entries.length}-დან. სრული ისტორიის ჩამოსატვირთად გამოიყენეთ CSV/TXT ექსპორტი.
+          ნაჩვენებია ბოლო 120 ჩანაწერი ${entries.length}-დან (სრული ბაზა შენახულია). ყველა ჩანაწერის ჩამოსატვირთად გამოიყენეთ CSV / TXT / JSON ექსპორტი.
         </div>
       `;
     }
@@ -1859,6 +1920,8 @@ class LiveSubPro {
     }
 
     const dateStr = new Date().toISOString().slice(0, 10);
+    // Export in chronological order (oldest -> newest) so the conference transcript reads naturally
+    const chronological = [...this.translationLog].reverse();
     let content = '';
     let mimeType = 'text/plain;charset=utf-8';
     let fileName = `iice_translation_log_${dateStr}.txt`;
@@ -1868,16 +1931,25 @@ class LiveSubPro {
       fileName = `iice_translation_log_${dateStr}.csv`;
       // \uFEFF is UTF-8 BOM so Microsoft Excel correctly opens Georgian text without encoding issues
       content = '\uFEFF"დრო","მიმართულება","ორიგინალი","თარგმანი"\n';
-      this.translationLog.forEach(e => {
+      chronological.forEach(e => {
         const time = `"${(e.time || '').replace(/"/g, '""')}"`;
         const dir = `"${(e.srcLang || 'en').toUpperCase()} -> ${(e.tgtLang || 'ka').toUpperCase()}"`;
         const orig = `"${(e.original || '').replace(/"/g, '""')}"`;
         const trans = `"${(e.translated || '').replace(/"/g, '""')}"`;
         content += `${time},${dir},${orig},${trans}\n`;
       });
+    } else if (format === 'json') {
+      mimeType = 'application/json;charset=utf-8';
+      fileName = `iice_conference_full_log_${dateStr}.json`;
+      content = JSON.stringify({
+        conference: 'IICE 2026',
+        exportedAt: new Date().toISOString(),
+        totalEntries: chronological.length,
+        entries: chronological
+      }, null, 2);
     } else {
-      content = `IICE 2026 LIVE TRANSLATION LOG\nთარიღი: ${dateStr}\nსულ ჩანაწერი: ${this.translationLog.length}\n${'='.repeat(60)}\n\n`;
-      this.translationLog.forEach((e, i) => {
+      content = `IICE 2026 LIVE TRANSLATION FULL TRANSCRIPT\nთარიღი: ${dateStr}\nსულ ჩანაწერი: ${chronological.length}\n${'='.repeat(60)}\n\n`;
+      chronological.forEach((e, i) => {
         content += `[#${i + 1}] ${e.time} (${(e.srcLang || 'en').toUpperCase()} -> ${(e.tgtLang || 'ka').toUpperCase()})\n`;
         content += `ORIGINAL:   ${e.original}\n`;
         content += `TRANSLATED: ${e.translated}\n`;
@@ -1898,11 +1970,17 @@ class LiveSubPro {
 
   clearHistoryLog() {
     if (!this.translationLog || this.translationLog.length === 0) return;
-    if (confirm('დარწმუნებული ხართ, რომ გსურთ თარგმანის ისტორიის გასუფთავება?')) {
+    if (confirm('დარწმუნებული ხართ, რომ გსურთ მთლიანი თარგმანის ისტორიის გასუფთავება?')) {
       this.translationLog = [];
       try {
         localStorage.removeItem('subpro_translation_log');
       } catch (e) {}
+      if (this.logDb) {
+        try {
+          const tx = this.logDb.transaction('logs', 'readwrite');
+          tx.objectStore('logs').clear();
+        } catch (e) {}
+      }
       this.updateLogCounters();
       this.renderLogEntries();
     }
