@@ -1087,7 +1087,17 @@ class LiveSubPro {
             ctxName.textContent = this.activeSpeaker.geo !== this.activeSpeaker.eng
               ? `${this.activeSpeaker.geo} / ${this.activeSpeaker.eng}`
               : this.activeSpeaker.eng;
-            ctxAff.textContent = [this.activeSpeaker.affiliation, this.activeSpeaker.type].filter(Boolean).join(' • ');
+            const abs = (typeof IICE_ABSTRACTS_DB !== 'undefined') ? IICE_ABSTRACTS_DB[this.activeSpeaker.id] : null;
+            let meta = [this.activeSpeaker.affiliation, this.activeSpeaker.type].filter(Boolean).join(' • ');
+            if (abs) {
+              const kwCount = (abs.kwg ? abs.kwg.length : 0) + (abs.kwe ? abs.kwe.length : 0);
+              const pairCount = abs.pairs ? abs.pairs.length : 0;
+              const titleText = this.currentSrcLang.startsWith('ka') ? (abs.tg || abs.te) : (abs.te || abs.tg);
+              meta += `\n📘 თეზისი: ${pairCount} წყვილი • ${kwCount} ტერმინი`;
+              if (titleText) meta += `\n„${titleText.slice(0, 95)}${titleText.length > 95 ? '...' : ''}“`;
+            }
+            ctxAff.style.whiteSpace = 'pre-line';
+            ctxAff.textContent = meta;
             ctxBox.classList.remove('hidden');
           } else {
             ctxBox.classList.add('hidden');
@@ -1589,7 +1599,140 @@ class LiveSubPro {
         .replace(/(?<![ა-ჰ])შესალმებით(?![ა-ჰ])/gi, 'მოგესალმებით')
         .replace(/(?<![ა-ჰ])ნანო\s+ნაწილაკ/gi, 'ნანონაწილაკ');
     }
+    if (this.activeSpeaker && typeof IICE_ABSTRACTS_DB !== 'undefined') {
+      fixed = this.snapToSpeakerAbstractKeywords(fixed);
+    }
     return fixed;
+  }
+
+  levenshtein(a, b) {
+    if (a === b) return 0;
+    const al = a.length, bl = b.length;
+    if (Math.abs(al - bl) > 2) return 99;
+    const dp = Array.from({ length: al + 1 }, (_, i) => i);
+    for (let j = 1; j <= bl; j++) {
+      let prev = dp[0];
+      dp[0] = j;
+      for (let i = 1; i <= al; i++) {
+        const tmp = dp[i];
+        dp[i] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, dp[i], dp[i - 1]);
+        prev = tmp;
+      }
+    }
+    return dp[al];
+  }
+
+  snapToSpeakerAbstractKeywords(text) {
+    const abs = IICE_ABSTRACTS_DB[this.activeSpeaker.id];
+    if (!abs) return text;
+    const isGeo = this.currentSrcLang.startsWith('ka');
+    const kws = isGeo ? (abs.kwg || []) : (abs.kwe || []);
+    if (kws.length === 0) return text;
+
+    const kwLowerSet = new Set(kws.map(k => k.toLowerCase()));
+    const tokens = text.split(/\s+/);
+    const out = [];
+
+    for (let i = 0; i < tokens.length; i++) {
+      const tok = tokens[i];
+      const cleanTok = tok.replace(/[.,!?;:"'()]+$/g, '');
+      const suffix = tok.slice(cleanTok.length);
+
+      // 1. Check bigram split collapse (e.g., "ფსევდო პროტეინი" -> "ფსევდოპროტეინი")
+      if (i + 1 < tokens.length) {
+        const nextClean = tokens[i + 1].replace(/[.,!?;:"'()]+$/g, '');
+        const merged = (cleanTok + nextClean).toLowerCase();
+        if (cleanTok.length >= 3 && nextClean.length >= 3 && kwLowerSet.has(merged)) {
+          const exactKw = kws.find(k => k.toLowerCase() === merged);
+          if (exactKw) {
+            out.push(exactKw + tokens[i + 1].slice(nextClean.length));
+            i++; // Skip next token
+            continue;
+          }
+        }
+      }
+
+      // 2. Phonetic/ASR snap for long scientific words (>= 6 chars)
+      if (cleanTok.length >= 6 && !kwLowerSet.has(cleanTok.toLowerCase())) {
+        let bestKw = null;
+        let bestDist = 3;
+        const lowTok = cleanTok.toLowerCase();
+        for (let j = 0; j < kws.length; j++) {
+          const kw = kws[j];
+          if (kw.length < 6) continue;
+          const dist = this.levenshtein(lowTok, kw.toLowerCase());
+          const maxAllowed = kw.length >= 9 ? 2 : 1;
+          if (dist > 0 && dist <= maxAllowed && dist < bestDist) {
+            bestDist = dist;
+            bestKw = kw;
+          }
+        }
+        if (bestKw) {
+          out.push(bestKw + suffix);
+          continue;
+        }
+      }
+
+      out.push(tok);
+    }
+
+    return out.join(' ');
+  }
+
+  matchSpeakerAbstractSentence(text, tgtCode) {
+    if (typeof IICE_ABSTRACTS_DB === 'undefined') return null;
+    const cleanInput = text.trim().toLowerCase().replace(/[.,!?;:"'()«»„“]+/g, '');
+    if (cleanInput.length < 22) return null;
+
+    const candidates = [];
+    if (this.activeSpeaker && IICE_ABSTRACTS_DB[this.activeSpeaker.id]) {
+      candidates.push(...(IICE_ABSTRACTS_DB[this.activeSpeaker.id].pairs || []));
+    }
+
+    if (candidates.length === 0) return null;
+
+    const getStems = (s) => s
+      .toLowerCase()
+      .replace(/[.,!?;:"'()«»„“]+/g, '')
+      .split(/\s+/)
+      .filter(w => w.length >= 3)
+      .map(w => w.length > 6 ? w.slice(0, 6) : w);
+
+    const inputStems = getStems(cleanInput);
+    if (inputStems.length < 3) return null;
+    const inputSet = new Set(inputStems);
+
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const pair of candidates) {
+      const src = (tgtCode === 'en' ? pair.g : pair.e);
+      const dst = (tgtCode === 'en' ? pair.e : pair.g);
+      if (!src || !dst) continue;
+
+      const cleanSrc = src.trim().toLowerCase().replace(/[.,!?;:"'()«»„“]+/g, '');
+      // Exact or near-exact string match
+      if (cleanSrc === cleanInput) {
+        return dst;
+      }
+
+      const ratio = cleanInput.length / Math.max(cleanSrc.length, 1);
+      if (ratio < 0.65 || ratio > 1.45) continue;
+
+      const srcStems = getStems(cleanSrc);
+      if (srcStems.length < 3) continue;
+      let hits = 0;
+      for (const st of inputSet) {
+        if (srcStems.includes(st)) hits++;
+      }
+      const sim = (2 * hits) / (inputSet.size + srcStems.length);
+      if (sim >= 0.72 && sim > bestScore) {
+        bestScore = sim;
+        bestMatch = dst;
+      }
+    }
+
+    return bestMatch;
   }
 
   cleanDisfluencies(text) {
@@ -2637,19 +2780,24 @@ class LiveSubPro {
       const srcCode = this.currentSrcLang.split('-')[0];
       const tgtCode = this.currentTgtLang;
 
-      // Check for exact official conference paper title or full institutional phrase (>= 25 chars)
-      let translated = null;
-      const cleanLower = clauseText.trim().toLowerCase().replace(/[.!?]+$/, '');
-      if (cleanLower.length >= 25 && this.glossaryEntries.length > 0) {
-        const exactTitleMatch = this.glossaryEntries.find(e => {
-          const srcTerm = (tgtCode === 'en' ? e.geo : e.eng).toLowerCase();
-          return srcTerm === cleanLower;
-        });
-        if (exactTitleMatch) {
-          translated = tgtCode === 'en' ? exactTitleMatch.eng : exactTitleMatch.geo;
+      // 1. Check active speaker's bilingual thesis sentence memory (>= 72% match -> instant official abstract translation)
+      let translated = this.matchSpeakerAbstractSentence(polished, tgtCode);
+
+      // 2. Check for exact official conference paper title or full institutional phrase (>= 25 chars)
+      if (!translated) {
+        const cleanLower = polished.trim().toLowerCase().replace(/[.!?]+$/, '');
+        if (cleanLower.length >= 25 && this.glossaryEntries.length > 0) {
+          const exactTitleMatch = this.glossaryEntries.find(e => {
+            const srcTerm = (tgtCode === 'en' ? e.geo : e.eng).toLowerCase();
+            return srcTerm === cleanLower;
+          });
+          if (exactTitleMatch) {
+            translated = tgtCode === 'en' ? exactTitleMatch.eng : exactTitleMatch.geo;
+          }
         }
       }
 
+      // 3. Resilient Google Translate fallback + glossary & academic post-processing
       if (!translated) {
         translated = await this.fetchTranslation(polished, srcCode, tgtCode);
         if (translated) {
@@ -2666,11 +2814,11 @@ class LiveSubPro {
 
         // Log finalized clause accurately to history
         if (isFinal) {
-          this.logTranslation(clauseText, translated, srcCode, tgtCode);
+          this.logTranslation(polished, translated, srcCode, tgtCode);
         } else {
           clearTimeout(this.interimLogTimer);
           this.interimLogTimer = setTimeout(() => {
-            this.logTranslation(clauseText, translated, srcCode, tgtCode);
+            this.logTranslation(polished, translated, srcCode, tgtCode);
           }, 2200);
         }
 
