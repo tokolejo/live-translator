@@ -756,6 +756,12 @@ class LiveSubPro {
     this.watchdogInterval = null;
     this.currentBanner = null;
 
+    // Smart Clause Chunking & Anti-Flicker Sequence Guard
+    this.translationSeq = 0;
+    this.lastResultIndex = -1;
+    this.committedWordsInCurrentIndex = 0;
+    this.clauseBreakRegex = /^(and|or|but|which|that|because|however|so|then|while|although|და|რომ|მაგრამ|თუმცა|რადგან|ხოლო|ამიტომ|როდესაც)$/i;
+
     // Default: English to Georgian (International conference)
     this.currentSrcLang = 'en-US';
     this.currentTgtLang = 'ka';
@@ -1406,11 +1412,24 @@ class LiveSubPro {
 
   enforceCinemaLength(text) {
     if (!this.toggleTwoLineLimit.checked || !text) return text;
-    const words = text.split(' ');
-    if (words.length > 20) {
-      return '... ' + words.slice(-18).join(' ');
+    const words = text.trim().split(/\s+/);
+    if (words.length > 24) {
+      return '... ' + words.slice(-22).join(' ');
     }
     return text;
+  }
+
+  polishTranslation(text) {
+    if (!text) return '';
+    let clean = text
+      .replace(/\s+([.,!?;:])/g, '$1')
+      .replace(/([.,!?;:])([^\s\d.,!?;:])/g, '$1 $2')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (clean.length > 0) {
+      clean = clean.charAt(0).toUpperCase() + clean.slice(1);
+    }
+    return clean;
   }
 
   openGlossaryModal(prefillGeo = '', prefillEng = '') {
@@ -2113,6 +2132,11 @@ class LiveSubPro {
       };
 
       this.recognition.onresult = (event) => {
+        if (event.resultIndex !== this.lastResultIndex) {
+          this.lastResultIndex = event.resultIndex;
+          this.committedWordsInCurrentIndex = 0;
+        }
+
         let interimTranscript = '';
         let finalTranscript = '';
 
@@ -2125,26 +2149,73 @@ class LiveSubPro {
           }
         }
 
-        const activeWords = (finalTranscript || interimTranscript).trim();
-
-        if (activeWords) {
+        if (finalTranscript.trim()) {
           this.lastSpeechActivityTime = Date.now();
-          let displaySpeech = this.cleanDisfluencies(activeWords);
-          displaySpeech = this.enforceCinemaLength(displaySpeech);
-          this.originalText.innerHTML = `<span>${this.escapeHtml(displaySpeech)}</span>`;
+          const fWords = finalTranscript.trim().split(/\s+/);
+          const remainingFinal = fWords.slice(this.committedWordsInCurrentIndex).join(' ').trim();
+          this.committedWordsInCurrentIndex = 0;
 
-          this.subtitleCard.classList.remove('faded-out');
-          this.subtitleCard.classList.add('speaking');
-          this.resetFadeoutTimer();
-          this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, true);
+          if (remainingFinal) {
+            let displaySpeech = this.cleanDisfluencies(remainingFinal);
+            displaySpeech = this.enforceCinemaLength(displaySpeech);
+            this.originalText.innerHTML = `<span>${this.escapeHtml(displaySpeech)}</span>`;
 
-          clearTimeout(this.transTimer);
-          if (finalTranscript.trim()) {
-            this.handleTranslation(finalTranscript.trim(), true);
-          } else if (interimTranscript.trim()) {
+            this.subtitleCard.classList.remove('faded-out');
+            this.subtitleCard.classList.add('speaking');
+            this.resetFadeoutTimer();
+            this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, true);
+
+            clearTimeout(this.transTimer);
+            this.handleTranslation(remainingFinal, true);
+          }
+          return;
+        }
+
+        if (interimTranscript.trim()) {
+          this.lastSpeechActivityTime = Date.now();
+          const iWords = interimTranscript.trim().split(/\s+/);
+
+          // Safety guard if Chrome revises & shortens hypothesis slightly
+          if (iWords.length < this.committedWordsInCurrentIndex) {
+            this.committedWordsInCurrentIndex = Math.max(0, iWords.length - 4);
+          }
+
+          let activeSlice = iWords.slice(this.committedWordsInCurrentIndex);
+
+          // Smart Clause Chunking: If speaker talks continuously >= 18 words without pausing,
+          // lock & translate the first natural clause while leaving >= 5 words in the mutable tail.
+          if (activeSlice.length >= 18) {
+            let splitLen = 13;
+            for (let k = 13; k >= 9; k--) {
+              if (this.clauseBreakRegex.test(activeSlice[k])) {
+                splitLen = k;
+                break;
+              }
+            }
+
+            const chunkToCommit = activeSlice.slice(0, splitLen).join(' ');
+            this.committedWordsInCurrentIndex += splitLen;
+            activeSlice = activeSlice.slice(splitLen);
+
+            clearTimeout(this.transTimer);
+            this.handleTranslation(chunkToCommit, true);
+          }
+
+          const activeText = activeSlice.join(' ').trim();
+          if (activeText) {
+            let displaySpeech = this.cleanDisfluencies(activeText);
+            displaySpeech = this.enforceCinemaLength(displaySpeech);
+            this.originalText.innerHTML = `<span>${this.escapeHtml(displaySpeech)}</span>`;
+
+            this.subtitleCard.classList.remove('faded-out');
+            this.subtitleCard.classList.add('speaking');
+            this.resetFadeoutTimer();
+            this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, true);
+
+            clearTimeout(this.transTimer);
             this.transTimer = setTimeout(() => {
-              this.handleTranslation(interimTranscript.trim(), false);
-            }, 300);
+              this.handleTranslation(activeText, false);
+            }, 420);
           }
         }
       };
@@ -2164,6 +2235,8 @@ class LiveSubPro {
       };
 
       this.recognition.onend = () => {
+        this.lastResultIndex = -1;
+        this.committedWordsInCurrentIndex = 0;
         if (this.isListening) {
           setTimeout(() => {
             if (this.isListening && this.recognition) {
@@ -2219,6 +2292,7 @@ class LiveSubPro {
     if (polished === this.lastProcessedSpeech && !isFinal) return;
     this.lastProcessedSpeech = polished;
 
+    const seq = ++this.translationSeq;
     this.updateStatus('translating', '🔄 თარგმნა...');
 
     try {
@@ -2229,14 +2303,13 @@ class LiveSubPro {
 
       if (translated) {
         translated = this.applyGlossary(translated, tgtCode);
+        translated = this.polishTranslation(translated);
         if (isFinal && !/[.!?]$/.test(translated)) {
           translated += '.';
         }
         translated = this.enforceCinemaLength(translated);
 
-        this.translatedText.innerHTML = `<span>${this.escapeHtml(translated)}</span>`;
-        this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
-
+        // Log finalized clause accurately to history
         if (isFinal) {
           this.logTranslation(clauseText, translated, srcCode, tgtCode);
         } else {
@@ -2245,11 +2318,19 @@ class LiveSubPro {
             this.logTranslation(clauseText, translated, srcCode, tgtCode);
           }, 2200);
         }
+
+        // Latest-Request-Wins Guard: Prevents older slower requests from overwriting newer text
+        if (seq === this.translationSeq) {
+          this.translatedText.innerHTML = `<span>${this.escapeHtml(translated)}</span>`;
+          this.broadcastSubtitles(this.originalText.innerHTML, this.translatedText.innerHTML, false);
+        }
       }
 
-      this.subtitleCard.classList.remove('speaking');
-      this.resetFadeoutTimer();
-      this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+      if (seq === this.translationSeq) {
+        this.subtitleCard.classList.remove('speaking');
+        this.resetFadeoutTimer();
+        this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
+      }
     } catch (err) {
       console.error('Translation error:', err);
       this.updateStatus('listening', '🎙️ ეთერშია (გისმენთ)...');
