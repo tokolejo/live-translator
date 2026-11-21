@@ -84,12 +84,26 @@ class LiveSubPro {
     this.transSizeVal = document.getElementById('transSizeVal');
     this.origSizeSlider = document.getElementById('origSizeSlider');
     this.origSizeVal = document.getElementById('origSizeVal');
+    this.textAlignSelect = document.getElementById('textAlignSelect');
 
-    // Drawer Controls - Style & Layout
+    // Drawer Controls - Style, Layout & Width
     this.overlayStyleSelect = document.getElementById('overlayStyleSelect');
     this.positionSelect = document.getElementById('positionSelect');
     this.bgOpacitySlider = document.getElementById('bgOpacitySlider');
     this.bgOpacityVal = document.getElementById('bgOpacityVal');
+    this.cardWidthSlider = document.getElementById('cardWidthSlider');
+    this.cardWidthVal = document.getElementById('cardWidthVal');
+    this.customColorGroup = document.getElementById('customColorGroup');
+    this.customBgColorPicker = document.getElementById('customBgColorPicker');
+    this.customBgColorHex = document.getElementById('customBgColorHex');
+
+    // Fullscreen & Presets
+    this.fullscreenBtn = document.getElementById('fullscreenBtn');
+    this.fullscreenIcon = document.getElementById('fullscreenIcon');
+    this.presetHallBtn = document.getElementById('presetHallBtn');
+    this.presetCinemaBtn = document.getElementById('presetCinemaBtn');
+    this.presetBroadcastBtn = document.getElementById('presetBroadcastBtn');
+    this.presetObsBtn = document.getElementById('presetObsBtn');
 
     // Automation
     this.autoFadeSelect = document.getElementById('autoFadeSelect');
@@ -160,6 +174,26 @@ class LiveSubPro {
     this.clearScreenBtn.addEventListener('click', () => this.clearScreen());
     this.swapLangBtn.addEventListener('click', () => this.swapLanguages());
 
+    // Fullscreen
+    if (this.fullscreenBtn) {
+      this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = !!document.fullscreenElement;
+      document.body.classList.toggle('is-fullscreen', isFs);
+      if (this.fullscreenBtn) {
+        this.fullscreenBtn.classList.toggle('btn-primary', isFs);
+        if (this.fullscreenIcon) {
+          this.fullscreenIcon.textContent = isFs ? '🗗' : '⛶';
+        }
+        const textSpan = this.fullscreenBtn.querySelector('.fullscreen-text');
+        if (textSpan) {
+          textSpan.textContent = isFs ? 'გამოსვლა (F)' : 'სრული ეკრანი (F)';
+        }
+      }
+    });
+
     // Drawer Toggles
     this.toggleSettingsBtn.addEventListener('click', () => this.toggleDrawer());
     this.hideBarBtn.addEventListener('click', () => this.toggleControlBar());
@@ -205,10 +239,60 @@ class LiveSubPro {
       localStorage.setItem('subpro_orig_size', e.target.value);
     });
 
+    // Text Alignment
+    if (this.textAlignSelect) {
+      this.textAlignSelect.addEventListener('change', (e) => {
+        this.setTextAlign(e.target.value);
+      });
+    }
+
+    // Card Width Slider
+    if (this.cardWidthSlider) {
+      this.cardWidthSlider.addEventListener('input', (e) => {
+        this.setCardWidth(e.target.value);
+      });
+    }
+
+    // Quick Width Chips
+    document.querySelectorAll('.quick-preset-chips .chip-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const w = btn.getAttribute('data-width');
+        if (w) this.setCardWidth(w);
+      });
+    });
+
     // Style & Position
     this.overlayStyleSelect.addEventListener('change', (e) => this.setOverlayStyle(e.target.value));
     this.positionSelect.addEventListener('change', (e) => this.setPosition(e.target.value));
     
+    // Custom Background Color Picker
+    if (this.customBgColorPicker) {
+      this.customBgColorPicker.addEventListener('input', (e) => {
+        this.setCustomColor(e.target.value);
+      });
+    }
+    if (this.customBgColorHex) {
+      this.customBgColorHex.addEventListener('input', (e) => {
+        if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) {
+          this.setCustomColor(e.target.value);
+        }
+      });
+    }
+
+    // Quick Stage Presets
+    if (this.presetHallBtn) {
+      this.presetHallBtn.addEventListener('click', () => this.applyPreset('hall'));
+    }
+    if (this.presetCinemaBtn) {
+      this.presetCinemaBtn.addEventListener('click', () => this.applyPreset('cinema'));
+    }
+    if (this.presetBroadcastBtn) {
+      this.presetBroadcastBtn.addEventListener('click', () => this.applyPreset('broadcast'));
+    }
+    if (this.presetObsBtn) {
+      this.presetObsBtn.addEventListener('click', () => this.applyPreset('obs'));
+    }
+
     this.bgOpacitySlider.addEventListener('input', (e) => {
       const val = e.target.value / 100;
       document.documentElement.style.setProperty('--card-bg-opacity', val);
@@ -242,6 +326,8 @@ class LiveSubPro {
 
       if (e.key === 'h' || e.key === 'H') {
         this.toggleControlBar();
+      } else if (e.key === 'f' || e.key === 'F') {
+        this.toggleFullscreen();
       } else if (e.key === 'c' || e.key === 'C') {
         this.clearScreen();
       } else if (e.code === 'Space') {
@@ -262,18 +348,126 @@ class LiveSubPro {
     this.floatingShowBtn.style.display = isHidden ? 'flex' : 'none';
   }
 
+  toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.warn('Fullscreen error:', err);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
+  setCardWidth(widthPercent) {
+    const val = parseInt(widthPercent, 10) || 92;
+    if (this.cardWidthSlider) this.cardWidthSlider.value = val;
+    if (this.cardWidthVal) this.cardWidthVal.textContent = `${val}%`;
+    document.documentElement.style.setProperty('--card-width', `${val}%`);
+    document.documentElement.style.setProperty('--card-max-width', `${val}vw`);
+    document.body.classList.toggle('card-fullwidth', val >= 99);
+    localStorage.setItem('subpro_card_width', val);
+  }
+
+  setTextAlign(align) {
+    ['align-left', 'align-center', 'align-right'].forEach(a => document.body.classList.remove(a));
+    document.body.classList.add(align);
+    if (this.textAlignSelect) this.textAlignSelect.value = align;
+    localStorage.setItem('subpro_text_align', align);
+  }
+
+  setCustomColor(color) {
+    if (!color) return;
+    document.documentElement.style.setProperty('--custom-bg-color', color);
+    if (this.customBgColorPicker) this.customBgColorPicker.value = color;
+    if (this.customBgColorHex) this.customBgColorHex.value = color;
+    localStorage.setItem('subpro_custom_color', color);
+  }
+
   setOverlayStyle(styleClass) {
     const validStyles = [
       'style-keynote-pill',
+      'style-oled-black',
       'style-cinema-fade',
-      'style-ghost-outline',
       'style-broadcast-ticker',
+      'style-cyber-neon',
+      'style-academic-slate',
       'style-frosted-glass',
-      'style-chroma-green'
+      'style-ghost-outline',
+      'style-clean-transparent',
+      'style-light-paper',
+      'style-chroma-green',
+      'style-chroma-blue',
+      'style-custom-color'
     ];
     validStyles.forEach(s => document.body.classList.remove(s));
     document.body.classList.add(styleClass);
+    if (this.overlayStyleSelect) this.overlayStyleSelect.value = styleClass;
+    if (this.customColorGroup) {
+      this.customColorGroup.style.display = (styleClass === 'style-custom-color') ? 'block' : 'none';
+    }
     localStorage.setItem('subpro_overlay_style', styleClass);
+  }
+
+  applyPreset(type) {
+    if (type === 'hall') {
+      // 🏛️ დიდი სააქტო დარბაზი - 100% სიგანე, OLED Black, დიდი შრიფტი, ცენტრში
+      this.setOverlayStyle('style-oled-black');
+      this.setCardWidth(100);
+      this.setTextAlign('align-center');
+      this.setPosition('pos-bottom');
+      this.setFontSizes(48, 24);
+      this.setBgOpacity(90);
+    } else if (type === 'cinema') {
+      // 🎬 Cinema Bottom Fade
+      this.setOverlayStyle('style-cinema-fade');
+      this.setCardWidth(96);
+      this.setTextAlign('align-center');
+      this.setPosition('pos-bottom-flush');
+      this.setFontSizes(36, 20);
+      this.setBgOpacity(85);
+    } else if (type === 'broadcast') {
+      // 📺 Broadcast Ticker
+      this.setOverlayStyle('style-broadcast-ticker');
+      this.setCardWidth(100);
+      this.setTextAlign('align-left');
+      this.setPosition('pos-bottom-flush');
+      this.setFontSizes(32, 18);
+      this.setBgOpacity(95);
+    } else if (type === 'obs') {
+      // 🪟 OBS Clean Transparent
+      this.setOverlayStyle('style-clean-transparent');
+      this.setCardWidth(90);
+      this.setTextAlign('align-center');
+      this.setPosition('pos-bottom');
+      this.setFontSizes(34, 20);
+      this.setBgOpacity(50);
+    }
+  }
+
+  setFontSizes(transSize, origSize) {
+    if (this.transSizeSlider) {
+      this.transSizeSlider.value = transSize;
+      this.transSizeVal.textContent = `${transSize}px`;
+      document.documentElement.style.setProperty('--trans-font-size', `${transSize}px`);
+      localStorage.setItem('subpro_trans_size', transSize);
+    }
+    if (this.origSizeSlider) {
+      this.origSizeSlider.value = origSize;
+      this.origSizeVal.textContent = `${origSize}px`;
+      document.documentElement.style.setProperty('--orig-font-size', `${origSize}px`);
+      localStorage.setItem('subpro_orig_size', origSize);
+    }
+  }
+
+  setBgOpacity(opacityVal) {
+    if (this.bgOpacitySlider) {
+      this.bgOpacitySlider.value = opacityVal;
+      this.bgOpacityVal.textContent = `${opacityVal}%`;
+      document.documentElement.style.setProperty('--card-bg-opacity', opacityVal / 100);
+      localStorage.setItem('subpro_bg_opacity', opacityVal);
+    }
   }
 
   setPosition(pos) {
@@ -441,6 +635,9 @@ class LiveSubPro {
     const pos = localStorage.getItem('subpro_position') || 'pos-bottom';
     const opacity = localStorage.getItem('subpro_bg_opacity') || '85';
     const autoFade = localStorage.getItem('subpro_autofade') || '5000';
+    const cardWidth = localStorage.getItem('subpro_card_width') || '92';
+    const textAlign = localStorage.getItem('subpro_text_align') || 'align-center';
+    const customColor = localStorage.getItem('subpro_custom_color') || '#0f172a';
     
     // Default: English to Georgian
     const srcLang = localStorage.getItem('subpro_src_lang') || 'en-US';
@@ -468,6 +665,10 @@ class LiveSubPro {
     this.origSizeSlider.value = origSize;
     this.origSizeVal.textContent = `${origSize}px`;
     document.documentElement.style.setProperty('--orig-font-size', `${origSize}px`);
+
+    this.setCardWidth(cardWidth);
+    this.setTextAlign(textAlign);
+    this.setCustomColor(customColor);
 
     this.overlayStyleSelect.value = style;
     this.setOverlayStyle(style);

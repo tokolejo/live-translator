@@ -21,6 +21,9 @@
   --trans-font-size: 32px;
   --orig-font-size: 20px;
   --card-bg-opacity: 0.85;
+  --card-width: 92%;
+  --card-max-width: 92vw;
+  --custom-bg-color: #0f172a;
 
   --font-family: 'FiraGO', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-display: 'Outfit', 'FiraGO', sans-serif;
@@ -531,7 +534,7 @@ input:checked + .slider:before {
 }
 
 .pos-corner .subtitle-card {
-  max-width: 650px;
+  max-width: var(--card-max-width, 650px);
 }
 
 .overlay-container.pos-center {
@@ -542,7 +545,7 @@ input:checked + .slider:before {
 }
 
 .pos-center .subtitle-card {
-  max-width: 860px;
+  max-width: var(--card-max-width, 860px);
 }
 
 /* ================= 4. REALISTIC OVERLAY STYLES ================= */
@@ -550,11 +553,47 @@ input:checked + .slider:before {
 /* Default Subtitle Card properties */
 .subtitle-card {
   position: relative;
-  width: 100%;
-  max-width: 92vw;
+  width: var(--card-width, 92%);
+  max-width: var(--card-max-width, 92vw);
   pointer-events: auto;
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, width 0.25s ease, max-width 0.25s ease;
   overflow: hidden;
+}
+
+/* Full Width Stretched Card across Screen */
+body.card-fullwidth .overlay-container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.card-fullwidth .subtitle-card {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+/* Text Alignment Modes */
+body.align-center .speech-layer {
+  justify-content: center;
+}
+body.align-center .speech-text {
+  text-align: center;
+}
+
+body.align-left .speech-layer {
+  justify-content: flex-start;
+}
+body.align-left .speech-text {
+  text-align: left;
+}
+
+body.align-right .speech-layer {
+  justify-content: flex-end;
+}
+body.align-right .speech-text {
+  text-align: right;
 }
 
 /* Layer Visibility Toggles */
@@ -756,6 +795,227 @@ body.style-chroma-green .subtitle-card {
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 12px;
   padding: 14px 22px;
+}
+
+/* --- OVERLAY STYLE 7: OLED Pure Black (Ideal for Stage / Projectors) --- */
+body.style-oled-black {
+  background: #000000 !important;
+}
+
+body.style-oled-black .subtitle-card {
+  background: rgba(0, 0, 0, var(--card-bg-opacity));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 16px 28px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.95);
+}
+
+body.style-oled-black .translated-text {
+  color: #38bdf8;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+/* --- OVERLAY STYLE 8: Cyber Neon Glow --- */
+body.style-cyber-neon {
+  background: #050814;
+}
+
+body.style-cyber-neon .subtitle-card {
+  background: rgba(8, 14, 28, var(--card-bg-opacity));
+  border: 1.5px solid #06b6d4;
+  border-radius: 18px;
+  padding: 16px 28px;
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.35), inset 0 0 15px rgba(6, 182, 212, 0.12);
+}
+
+body.style-cyber-neon .translated-text {
+  color: #22d3ee;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+}
+
+/* --- OVERLAY STYLE 9: Academic Slate & Navy --- */
+body.style-academic-slate {
+  background: #0b132b;
+}
+
+body.style-academic-slate .subtitle-card {
+  background: rgba(28, 37, 65, var(--card-bg-opacity));
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 16px;
+  padding: 16px 28px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
+}
+
+body.style-academic-slate .translated-text {
+  color: #fcd34d;
+}
+
+/* --- OVERLAY STYLE 10: Ultra Clean Transparent --- */
+body.style-clean-transparent {
+  background: transparent !important;
+}
+
+body.style-clean-transparent .subtitle-card {
+  background: rgba(15, 23, 42, calc(var(--card-bg-opacity) * 0.45)) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 12px 24px;
+}
+
+/* --- OVERLAY STYLE 11: Clean Studio Light (White / Daylight) --- */
+body.style-light-paper {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+body.style-light-paper .subtitle-card {
+  background: rgba(255, 255, 255, var(--card-bg-opacity));
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  padding: 16px 28px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+body.style-light-paper .original-text {
+  color: #475569;
+  text-shadow: none;
+}
+
+body.style-light-paper .translated-text {
+  color: #1d4ed8;
+  text-shadow: none;
+}
+
+body.style-light-paper .tag-badge {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+body.style-light-paper .tag-badge.trans-badge {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* --- OVERLAY STYLE 12: Blue Screen Chroma Key --- */
+body.style-chroma-blue {
+  background: #0000ff !important;
+}
+
+body.style-chroma-blue .subtitle-card {
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 14px 22px;
+}
+
+/* --- OVERLAY STYLE 13: Custom Background Color --- */
+body.style-custom-color {
+  background: #090d16;
+}
+
+body.style-custom-color .subtitle-card {
+  background: var(--custom-bg-color, #0f172a);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 16px 28px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* UI Controls: Color Pickers, Width Chips & Preset Buttons */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.color-picker-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-picker-input::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+
+.color-picker-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 4px;
+}
+
+.form-input-hex {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  width: 85px;
+}
+
+.quick-preset-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.preset-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-outline-preset {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.3;
+}
+
+.btn-outline-preset:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: var(--primary);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+body.is-fullscreen .fullscreen-text {
+  color: var(--accent-green);
 }
 
 /* ================= 5. FLOATING RESTORE BUTTON ================= */

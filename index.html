@@ -48,6 +48,10 @@
 
       <!-- Action Buttons -->
       <div class="bar-right">
+        <button id="fullscreenBtn" class="btn btn-ghost" title="სრული ეკრანი (F)">
+          <span id="fullscreenIcon">⛶</span>
+          <span class="fullscreen-text">სრული ეკრანი (F)</span>
+        </button>
         <button id="clearScreenBtn" class="btn btn-ghost" title="ეკრანის გასუფთავება (C)">
           <span>🧹 გასუფთავება</span>
         </button>
@@ -123,7 +127,7 @@
               <span>თარგმანის შრიფტი:</span>
               <span id="transSizeVal" class="val-pill">32px</span>
             </div>
-            <input type="range" id="transSizeSlider" min="18" max="64" value="32" class="range-input">
+            <input type="range" id="transSizeSlider" min="18" max="120" value="32" class="range-input">
           </div>
 
           <div class="slider-group">
@@ -131,24 +135,62 @@
               <span>ორიგინალის შრიფტი:</span>
               <span id="origSizeVal" class="val-pill">20px</span>
             </div>
-            <input type="range" id="origSizeSlider" min="14" max="44" value="20" class="range-input">
+            <input type="range" id="origSizeSlider" min="14" max="80" value="20" class="range-input">
+          </div>
+
+          <div class="field-group">
+            <label>ტექსტის განლაგება:</label>
+            <select id="textAlignSelect" class="form-select">
+              <option value="align-center" selected>↔️ ცენტრში (დარბაზის სტილი)</option>
+              <option value="align-left">⬅️ მარცხნივ</option>
+              <option value="align-right">➡️ მარჯვნივ</option>
+            </select>
           </div>
         </div>
 
         <!-- Column 3: Slide Overlays & Transparency -->
         <div class="drawer-card">
-          <div class="card-title">🎨 სლაიდის ოვერლეი</div>
+          <div class="card-title">🎨 სლაიდის ოვერლეი და ბექგრაუნდი</div>
           
           <div class="field-group">
             <label>დიზაინის სტილი:</label>
             <select id="overlayStyleSelect" class="form-select">
               <option value="style-keynote-pill" selected>🍏 Apple Keynote Pill (მცურავი კაფსულა)</option>
-              <option value="style-cinema-fade">🎬 Cinema Bottom Fade (რბილი დაჩრდილვა)</option>
-              <option value="style-ghost-outline">👻 Ghost Outline (ფონის გარეშე, კონტურით)</option>
+              <option value="style-oled-black">🌌 OLED Pure Black (სააქტო დარბაზი / პროექტორი)</option>
+              <option value="style-cinema-fade">🎬 Cinema Bottom Fade (კინო-დაჩრდილვა)</option>
               <option value="style-broadcast-ticker">📺 Broadcast News Ticker (სრული ქვედა ზოლი)</option>
+              <option value="style-cyber-neon">💎 Cyber Neon (ნეონის მანათობელი კონტური)</option>
+              <option value="style-academic-slate">🏛️ Academic Slate (საპრეზენტაციო ინდიგო)</option>
               <option value="style-frosted-glass">🔮 Frosted Glass (მუქი მინა)</option>
-              <option value="style-chroma-green">🟩 Green Screen (Chroma Key)</option>
+              <option value="style-ghost-outline">👻 Ghost Outline (ფონის გარეშე, კონტურით)</option>
+              <option value="style-clean-transparent">🪟 Ultra Clean Transparent (სუფთა OBS-ისთვის)</option>
+              <option value="style-light-paper">☀️ Studio Light (თეთრი/ნათელი ფონი)</option>
+              <option value="style-chroma-green">🟩 Green Screen (Chroma Key 00FF00)</option>
+              <option value="style-chroma-blue">🟦 Blue Screen (Chroma Key 0000FF)</option>
+              <option value="style-custom-color">🎨 Custom Color (საკუთარი ფერი)</option>
             </select>
+          </div>
+
+          <!-- Custom Color Picker Row -->
+          <div class="field-group" id="customColorGroup" style="display: none;">
+            <label>საკუთარი ფონის ფერი:</label>
+            <div class="color-picker-row">
+              <input type="color" id="customBgColorPicker" value="#0f172a" class="color-picker-input">
+              <input type="text" id="customBgColorHex" value="#0f172a" class="form-input-hex" maxlength="7">
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-head">
+              <span>ბარათის სიგანე ეკრანზე:</span>
+              <span id="cardWidthVal" class="val-pill">92%</span>
+            </div>
+            <input type="range" id="cardWidthSlider" min="40" max="100" value="92" class="range-input">
+            <div class="quick-preset-chips">
+              <button type="button" class="chip-btn" data-width="100">100% სრული</button>
+              <button type="button" class="chip-btn" data-width="92">92% სტანდარტი</button>
+              <button type="button" class="chip-btn" data-width="70">70% კომპაქტი</button>
+            </div>
           </div>
 
           <div class="field-group">
@@ -171,9 +213,9 @@
           </div>
         </div>
 
-        <!-- Column 4: Audio & Timing Automation -->
+        <!-- Column 4: Audio & Timing Automation & Presets -->
         <div class="drawer-card">
-          <div class="card-title">🎙️ ტაიმერი და ავტომატიკა</div>
+          <div class="card-title">🎙️ ავტომატიკა და პროფილები</div>
 
           <div class="field-group">
             <label>ტექსტის გაქრობა სიჩუმისას:</label>
@@ -183,6 +225,24 @@
               <option value="3000">⏱️ 3 წამში (სწრაფი)</option>
               <option value="0">🚫 არასდროს (დარჩეს)</option>
             </select>
+          </div>
+
+          <div class="field-group">
+            <label>სწრაფი საპრეზენტაციო პროფილები:</label>
+            <div class="preset-buttons-grid">
+              <button type="button" class="btn btn-outline-preset" id="presetHallBtn" title="100% სიგანე, დიდი შრიფტი, შავი ფონი">
+                🏛️ დიდი სააქტო დარბაზი
+              </button>
+              <button type="button" class="btn btn-outline-preset" id="presetCinemaBtn" title="კინო-სუბტიტრები ეკრანის ძირში">
+                🎬 კინო / Cinema Fade
+              </button>
+              <button type="button" class="btn btn-outline-preset" id="presetBroadcastBtn" title="100% სიგანის ქვედა საინფორმაციო ზოლი">
+                📺 Broadcast Ticker
+              </button>
+              <button type="button" class="btn btn-outline-preset" id="presetObsBtn" title="OBS-სთვის გამჭვირვალე ოვერლეი">
+                🪟 OBS გამჭვირვალე
+              </button>
+            </div>
           </div>
         </div>
 
