@@ -48,6 +48,9 @@
 
       <!-- Action Buttons -->
       <div class="bar-right">
+        <button id="openLogBtn" class="btn btn-ghost" title="თარგმანის ისტორია და ლოგი">
+          <span>📜 ლოგი (<span id="logCountBadge">0</span>)</span>
+        </button>
         <button id="fullscreenBtn" class="btn btn-ghost" title="სრული ეკრანი (F)">
           <span id="fullscreenIcon">⛶</span>
           <span class="fullscreen-text">სრული ეკრანი (F)</span>
@@ -268,20 +271,119 @@
     </div>
   </header>
 
-  <!-- Terminology / Glossary Modal (Hidden by default) -->
+  <!-- Terminology / Glossary Modal (Structured, Searchable & Editable) -->
   <div id="glossaryModal" class="modal-overlay hidden" style="display: none;">
-    <div class="modal-card">
+    <div class="modal-card modal-large">
       <div class="modal-header">
-        <h3>📖 კონფერენციის ტერმინოლოგია</h3>
+        <div class="modal-title-group">
+          <h3>📖 კონფერენციის ტერმინოლოგია</h3>
+          <span class="badge-counter" id="glossaryModalCount">592 ტერმინი</span>
+        </div>
         <button id="closeGlossaryBtn" class="btn-close">&times;</button>
       </div>
-      <p class="modal-desc">
-        ჩაწერეთ ტერმინები, ორგანიზაციები ან სახელები. სისტემა ავტომატურად ჩაანაცვლებს შეცდომებს:
-      </p>
-      <textarea id="glossaryInput" placeholder="მაგალითად:&#10;აიტი: IT&#10;ხელოვნური ინტელექტი: Artificial Intelligence&#10;გიორგი: Giorgi"></textarea>
+
+      <!-- Glossary Navigation Tabs -->
+      <div class="modal-tabs">
+        <button id="tabTableViewBtn" class="modal-tab-btn active">📋 ტერმინების სია & ძებნა</button>
+        <button id="tabRawViewBtn" class="modal-tab-btn">📝 ტექსტური რედაქტორი</button>
+      </div>
+
+      <!-- Tab 1: Structured Search & Term Cards -->
+      <div id="glossaryTableView" class="modal-tab-content">
+        <!-- Quick Add New Term Row -->
+        <div class="quick-add-term-bar">
+          <input type="text" id="newTermGeo" placeholder="ქართული ტერმინი / სახელი..." class="form-input">
+          <span class="swap-arrow">➔</span>
+          <input type="text" id="newTermEng" placeholder="English scientific term or name..." class="form-input">
+          <button id="addNewTermBtn" class="btn btn-primary btn-sm">➕ დამატება</button>
+        </div>
+
+        <!-- Search Bar & Category Filters -->
+        <div class="glossary-search-bar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="glossarySearchInput" placeholder="მოძებნეთ ტერმინი, ნაერთი ან ავტორი (მაგ. ციციშვილი, მანგანუმი, Zeolite, TSU)..." class="search-input">
+            <button id="clearGlossarySearchBtn" class="search-clear-btn" style="display: none;">&times;</button>
+          </div>
+          <div class="filter-chips">
+            <button class="filter-chip active" data-filter="all">ყველა (<span id="countAll">0</span>)</button>
+            <button class="filter-chip" data-filter="science">🔬 ქიმია & ტექნოლოგია</button>
+            <button class="filter-chip" data-filter="authors">👥 მეცნიერები</button>
+            <button class="filter-chip" data-filter="institutes">🏛️ ინსტიტუტები</button>
+          </div>
+        </div>
+
+        <!-- Scrollable List of Terms -->
+        <div class="glossary-items-list" id="glossaryItemsList">
+          <!-- Dynamically populated rows -->
+        </div>
+      </div>
+
+      <!-- Tab 2: Raw Text Edit Mode (For power bulk edits) -->
+      <div id="glossaryRawView" class="modal-tab-content" style="display: none;">
+        <p class="modal-desc">
+          ჩაწერეთ ტერმინები ფორმატში <code>ქართული: English</code> (თითო ხაზზე თითო ტერმინი):
+        </p>
+        <textarea id="glossaryInput" placeholder="ტერმინი: Term&#10;სახელი: Name"></textarea>
+      </div>
+
       <div class="modal-footer">
-        <button id="resetGlossaryBtn" class="btn btn-ghost" title="IICE-ის ოფიციალური ლექსიკონის ჩატვირთვა">🔄 IICE ლექსიკონის აღდგენა</button>
-        <button id="saveGlossaryBtn" class="btn btn-primary">შენახვა</button>
+        <div class="footer-left">
+          <button id="resetGlossaryBtn" class="btn btn-ghost" title="IICE-ის ოფიციალური ბაზის აღდგენა">
+            🔄 IICE ბაზის აღდგენა
+          </button>
+          <button id="exportGlossaryBtn" class="btn btn-ghost" title="ლექსიკონის ჩამოტვირთვა TXT ფაილად">
+            📥 ჩამოტვირთვა (.txt)
+          </button>
+        </div>
+        <button id="saveGlossaryBtn" class="btn btn-primary">💾 შენახვა</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Translation History & Mistakes Analysis Log Modal -->
+  <div id="historyLogModal" class="modal-overlay hidden" style="display: none;">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>📜 თარგმანის ისტორია და ლოგი</h3>
+          <span class="badge-counter" id="logModalCount">0 ფრაზა</span>
+        </div>
+        <button id="closeLogBtn" class="btn-close">&times;</button>
+      </div>
+
+      <p class="modal-desc">
+        აქ ინახება კონფერენციის განმავლობაში ნათქვამი და ნათარგმნი ყველა წინადადება. შეგიძლიათ გააანალიზოთ შეცდომები, შეინახოთ სტენოგრამა და დაუმატოთ ტერმინები ლექსიკონს:
+      </p>
+
+      <!-- Search in Log -->
+      <div class="glossary-search-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="logSearchInput" placeholder="მოძებნეთ ნათარგმნ ფრაზებში..." class="search-input">
+        </div>
+      </div>
+
+      <!-- Log Entries Container -->
+      <div class="log-entries-list" id="logEntriesList">
+        <div class="log-empty-state">
+          <span>ჯერ თარგმანი არ განხორციელებულა. როგორც კი დაიწყება საუბარი, აქ ჩაიწერება სრული სტენოგრამა.</span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="footer-left">
+          <button id="exportLogCsvBtn" class="btn btn-ghost" title="სტენოგრამის ჩამოტვირთვა CSV ფორმატში">
+            📥 ექსპორტი (CSV)
+          </button>
+          <button id="exportLogTxtBtn" class="btn btn-ghost" title="სტენოგრამის ჩამოტვირთვა ტექსტურად">
+            📄 ექსპორტი (TXT)
+          </button>
+          <button id="clearLogBtn" class="btn btn-ghost text-danger" title="ისტორიის გასუფთავება">
+            🧹 ლოგის გასუფთავება
+          </button>
+        </div>
+        <button id="closeLogBottomBtn" class="btn btn-primary">დახურვა</button>
       </div>
     </div>
   </div>

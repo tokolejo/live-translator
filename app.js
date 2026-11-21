@@ -687,7 +687,7 @@ class LiveSubPro {
     this.originalLangTag = document.getElementById('originalLangTag');
     this.targetLangTag = document.getElementById('targetLangTag');
 
-    // Glossary Modal
+    // Glossary Modal Elements
     this.openGlossaryBtn = document.getElementById('openGlossaryBtn');
     this.closeGlossaryBtn = document.getElementById('closeGlossaryBtn');
     this.saveGlossaryBtn = document.getElementById('saveGlossaryBtn');
@@ -695,6 +695,30 @@ class LiveSubPro {
     this.glossaryModal = document.getElementById('glossaryModal');
     this.glossaryInput = document.getElementById('glossaryInput');
     this.glossaryCount = document.getElementById('glossaryCount');
+    this.glossaryModalCount = document.getElementById('glossaryModalCount');
+    this.tabTableViewBtn = document.getElementById('tabTableViewBtn');
+    this.tabRawViewBtn = document.getElementById('tabRawViewBtn');
+    this.glossaryTableView = document.getElementById('glossaryTableView');
+    this.glossaryRawView = document.getElementById('glossaryRawView');
+    this.newTermGeo = document.getElementById('newTermGeo');
+    this.newTermEng = document.getElementById('newTermEng');
+    this.addNewTermBtn = document.getElementById('addNewTermBtn');
+    this.glossarySearchInput = document.getElementById('glossarySearchInput');
+    this.clearGlossarySearchBtn = document.getElementById('clearGlossarySearchBtn');
+    this.glossaryItemsList = document.getElementById('glossaryItemsList');
+    this.exportGlossaryBtn = document.getElementById('exportGlossaryBtn');
+
+    // History Log Elements
+    this.openLogBtn = document.getElementById('openLogBtn');
+    this.logCountBadge = document.getElementById('logCountBadge');
+    this.historyLogModal = document.getElementById('historyLogModal');
+    this.closeLogBtn = document.getElementById('closeLogBtn');
+    this.closeLogBottomBtn = document.getElementById('closeLogBottomBtn');
+    this.logSearchInput = document.getElementById('logSearchInput');
+    this.logEntriesList = document.getElementById('logEntriesList');
+    this.exportLogCsvBtn = document.getElementById('exportLogCsvBtn');
+    this.exportLogTxtBtn = document.getElementById('exportLogTxtBtn');
+    this.clearLogBtn = document.getElementById('clearLogBtn');
 
     // State Variables
     this.isListening = false;
@@ -703,6 +727,9 @@ class LiveSubPro {
     this.fadeoutTimer = null;
     this.meterResetTimer = null;
     this.glossaryRules = [];
+    this.glossaryEntries = [];
+    this.glossaryCurrentCategory = 'all';
+    this.translationLog = [];
     this.transCache = new Map();
     this.lastProcessedSpeech = '';
     this.audioContext = null;
@@ -724,6 +751,7 @@ class LiveSubPro {
   init() {
     this.checkBrowserSupport();
     this.loadSettings();
+    this.loadTranslationLog();
     this.loadGlossary();
     this.bindEvents();
     this.checkUrlParams();
@@ -926,19 +954,95 @@ class LiveSubPro {
     });
 
     // Glossary Modal
-    this.openGlossaryBtn.addEventListener('click', () => {
-      this.glossaryModal.style.display = 'flex';
-      this.glossaryModal.classList.add('active');
-      this.glossaryModal.classList.remove('hidden');
-    });
-    this.closeGlossaryBtn.addEventListener('click', () => {
-      this.glossaryModal.style.display = 'none';
-      this.glossaryModal.classList.remove('active');
-      this.glossaryModal.classList.add('hidden');
-    });
-    this.saveGlossaryBtn.addEventListener('click', () => this.saveGlossary());
+    if (this.openGlossaryBtn) {
+      this.openGlossaryBtn.addEventListener('click', () => {
+        this.openGlossaryModal();
+      });
+    }
+    if (this.closeGlossaryBtn) {
+      this.closeGlossaryBtn.addEventListener('click', () => {
+        this.closeGlossaryModal();
+      });
+    }
+    if (this.saveGlossaryBtn) {
+      this.saveGlossaryBtn.addEventListener('click', () => this.saveGlossary());
+    }
     if (this.resetGlossaryBtn) {
       this.resetGlossaryBtn.addEventListener('click', () => this.resetToIiceGlossary());
+    }
+
+    // Glossary Tabs & Tools
+    if (this.tabTableViewBtn && this.tabRawViewBtn) {
+      this.tabTableViewBtn.addEventListener('click', () => this.switchGlossaryTab('table'));
+      this.tabRawViewBtn.addEventListener('click', () => this.switchGlossaryTab('raw'));
+    }
+
+    if (this.addNewTermBtn) {
+      this.addNewTermBtn.addEventListener('click', () => this.addGlossaryTermFromInput());
+    }
+    if (this.newTermGeo) {
+      this.newTermGeo.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (this.newTermEng) this.newTermEng.focus();
+        }
+      });
+    }
+    if (this.newTermEng) {
+      this.newTermEng.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          this.addGlossaryTermFromInput();
+        }
+      });
+    }
+
+    if (this.glossarySearchInput) {
+      this.glossarySearchInput.addEventListener('input', () => this.filterGlossary());
+    }
+    if (this.clearGlossarySearchBtn) {
+      this.clearGlossarySearchBtn.addEventListener('click', () => {
+        if (this.glossarySearchInput) this.glossarySearchInput.value = '';
+        this.filterGlossary();
+      });
+    }
+
+    // Filter Chips
+    const chips = document.querySelectorAll('.chip-btn');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        this.glossaryCurrentCategory = chip.dataset.filter || 'all';
+        this.filterGlossary();
+      });
+    });
+
+    if (this.exportGlossaryBtn) {
+      this.exportGlossaryBtn.addEventListener('click', () => this.exportGlossaryFile());
+    }
+
+    // Translation History Log Modal
+    if (this.openLogBtn) {
+      this.openLogBtn.addEventListener('click', () => this.openHistoryLog());
+    }
+    if (this.closeLogBtn) {
+      this.closeLogBtn.addEventListener('click', () => this.closeHistoryLog());
+    }
+    if (this.closeLogBottomBtn) {
+      this.closeLogBottomBtn.addEventListener('click', () => this.closeHistoryLog());
+    }
+    if (this.logSearchInput) {
+      this.logSearchInput.addEventListener('input', () => this.renderLogEntries(this.logSearchInput.value));
+    }
+    if (this.exportLogCsvBtn) {
+      this.exportLogCsvBtn.addEventListener('click', () => this.exportLogAs('csv'));
+    }
+    if (this.exportLogTxtBtn) {
+      this.exportLogTxtBtn.addEventListener('click', () => this.exportLogAs('txt'));
+    }
+    if (this.clearLogBtn) {
+      this.clearLogBtn.addEventListener('click', () => this.clearHistoryLog());
     }
 
     // Hotkeys
@@ -1236,6 +1340,62 @@ class LiveSubPro {
     return text;
   }
 
+  openGlossaryModal(prefillGeo = '', prefillEng = '') {
+    if (!this.glossaryModal) return;
+    this.glossaryModal.style.display = 'flex';
+    this.glossaryModal.classList.add('active');
+    this.glossaryModal.classList.remove('hidden');
+    if (prefillGeo || prefillEng) {
+      this.switchGlossaryTab('table');
+      if (this.newTermGeo) this.newTermGeo.value = prefillGeo;
+      if (this.newTermEng) this.newTermEng.value = prefillEng;
+      if (this.newTermGeo && !prefillGeo) this.newTermGeo.focus();
+      else if (this.newTermEng) this.newTermEng.focus();
+    }
+  }
+
+  closeGlossaryModal() {
+    if (!this.glossaryModal) return;
+    this.glossaryModal.style.display = 'none';
+    this.glossaryModal.classList.remove('active');
+    this.glossaryModal.classList.add('hidden');
+  }
+
+  switchGlossaryTab(tab) {
+    if (tab === 'table') {
+      if (this.tabTableViewBtn) this.tabTableViewBtn.classList.add('active');
+      if (this.tabRawViewBtn) this.tabRawViewBtn.classList.remove('active');
+      if (this.glossaryTableView) this.glossaryTableView.classList.remove('hidden');
+      if (this.glossaryRawView) this.glossaryRawView.classList.add('hidden');
+      if (this.glossaryInput) {
+        this.parseGlossary(this.glossaryInput.value);
+      }
+    } else {
+      if (this.tabRawViewBtn) this.tabRawViewBtn.classList.add('active');
+      if (this.tabTableViewBtn) this.tabTableViewBtn.classList.remove('active');
+      if (this.glossaryRawView) this.glossaryRawView.classList.remove('hidden');
+      if (this.glossaryTableView) this.glossaryTableView.classList.add('hidden');
+      if (this.glossaryInput) {
+        this.glossaryInput.value = this.buildGlossaryText();
+      }
+    }
+  }
+
+  buildGlossaryText() {
+    return this.glossaryEntries.map(e => `${e.geo}: ${e.eng}`).join('\n');
+  }
+
+  categorizeTerm(geo, eng) {
+    const combined = (geo + ' ' + eng).toLowerCase();
+    if (/უნივერსიტეტ|ინსტიტუტ|აკადემი|ფაკულტეტ|დეპარტამენტ|ცენტრ|university|institute|academy|faculty|department|center/.test(combined)) {
+      return 'institutes';
+    }
+    if (/^[ა-ჰa-z]\.\s*[ა-ჰa-z]+/i.test(geo.trim()) || /^[ა-ჰa-z]\.\s*[ა-ჰa-z]+/i.test(eng.trim()) || /პროფესორ|დოქტორ|აკადემიკოს|დეკან|ავტორ|prof\.|dr\./i.test(combined)) {
+      return 'authors';
+    }
+    return 'science';
+  }
+
   loadGlossary() {
     const GLOSSARY_VER = '2026_conference_v2';
     const savedVer = localStorage.getItem('subpro_glossary_ver');
@@ -1245,43 +1405,63 @@ class LiveSubPro {
       localStorage.setItem('subpro_glossary', raw);
       localStorage.setItem('subpro_glossary_ver', GLOSSARY_VER);
     }
-    this.glossaryInput.value = raw;
+    if (this.glossaryInput) {
+      this.glossaryInput.value = raw;
+    }
     this.parseGlossary(raw);
   }
 
   saveGlossary() {
-    const raw = this.glossaryInput.value;
+    let raw = '';
+    if (this.glossaryRawView && !this.glossaryRawView.classList.contains('hidden') && this.glossaryInput) {
+      raw = this.glossaryInput.value;
+    } else {
+      raw = this.buildGlossaryText();
+      if (this.glossaryInput) this.glossaryInput.value = raw;
+    }
     localStorage.setItem('subpro_glossary', raw);
     localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
     this.parseGlossary(raw);
-    this.glossaryModal.style.display = 'none';
-    this.glossaryModal.classList.remove('active');
-    this.glossaryModal.classList.add('hidden');
+    this.closeGlossaryModal();
   }
 
   resetToIiceGlossary() {
-    this.glossaryInput.value = DEFAULT_IICE_GLOSSARY;
-    this.saveGlossary();
+    if (confirm('ნამდვილად გსურთ ლექსიკონის საწყის IICE 2026 მდგომარეობაზე დაბრუნება?')) {
+      if (this.glossaryInput) this.glossaryInput.value = DEFAULT_IICE_GLOSSARY;
+      this.parseGlossary(DEFAULT_IICE_GLOSSARY);
+      localStorage.setItem('subpro_glossary', DEFAULT_IICE_GLOSSARY);
+      localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    }
   }
 
   parseGlossary(raw) {
     this.geoToEngRules = [];
     this.engToGeoRules = [];
-    const lines = raw.split('\n');
+    this.glossaryEntries = [];
+    const lines = (raw || '').split('\n');
     let totalPairs = 0;
 
-    lines.forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx !== -1) {
-        const left = line.slice(0, idx).trim();
-        const right = line.slice(idx + 1).trim();
+    lines.forEach((line, idx) => {
+      const colonIdx = line.indexOf(':');
+      if (colonIdx !== -1) {
+        const left = line.slice(0, colonIdx).trim();
+        const right = line.slice(colonIdx + 1).trim();
         if (left && right) {
           totalPairs++;
+          const leftIsGeo = /[\u10A0-\u10FF]/.test(left);
+          const geoText = leftIsGeo ? left : right;
+          const engText = leftIsGeo ? right : left;
+
+          this.glossaryEntries.push({
+            id: 'term_' + idx + '_' + Math.random().toString(36).substr(2, 5),
+            geo: geoText,
+            eng: engText,
+            category: this.categorizeTerm(geoText, engText)
+          });
+
           const leftEsc = left.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           const rightEsc = right.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-          // Left is Geo, Right is Eng (or vice-versa)
-          const leftIsGeo = /[\u10A0-\u10FF]/.test(left);
           if (leftIsGeo) {
             this.geoToEngRules.push({
               regex: new RegExp(leftEsc, 'gi'),
@@ -1315,6 +1495,333 @@ class LiveSubPro {
 
     if (this.glossaryCount) {
       this.glossaryCount.textContent = totalPairs;
+    }
+    if (this.glossaryModalCount) {
+      this.glossaryModalCount.textContent = totalPairs;
+    }
+
+    this.filterGlossary();
+  }
+
+  filterGlossary() {
+    const query = (this.glossarySearchInput ? this.glossarySearchInput.value : '').toLowerCase().trim();
+    const cat = this.glossaryCurrentCategory || 'all';
+
+    let filtered = this.glossaryEntries;
+
+    if (cat !== 'all') {
+      filtered = filtered.filter(item => item.category === cat);
+    }
+
+    if (query) {
+      filtered = filtered.filter(item =>
+        item.geo.toLowerCase().includes(query) ||
+        item.eng.toLowerCase().includes(query)
+      );
+    }
+
+    this.renderGlossaryTable(filtered);
+  }
+
+  renderGlossaryTable(items) {
+    if (!this.glossaryItemsList) return;
+    if (!items || items.length === 0) {
+      this.glossaryItemsList.innerHTML = `
+        <div class="empty-state-card">
+          <span style="font-size: 26px;">🔍</span>
+          <p style="margin: 6px 0 0; color: #94a3b8; font-size: 13px;">შესატყვისი ტერმინი ვერ მოიძებნა</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Limit rendering to first 150 items for super smooth scrolling
+    const displayItems = items.slice(0, 150);
+    let html = '';
+
+    displayItems.forEach(item => {
+      html += `
+        <div class="term-row-card" data-id="${item.id}">
+          <div class="term-text-col">
+            <div class="term-geo">${this.escapeHtml(item.geo)}</div>
+            <div class="term-arrow">⇄</div>
+            <div class="term-eng">${this.escapeHtml(item.eng)}</div>
+          </div>
+          <div class="term-actions">
+            <button class="term-del-btn" title="ტერმინის წაშლა" data-id="${item.id}">✕</button>
+          </div>
+        </div>
+      `;
+    });
+
+    if (items.length > 150) {
+      html += `
+        <div style="text-align: center; padding: 12px; color: #94a3b8; font-size: 12px;">
+          ჩანს 150 ჩანაწერი ${items.length}-დან. გამოიყენეთ ძიება კონკრეტული ტერმინის მოსაძებნად.
+        </div>
+      `;
+    }
+
+    this.glossaryItemsList.innerHTML = html;
+
+    // Bind delete buttons
+    const delBtns = this.glossaryItemsList.querySelectorAll('.term-del-btn');
+    delBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        this.deleteGlossaryTerm(id);
+      });
+    });
+  }
+
+  addGlossaryTermFromInput() {
+    const geo = this.newTermGeo ? this.newTermGeo.value.trim() : '';
+    const eng = this.newTermEng ? this.newTermEng.value.trim() : '';
+    if (!geo || !eng) {
+      alert('გთხოვთ შეიყვანოთ როგორც ქართული, ასევე ინგლისური შესატყვისი.');
+      return;
+    }
+
+    const newEntry = {
+      id: 'term_new_' + Date.now(),
+      geo: geo,
+      eng: eng,
+      category: this.categorizeTerm(geo, eng)
+    };
+
+    this.glossaryEntries.unshift(newEntry);
+    const updatedRaw = this.buildGlossaryText();
+    localStorage.setItem('subpro_glossary', updatedRaw);
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
+
+    // Clear inputs
+    if (this.newTermGeo) this.newTermGeo.value = '';
+    if (this.newTermEng) this.newTermEng.value = '';
+    if (this.newTermGeo) this.newTermGeo.focus();
+
+    this.parseGlossary(updatedRaw);
+  }
+
+  deleteGlossaryTerm(id) {
+    this.glossaryEntries = this.glossaryEntries.filter(e => e.id !== id);
+    const updatedRaw = this.buildGlossaryText();
+    localStorage.setItem('subpro_glossary', updatedRaw);
+    localStorage.setItem('subpro_glossary_ver', '2026_conference_v2');
+    if (this.glossaryInput) this.glossaryInput.value = updatedRaw;
+    this.parseGlossary(updatedRaw);
+  }
+
+  exportGlossaryFile() {
+    const text = this.buildGlossaryText();
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `iice_conference_glossary_${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // --- Translation History Logging Methods ---
+
+  loadTranslationLog() {
+    try {
+      const saved = localStorage.getItem('subpro_translation_log');
+      this.translationLog = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      this.translationLog = [];
+    }
+    if (this.logCountBadge) {
+      this.logCountBadge.textContent = this.translationLog.length;
+    }
+  }
+
+  logTranslation(original, translated, srcLang, tgtLang) {
+    if (!original || !translated) return;
+    const cleanOrig = original.trim();
+    const cleanTrans = translated.trim();
+    if (!cleanOrig || !cleanTrans) return;
+
+    // Avoid immediate duplicate of the exact same entry
+    if (this.translationLog.length > 0) {
+      const last = this.translationLog[0];
+      if (last.original === cleanOrig && last.translated === cleanTrans) return;
+    }
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('ka-GE', { hour12: false });
+    const entry = {
+      id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+      time: timeStr,
+      original: cleanOrig,
+      translated: cleanTrans,
+      srcLang: srcLang || 'en',
+      tgtLang: tgtLang || 'ka'
+    };
+
+    this.translationLog.unshift(entry);
+    if (this.translationLog.length > 1000) {
+      this.translationLog = this.translationLog.slice(0, 1000);
+    }
+
+    try {
+      localStorage.setItem('subpro_translation_log', JSON.stringify(this.translationLog));
+    } catch (e) {
+      console.warn('Could not save translation log to localStorage:', e);
+    }
+
+    if (this.logCountBadge) {
+      this.logCountBadge.textContent = this.translationLog.length;
+    }
+
+    if (this.historyLogModal && this.historyLogModal.classList.contains('active')) {
+      this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
+    }
+  }
+
+  openHistoryLog() {
+    if (!this.historyLogModal) return;
+    this.historyLogModal.style.display = 'flex';
+    this.historyLogModal.classList.add('active');
+    this.historyLogModal.classList.remove('hidden');
+    this.renderLogEntries(this.logSearchInput ? this.logSearchInput.value : '');
+  }
+
+  closeHistoryLog() {
+    if (!this.historyLogModal) return;
+    this.historyLogModal.style.display = 'none';
+    this.historyLogModal.classList.remove('active');
+    this.historyLogModal.classList.add('hidden');
+  }
+
+  renderLogEntries(query = '') {
+    if (!this.logEntriesList) return;
+    const q = (query || '').toLowerCase().trim();
+
+    let entries = this.translationLog;
+    if (q) {
+      entries = entries.filter(e =>
+        e.original.toLowerCase().includes(q) ||
+        e.translated.toLowerCase().includes(q)
+      );
+    }
+
+    if (!entries || entries.length === 0) {
+      this.logEntriesList.innerHTML = `
+        <div class="empty-state-card">
+          <span style="font-size: 26px;">📜</span>
+          <p style="margin: 6px 0 0; color: #94a3b8; font-size: 13px;">${q ? 'შესატყვისი ჩანაწერი ვერ მოიძებნა' : 'თარგმანის ისტორია ჯერ ცარიელია. საუბრის დაწყებისას აქ ავტომატურად შეინახება ყველა ფრაზა.'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    let html = '';
+    entries.slice(0, 120).forEach(e => {
+      const isSrcGeo = /[\u10A0-\u10FF]/.test(e.original);
+      const geoText = isSrcGeo ? e.original : e.translated;
+      const engText = isSrcGeo ? e.translated : e.original;
+
+      html += `
+        <div class="log-entry-card">
+          <div class="log-entry-header">
+            <span class="log-timestamp">⏱ ${this.escapeHtml(e.time)}</span>
+            <span class="log-lang-badge">${this.escapeHtml((e.srcLang || 'en').toUpperCase())} ➔ ${this.escapeHtml((e.tgtLang || 'ka').toUpperCase())}</span>
+            <button class="btn-quick-add-to-glossary" data-geo="${this.escapeHtml(geoText)}" data-eng="${this.escapeHtml(engText)}">
+              ➕ ლექსიკონში დამატება
+            </button>
+          </div>
+          <div class="log-entry-row">
+            <span class="log-entry-label">ორიგინალი:</span>
+            <span class="log-entry-orig">${this.escapeHtml(e.original)}</span>
+          </div>
+          <div class="log-entry-row">
+            <span class="log-entry-label">თარგმანი:</span>
+            <span class="log-entry-trans">${this.escapeHtml(e.translated)}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    if (entries.length > 120) {
+      html += `
+        <div style="text-align: center; padding: 12px; color: #94a3b8; font-size: 12px;">
+          ჩანს ბოლო 120 ჩანაწერი ${entries.length}-დან. სრული ისტორიის ჩამოსატვირთად გამოიყენეთ CSV/TXT ექსპორტი.
+        </div>
+      `;
+    }
+
+    this.logEntriesList.innerHTML = html;
+
+    // Bind quick add buttons
+    const addBtns = this.logEntriesList.querySelectorAll('.btn-quick-add-to-glossary');
+    addBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const geo = btn.getAttribute('data-geo') || '';
+        const eng = btn.getAttribute('data-eng') || '';
+        this.closeHistoryLog();
+        this.openGlossaryModal(geo, eng);
+      });
+    });
+  }
+
+  exportLogAs(format) {
+    if (!this.translationLog || this.translationLog.length === 0) {
+      alert('თარგმანის ისტორია ცარიელია.');
+      return;
+    }
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    let content = '';
+    let mimeType = 'text/plain;charset=utf-8';
+    let fileName = `iice_translation_log_${dateStr}.txt`;
+
+    if (format === 'csv') {
+      mimeType = 'text/csv;charset=utf-8';
+      fileName = `iice_translation_log_${dateStr}.csv`;
+      // \uFEFF is UTF-8 BOM so Microsoft Excel correctly opens Georgian text without encoding issues
+      content = '\uFEFF"დრო","მიმართულება","ორიგინალი","თარგმანი"\n';
+      this.translationLog.forEach(e => {
+        const time = `"${(e.time || '').replace(/"/g, '""')}"`;
+        const dir = `"${(e.srcLang || 'en').toUpperCase()} -> ${(e.tgtLang || 'ka').toUpperCase()}"`;
+        const orig = `"${(e.original || '').replace(/"/g, '""')}"`;
+        const trans = `"${(e.translated || '').replace(/"/g, '""')}"`;
+        content += `${time},${dir},${orig},${trans}\n`;
+      });
+    } else {
+      content = `IICE 2026 LIVE TRANSLATION LOG\nთარიღი: ${dateStr}\nსულ ჩანაწერი: ${this.translationLog.length}\n${'='.repeat(60)}\n\n`;
+      this.translationLog.forEach((e, i) => {
+        content += `[#${i + 1}] ${e.time} (${(e.srcLang || 'en').toUpperCase()} -> ${(e.tgtLang || 'ka').toUpperCase()})\n`;
+        content += `ORIGINAL:   ${e.original}\n`;
+        content += `TRANSLATED: ${e.translated}\n`;
+        content += `${'-'.repeat(40)}\n\n`;
+      });
+    }
+
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  clearHistoryLog() {
+    if (!this.translationLog || this.translationLog.length === 0) return;
+    if (confirm('დარწმუნებული ხართ, რომ გსურთ თარგმანის ისტორიის გასუფთავება?')) {
+      this.translationLog = [];
+      try {
+        localStorage.removeItem('subpro_translation_log');
+      } catch (e) {}
+      if (this.logCountBadge) this.logCountBadge.textContent = '0';
+      this.renderLogEntries();
     }
   }
 
@@ -1649,6 +2156,15 @@ class LiveSubPro {
         translated = this.enforceCinemaLength(translated);
 
         this.translatedText.innerHTML = `<span>${this.escapeHtml(translated)}</span>`;
+
+        if (isFinal) {
+          this.logTranslation(clauseText, translated, srcCode, tgtCode);
+        } else {
+          clearTimeout(this.interimLogTimer);
+          this.interimLogTimer = setTimeout(() => {
+            this.logTranslation(clauseText, translated, srcCode, tgtCode);
+          }, 2200);
+        }
       }
 
       this.subtitleCard.classList.remove('speaking');
