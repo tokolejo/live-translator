@@ -1,7 +1,10 @@
 import re
 import json
+from pathlib import Path
 
-with open(r'd:\PROJECTS\live translator\iice_full_glossary.txt', encoding='utf-8') as f:
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(BASE_DIR / 'data' / 'iice_full_glossary.txt', encoding='utf-8') as f:
     raw_lines = [l.strip() for l in f if ':' in l]
 
 cleaned_dict = {}
@@ -39,8 +42,8 @@ print(f"Total polished entries: {len(cleaned_dict)}")
 # Sort by length descending
 sorted_items = sorted(cleaned_dict.items(), key=lambda x: len(x[0]), reverse=True)
 
-with open(r'd:\PROJECTS\live translator\curated_iice_glossary.txt', 'w', encoding='utf-8') as f:
+with open(BASE_DIR / 'data' / 'curated_iice_glossary.txt', 'w', encoding='utf-8') as f:
     for g, e in sorted_items:
         f.write(f"{g}: {e}\n")
 
-print("Saved to curated_iice_glossary.txt")
+print("Saved to data/curated_iice_glossary.txt")

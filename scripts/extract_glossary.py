@@ -141,12 +141,16 @@ print(f"Total extracted glossary pairs: {len(glossary_pairs)}")
 # Sort by length descending so longer phrases match first!
 sorted_items = sorted(glossary_pairs.items(), key=lambda x: len(x[0]), reverse=True)
 
-with open(r'd:\PROJECTS\live translator\extracted_glossary.json', 'w', encoding='utf-8') as f:
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(BASE_DIR / 'data' / 'extracted_glossary.json', 'w', encoding='utf-8') as f:
     json.dump(dict(sorted_items), f, ensure_ascii=False, indent=2)
 
 # Also create text format
-with open(r'd:\PROJECTS\live translator\extracted_glossary.txt', 'w', encoding='utf-8') as f:
+with open(BASE_DIR / 'data' / 'extracted_glossary.txt', 'w', encoding='utf-8') as f:
     for g, e in sorted_items:
         f.write(f"{g}: {e}\n")
 
-print("Glossary saved to extracted_glossary.txt and extracted_glossary.json")
+print("Glossary saved to data/extracted_glossary.txt and data/extracted_glossary.json")

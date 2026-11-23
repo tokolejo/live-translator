@@ -21,7 +21,7 @@ if %ERRORLEVEL% EQU 0 (
     python -m http.server 8080
 ) else (
     echo [Engine] Built-in Windows PowerShell HTTP Server
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0server.ps1" -Port 8080
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\server.ps1" -Port 8080
 )
 
 pause

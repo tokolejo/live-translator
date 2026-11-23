@@ -3,7 +3,7 @@ param(
     [int]$Port = 8080
 )
 
-$Root = $PSScriptRoot
+$Root = Split-Path -Parent $PSScriptRoot
 $Listener = New-Object System.Net.HttpListener
 $Listener.Prefixes.Add("http://localhost:$Port/")
 

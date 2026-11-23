@@ -239,8 +239,12 @@ for g, e in glossary.items():
 sorted_pairs = sorted(cleaned_glossary.items(), key=lambda x: len(x[0]), reverse=True)
 print(f"Final high-precision curated terms: {len(sorted_pairs)}")
 
-with open(r'd:\PROJECTS\live translator\iice_full_glossary.txt', 'w', encoding='utf-8') as f:
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(BASE_DIR / 'data' / 'iice_full_glossary.txt', 'w', encoding='utf-8') as f:
     for g, e in sorted_pairs:
         f.write(f"{g}: {e}\n")
 
-print("Saved to iice_full_glossary.txt")
+print("Saved to data/iice_full_glossary.txt")

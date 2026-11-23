@@ -49,10 +49,10 @@
 `BroadcastChannel`-ის (`index.html` ⇄ `stage.html` სინქრონიზაცია) და მიკროფონის ნებართვების სტაბილურად მუშაობისთვის სასურველია აპლიკაცია გაეშვას `localhost`-ზე:
 
 1. გაუშვით **`start_translator.bat`** (ორმაგი კლიკით).
-   - სკრიპტი ავტომატურად იწყებს ლოკალურ HTTP სერვერს პორტზე `8080` (`python -m http.server 8080`, ხოლო თუ Python არ არის დაყენებული — Windows-ის ჩაშენებულ PowerShell სერვერს `server.ps1`-ით) და ხსნის `http://localhost:8080/index.html`-ს Google Chrome-ში.
+   - სკრიპტი ავტომატურად იწყებს ლოკალურ HTTP სერვერს პორტზე `8080` (`python -m http.server 8080`, ხოლო თუ Python არ არის დაყენებული — Windows-ის ჩაშენებულ PowerShell სერვერს `scripts/server.ps1`-ით) და ხსნის `http://localhost:8080/index.html`-ს Google Chrome-ში.
    - ალტერნატიულად, შეგიძლიათ პირდაპირ გაუშვათ PowerShell სერვერი:
      ```powershell
-     powershell -NoProfile -ExecutionPolicy Bypass -File server.ps1 -Port 8080
+     powershell -NoProfile -ExecutionPolicy Bypass -File scripts/server.ps1 -Port 8080
      ```
 2. მიეცით Chrome-ს მიკროფონის გამოყენების ნებართვა (*Allow microphone*).
 3. საჭიროების შემთხვევაში აირჩიეთ სექცია/მომხსენებელი, ენის მიმართულება (`🇺🇸 English ➔ 🇬🇪 ქართული` ან `🇬🇪 ქართული ➔ 🇺🇸 English`) და დააჭირეთ **„ჩართვა“**-ს (`P` ან `Space`).
@@ -94,14 +94,15 @@
 
 ## 📁 პროექტის სტრუქტურა
 
-| ფაილი | დანიშნულება |
+| ფაილი / ფოლდერი | დანიშნულება |
 |---|---|
+| `start_translator.bat` | Windows-ის გამშვები (ორმაგი კლიკით უშვებს სერვერს + Chrome-ს) |
 | `index.html` | ოპერატორის 3-სვეტიანი სტუდია, პროექტორის მონიტორი, ლოგები და ლექსიკონის მოდალი |
-| `app.js` | მთავარი ძრავა (`LiveSubPro`): Web Speech API, Watchdog, ASR კორექცია, 3-დონიანი თარგმანი, 103 მომხსენებელი, 623 ტერმინი, IndexedDB ლოგები, BroadcastChannel |
-| `stage.html` / `stage.js` | დამოუკიდებელი პროექტორის/სცენის ეკრანი მცურავი Quick Control Toolbar-ით |
-| `style.css` | სტუდიის ინტერფეისი, 13 პროექტორის დიზაინი და საინფორმაციო ბანერების სტილები |
-| `abstracts_data.js` | მომხსენებლების ბილინგვური თეზისების ცოდნის ბაზა (`IICE_ABSTRACTS_DB` — 103 თეზისი, 352 წინადადების წყვილი) |
-| `curated_iice_glossary.txt` | კონფერენციის გაწმენდილი ტერმინოლოგიური ლექსიკონი (`ქართული: English`) |
-| `start_translator.bat` | Windows-ის გამშვები (Python ან PowerShell HTTP სერვერი + Chrome) |
-| `server.ps1` | ნულოვანი დამოკიდებულების PowerShell HTTP სერვერი (`System.Net.HttpListener`) |
-| `extract_glossary.py`, `build_full_conference_glossary.py`, `clean_glossary.py`, `inject_glossary_to_app.py` | ოფლაინ Python სკრიპტები კონფერენციის `.docx` თეზისებიდან და `SUMMARY.csv`-დან ლექსიკონის ამოღების, გაწმენდისა და `app.js`-ში ჩაშენებისთვის |
+| `stage.html` | დამოუკიდებელი პროექტორის/სცენის ეკრანი მცურავი Quick Control Toolbar-ით |
+| `css/style.css` | სტუდიის ინტერფეისი, 13 პროექტორის დიზაინი და საინფორმაციო ბანერების სტილები |
+| `js/app.js` | მთავარი ძრავა (`LiveSubPro`): Web Speech API, Watchdog, Noise Gate, ASR კორექცია, 3-დონიანი თარგმანი, დღის განრიგი, 103 მომხსენებელი, IndexedDB ლოგები, BroadcastChannel |
+| `js/stage.js` | პროექტორის ეკრანის კონტროლერი და ორმხრივი სინქრონიზაცია |
+| `data/abstracts_data.js` | მომხსენებლების ბილინგვური თეზისების ცოდნის ბაზა (`IICE_ABSTRACTS_DB` — 103 თეზისი, 352 წინადადების წყვილი) |
+| `data/curated_iice_glossary.txt` | კონფერენციის გაწმენდილი ტერმინოლოგიური ლექსიკონი (`ქართული: English`) |
+| `scripts/server.ps1` | ნულოვანი დამოკიდებულების PowerShell HTTP სერვერი (`System.Net.HttpListener`) |
+| `scripts/*.py` | ოფლაინ Python სკრიპტები თეზისებიდან ლექსიკონის ამოღების, გაწმენდისა და `js/app.js`-ში ჩაშენებისთვის |
