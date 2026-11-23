@@ -810,6 +810,8 @@ class LiveSubPro {
     this.glossaryEntries = [];
     this.glossaryCurrentCategory = 'all';
     this.translationLog = [];
+    this.logPageSize = 200;
+    this.logDisplayLimit = 200;
     this.transCache = new Map();
     this.lastProcessedSpeech = '';
     this.prevFinalTranslated = '';
@@ -1275,7 +1277,10 @@ class LiveSubPro {
       this.closeLogBottomBtn.addEventListener('click', () => this.closeHistoryLog());
     }
     if (this.logSearchInput) {
-      this.logSearchInput.addEventListener('input', () => this.renderLogEntries(this.logSearchInput.value));
+      this.logSearchInput.addEventListener('input', () => {
+        this.logDisplayLimit = this.logPageSize;
+        this.renderLogEntries(this.logSearchInput.value);
+      });
     }
     if (this.exportLogCsvBtn) {
       this.exportLogCsvBtn.addEventListener('click', () => this.exportLogAs('csv'));
@@ -2631,7 +2636,8 @@ class LiveSubPro {
     }
 
     let html = '';
-    entries.slice(0, 120).forEach(e => {
+    const visibleEntries = entries.slice(0, this.logDisplayLimit);
+    visibleEntries.forEach(e => {
       const isSrcGeo = /[\u10A0-\u10FF]/.test(e.original);
       const geoText = isSrcGeo ? e.original : e.translated;
       const engText = isSrcGeo ? e.translated : e.original;
@@ -2657,15 +2663,30 @@ class LiveSubPro {
       `;
     });
 
-    if (entries.length > 120) {
+    if (entries.length > visibleEntries.length) {
+      const remaining = entries.length - visibleEntries.length;
+      const nextBatch = Math.min(this.logPageSize, remaining);
       html += `
-        <div style="text-align: center; padding: 12px; color: #94a3b8; font-size: 12px;">
-          ნაჩვენებია ბოლო 120 ჩანაწერი ${entries.length}-დან (სრული ბაზა შენახულია). ყველა ჩანაწერის ჩამოსატვირთად გამოიყენეთ CSV / TXT / JSON ექსპორტი.
+        <div class="log-load-more-wrap">
+          <div class="log-load-more-info">ნაჩვენებია ბოლო ${visibleEntries.length} ჩანაწერი ${entries.length}-დან</div>
+          <button type="button" id="loadMoreLogsBtn" class="btn-load-more">
+            ⬇️ ჩატვირთე კიდევ ${nextBatch} (დარჩენილია ${remaining})
+          </button>
         </div>
       `;
     }
 
     this.logEntriesList.innerHTML = html;
+
+    const loadMoreBtn = document.getElementById('loadMoreLogsBtn');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        const prevScrollTop = this.logEntriesList.scrollTop;
+        this.logDisplayLimit += this.logPageSize;
+        this.renderLogEntries(query);
+        this.logEntriesList.scrollTop = prevScrollTop;
+      });
+    }
 
     // Bind quick add buttons
     const addBtns = this.logEntriesList.querySelectorAll('.btn-quick-add-to-glossary');
@@ -2738,6 +2759,7 @@ class LiveSubPro {
     if (!this.translationLog || this.translationLog.length === 0) return;
     if (confirm('დარწმუნებული ხართ, რომ გსურთ მთლიანი თარგმანის ისტორიის გასუფთავება?')) {
       this.translationLog = [];
+      this.logDisplayLimit = this.logPageSize;
       try {
         localStorage.removeItem('subpro_translation_log');
       } catch (e) {}
